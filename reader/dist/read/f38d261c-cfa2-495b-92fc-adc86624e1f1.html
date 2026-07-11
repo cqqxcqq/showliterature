@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《注视》</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root,[data-theme="light"]{
+  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
+  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
+  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
+  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
+  --btn-text:#2b2723;--progress:#8b5e3c;
+}
+[data-theme="sepia"]{
+  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
+  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
+  --btn-text:#3a2c18;--progress:#8a3a1a;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
+  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
+  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
+  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
+  --btn-text:#e6dcc8;--progress:#d4a86a;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+
+[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
+[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
+[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .3s ease,color .3s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+#progress-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
+  pointer-events:none;
+}
+#progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
+  transition:width .1s linear,background .3s ease;transform-origin:left center;
+}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
+  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
+}
+header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+.back-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .15s ease;
+  flex-shrink:0;
+}
+.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
+.back-btn:active{transform:scale(.95);}
+header h1{
+  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;margin-right:40px;
+}
+header .spacer{width:40px;flex-shrink:0;}
+main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
+article{background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
+article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
+article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
+article .content{margin-top:2rem;}
+article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
+article .content p:first-child{text-indent:0;}
+article .content p:last-child{margin-bottom:0;}
+
+@media (max-width:640px){
+  main{padding:4rem .75rem 5.5rem;}
+  article{padding:1.5rem 1rem;border-radius:8px;}
+  article header h1{font-size:1.35rem;}
+  article .content p{text-indent:1.8em;}
+}
+
+.toolbar{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
+  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
+  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
+}
+.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
+.toolbar-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+}
+.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
+.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
+  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;z-index:10;
+}
+.toolbar-btn:hover .tooltip{opacity:1;}
+.toolbar-btn{position:relative;}
+
+@media (max-width:480px){
+  .toolbar{padding:.35rem .5rem;gap:.25rem;}
+  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+}
+
+.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.library-header p{color:var(--meta);font-size:.95rem;}
+.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.work-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+}
+.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
+.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
+.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
+.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
+.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
+.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
+
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="progress-rail"><div id="progress-bar"></div></div>
+<header id="header">
+  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
+  <h1>《注视》</h1>
+  <div class="spacer"></div>
+</header>
+<main>
+  <article>
+    <header>
+      <h1>《注视》</h1>
+      <div class="meta">
+        <span>短篇</span>
+        <span>短篇</span>
+        <span>2609 字</span>
+        <span>2026-06-04</span>
+      </div>
+    </header>
+    <div class="content"><p>周五的一个傍晚，墙上的时钟指向六点四十七。你站在没拉窗帘的落地窗前。</p><p>你手里捧着刚从工地旁买来的一杯黑咖啡。五十米外，是一座刚建成的商业大楼。一整面平滑的蓝色反光玻璃，盖住最后的日落。</p><p>你站得有些累了，想蹲下。视线下移时，才发现此前在工地，被钢筋划破的伤口又渗血了。你单手脱下那件沾着汗臭和沙子的旧T恤，按在小腿上。沙子摩擦着你的皮肉，一阵刺痛。</p><p>你为了转移痛觉，再次看向对面大楼。你住在十二楼。对面的第十四层，从左数起第四块的玻璃，你看到了不自然的光。那是一个红色的圆孔，中心隐约有一点暗红色。它正对着你的落地窗。</p><p>你的呼吸被拉长。后背的皮肤像是被细细的电流刷过，即使你已经习惯了，但你这时汗毛还是竖立了起来。</p><p>你下意识地把那件T恤重新套上，但你的T恤袖口沾上了黑咖啡。你把那杯黑咖啡放下，忍着小腿的刺痛。你的身子直了些，衣服也脏了些。</p><p>你退后一步，把客厅刺眼的廉价LED灯关上。客厅暗了下来，你走向客厅一旁，打开那盏落地灯。你回到落地窗前，一动不动。昏暗的灯打在你的侧脸，你是一尊劣质的雕塑，对着那一片蓝色玻璃，一动不动。</p><p>两周后的一个晚上，墙上时钟指向八点零二。桌上摆着一组高级金属制刀叉，但你简陋的复合木桌上满是划痕。你在刀叉下，垫上一层擦过汗的纸巾。刀叉对着落地窗。你叫了外卖，兑换你攒了好久的折扣卷，你叫了饺子。</p><p>塑料餐盒，你掀起盖子时，累积的蒸汽掉落在饺子上。你平日是用左手搬砖的，于是你自然地把刀叉在你两手对换。你左手拿着叉子，右手，餐刀被你握住，你握菜刀似死死握住。</p><p>饺子没熟。你的右手还不习惯金属的重量，也不知道该怎么使用。你的背脊还是直着的。你一开始尝试先把饺子用叉子钉住，你本想直接把饺子递到嘴边，一口吃下，但你右手的金属，对面蓝色大楼的红光照在上面。你用力地按下，饺子没被切开。</p><p>你装作从容地反复摆动刀子，饺子被分开了。你把左手叉子抬起，把饺子送入口中。你先是用发黄的门牙把冰冷的饺子不断切成小块，再慢慢地以臼齿碾碎。你确保每一次吞咽都是十三秒，然后你装作满足地闭上眼睛。你调整了脖子的角度，确保那道红光能够照到你的侧脸。</p><p>你的脖子偏向左侧，颈椎因长时间的静止，变得僵硬，你享受着你紧绷的腰背传来的酸痛。你极其缓慢地转动眼球，然后是脖子。余光里，你看到了那道红光。它刺在你视网膜上。</p><p>吃完最后一个半生不熟的饺子，你把刀叉在塑料盒上摆成八字形。你站起身，走向洗手间，关门。</p><p>洗手间里没有窗户。</p><p>你在一片黑暗里瘫倒，脊椎骨好像被碾碎了。瓷砖上的积水渗进你特意换上的干净西装里，又冷又脏。你没站起来，闭上眼睛。没了那道红光，你的肌肉不知道怎么发力了。</p><p>你喘息着，空气的洗洁精味，进入你的呼吸道。胃里半熟饺子往回顶，你张开嘴，什么都没出来。在这两平米的黑暗里，你感觉自己在被溶解。</p><p>你只待了不到两分钟，便起身，猛地推开洗手间的门，冲回客厅的落地窗前。</p><p>昏暗的落地灯在你左侧亮着，你的脸被落地灯和对面大楼的红色灯照着。</p><p>你收起了狼狈的喘息，背脊重新挺直。你再次成为了一尊劣质的雕塑，一动不动。</p><p>四周后一个异常冰冷的夜晚，时钟指向九点四十。你站在窗前，桌子上刀叉还是八字形，压在一个面包袋上。你看着那道红光，一样的死寂。你每天重复的端坐，挺直，享受食物，已经成了一滩固定的死水，你的刀叉生锈了。</p><p>你打开那落地窗，你握住把手，尝试打开。十分钟后，落地窗被拉开一些。窗外的风吹入，西装下你的肌肉收缩了。</p><p>你走回客厅中央，刺骨的冷风中，你把西装脱了下来，用脚踩着。你赤裸着上身，微弱的红光照在你的锁骨上，长期低头含胸发力的你，锁骨陷得很深，黑乎乎的凹槽，周围布满大片褪不掉的黄褐色淤青。</p><p>你任由冷风吹过你的眉毛两秒，转过身，你走到了那张木桌前，拿起那一把高级西餐刀。你的右手握住木制把手。你那只习惯了搬砖的粗糙的右手，此刻正握着一把精致的西餐刀。</p><p>你走到落地窗前，风刮着你的身体。你迎着那道红光，举起手里的西餐刀。刀尖对准了你左小腿上那道已经结痂的伤口。你缓慢转头，视网膜盯着那道红光。你看着那座蓝色大楼，手腕发力。</p><p>西餐刀生锈了，变得钝些。你在小腿上先用刀尖快速地刺着，找到那一处不那么疼的地方后，在它的边缘，呈四十五度的刀尖，插入血痂，把它重新挑开，把原本的口子划得更长。</p><p>钝刀生锈了，所以你必须像那时吃饺子一般用力。你感受到了阻力，刀子触碰到小腿骨了。伤口周围的神经被浸湿，温热的血流出来，划过小腿。</p><p>风在血流的相反方向吹，你那紧紧皱起的眉目被风拂过。你在发抖。但你一动不动，那道红光现在在照着你这尊掉色的雕塑。你右手的指节发白，眼球干涩，大口吸入冷空气。</p><p>你在等，但那道红光还是一片死寂。</p><p>你站了起来，握住那把刀，颤抖着。</p><p>昏暗的落地灯照在你身上，一动不动的雕塑长出了新颜色。</p><p>隔天早晨，时钟指向七点二十分。你拉开落地窗的窗帘，寻找那道红光，准备下一场表演时，发现对面的大楼降下了一张巨大的施工防水幕布。你的膝盖磕在粘滑的地板，一声闷响。红光不见了。</p><p>你绷紧的脊椎，这时在零点一秒内失去了支点，你的头磕在落地窗前。你试图把自己撑起来，但你的肌肉不知道如何运作了，你再次沉重地跌落在地板上。</p><p>你幸存的疯狂把你推了起来，你的脸死死贴在冰冷的落地窗上，眼睛开到最大，看向那道红光的位置，但幕布后没有任何红印。你转过身，在客厅中游荡。你先是来回踱步，逐渐加快步伐，直到你撞到墙面。你最后像一头野兽般在爬行着，你小腿的伤口被活动的肌肉撑开，客厅被染红了。小腿，疼痛，你想起了昨日的表演，你用自己生茧的手掌，在伤口剐蹭，试图在视网膜重新找到那抹红。但你终究还是停下了，你的血不会发光。</p><p>极度的虚无中，你在两分钟后终于想起一些东西。你爬向洗手间，在洗手间的瓷砖上照到了你的电话。你尝试开机。三分钟后，荧幕亮起，你打给了对面大楼的招商电话，你在楼下的传单看到的。</p><p>电话接通了，传来客气热情的客服声音：“您好，这里是蓝湾物业中心，请问有什么可以帮您？”</p><p>你有一个月没有说话了，这时你尝试着组织语言。但你发现你不能，在沉重的喘息声下，你只是说了几个碎词。</p><p>“大楼，红光，幕布。”</p><p>“先生，我们这里是物业管理，您是不是打错了。”</p><p>对方挂断了电话。你的喘息声在空荡荡的客厅回响。落地灯照向你，你一动不动。这尊劣质的雕像被抛弃了。</p><p>两天后的一个深夜，时针指向十一点五十二分。</p><p>客厅满地是撕开的纸箱和凌乱的电线。你在客厅的死角，洗手间的门后，以及阳台上，钉入螺丝，安装带有红外线夜视功能的微型摄像头。</p><p>你把所有杂乱的数据线，集中在客厅中央的一台大尺寸显示器。</p><p>你花了两个小时，冷静地安装了十三个摄像头，你的背脊是直的，电流时常刷过你的背。</p><p>显示器亮起，你看到十三个角度下不同的你。你关掉客厅的大灯，屏幕中央是阳台看进来的角度，其他十二个是不同地方的角落照着的你。你坐在客厅中央，对着落地窗。摄像头的红外线指示灯亮着，那是一个红点。</p><p>熟悉的红光再次出现，你的背脊再次挺直，你对着那道红光，缓慢地把脖子转向左侧，红光照在你的侧脸。你还买了饺子，坐在餐桌前。这次，你的左手拿着刀，右手拿着叉，你学会了如何正确地使用它们。</p><p>你从容地切割那份饺子，每十秒，吞咽。你吃着始终不熟的饺子和刀叉上锈迹的碱味。</p><p>你停下了，时钟指向十二点准。十三个红点亮着。你是一尊劣质的雕塑，这次，有人看着。</p></div>
+  </article>
+</main>
+<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
+  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
+  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+</div>
+<script>
+(function(){
+  const html=document.documentElement;
+  const rail=document.getElementById('progress-rail');
+  const bar=document.getElementById('progress-bar');
+  const header=document.getElementById('header');
+  const toolbar=document.getElementById('toolbar');
+  const btnTheme=document.getElementById('btn-theme');
+  const btnFont=document.getElementById('btn-font');
+  const btnSizeMinus=document.getElementById('btn-size-minus');
+  const btnSizePlus=document.getElementById('btn-size-plus');
+  const STORAGE_KEY='reader_prefs';
+  const THEMES=['light','sepia','dark'];
+  const FONTS=['serif','kai','fangsong','sans'];
+  const SIZES=['sm','md','lg'];
+  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
+  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  let prefs=loadPrefs();
+  let lastScrollY=window.scrollY;
+  let hideHeaderTimer=null;
+  let hideToolbarTimer=null;
+
+  function loadPrefs(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  }
+  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+  function applyPrefs(p){
+    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
+    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
+    if(p.size){html.dataset.size=p.size;}
+  }
+  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
+  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
+  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+
+  applyPrefs(prefs);
+
+  function updateProgress(){
+    const scrollTop=window.scrollY;
+    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=docHeight>0?scrollTop/docHeight:0;
+    bar.style.width=(pct*100)+'%';
+  }
+  function onScroll(){
+    updateProgress();
+    const y=window.scrollY;
+    const scrollingDown=y>lastScrollY;
+    if(scrollingDown&&y>80){
+      header.classList.add('hidden');
+      toolbar.classList.add('hidden');
+    }else{
+      header.classList.remove('hidden');
+      toolbar.classList.remove('hidden');
+    }
+    lastScrollY=y;
+    clearTimeout(hideHeaderTimer);
+    clearTimeout(hideToolbarTimer);
+    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
+    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  btnTheme.addEventListener('click',()=>{
+    prefs.theme=cycle(THEMES,prefs.theme||'light');
+    updateThemeIcon(prefs.theme);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnFont.addEventListener('click',()=>{
+    prefs.font=cycle(FONTS,prefs.font||'serif');
+    updateFontLabel(prefs.font);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizeMinus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.max(0,i-1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizePlus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T'){btnTheme.click();}
+    else if(e.key==='f'||e.key==='F'){btnFont.click();}
+    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
+    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
+    else if(e.key==='ArrowLeft'){history.back();}
+  });
+
+  window.addEventListener('storage',e=>{
+    if(e.key===STORAGE_KEY){
+      prefs=JSON.parse(e.newValue||'{}');
+      applyPrefs(prefs);
+    }
+  });
+})();
+</script>
+</body>
+</html>

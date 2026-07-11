@@ -383,14 +383,20 @@ def load_works():
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         data = json.load(f)
     works = [w for w in data.get('works', []) if not w.get('is_archived', False)]
-    works.sort(key=lambda w: (w.get('order', 999), -int(w.get('added_date', '0000-00-00').replace('-', ''))))
+    works.sort(key=lambda w: (w.get('order', 999), w.get('added_date', '0000-00-00 00:00')))
     return works
+
+def split_paragraphs(content):
+    """Split content into paragraphs, handling both \\r\\n\\r\\n and \\n\\n."""
+    import re
+    paras = re.split(r'\r?\n\r?\n', content.strip())
+    return [p.strip() for p in paras if p.strip()]
 
 def build_library(works):
     total_chars = sum(w.get('char_count', 0) for w in works)
     cards = []
     for w in works:
-        excerpt = w['content'].split('\n\n')[0][:120] + '…'
+        excerpt = split_paragraphs(w['content'])[0][:120] + '…'
         cards.append(f'''
   <a href="read/{w['id']}.html" class="work-card">
     <div class="title">{w['title']}</div>
@@ -418,7 +424,7 @@ def build_library(works):
     print(f"Generated index.html with {len(works)} works")
 
 def build_reader(work):
-    paragraphs = ''.join(f'<p>{p}</p>' for p in work['content'].split('\n\n') if p.strip())
+    paragraphs = ''.join(f'<p>{p}</p>' for p in split_paragraphs(work['content']))
     html = READER_HTML.format(
         theme='light', font='serif', size='md',
         title=work['title'],

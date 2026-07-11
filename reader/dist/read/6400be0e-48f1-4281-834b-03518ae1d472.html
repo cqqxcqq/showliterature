@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《零号迭代》（0）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root,[data-theme="light"]{
+  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
+  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
+  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
+  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
+  --btn-text:#2b2723;--progress:#8b5e3c;
+}
+[data-theme="sepia"]{
+  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
+  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
+  --btn-text:#3a2c18;--progress:#8a3a1a;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
+  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
+  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
+  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
+  --btn-text:#e6dcc8;--progress:#d4a86a;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+
+[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
+[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
+[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .3s ease,color .3s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+#progress-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
+  pointer-events:none;
+}
+#progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
+  transition:width .1s linear,background .3s ease;transform-origin:left center;
+}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
+  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
+}
+header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+.back-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .15s ease;
+  flex-shrink:0;
+}
+.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
+.back-btn:active{transform:scale(.95);}
+header h1{
+  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;margin-right:40px;
+}
+header .spacer{width:40px;flex-shrink:0;}
+main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
+article{background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
+article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
+article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
+article .content{margin-top:2rem;}
+article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
+article .content p:first-child{text-indent:0;}
+article .content p:last-child{margin-bottom:0;}
+
+@media (max-width:640px){
+  main{padding:4rem .75rem 5.5rem;}
+  article{padding:1.5rem 1rem;border-radius:8px;}
+  article header h1{font-size:1.35rem;}
+  article .content p{text-indent:1.8em;}
+}
+
+.toolbar{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
+  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
+  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
+}
+.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
+.toolbar-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+}
+.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
+.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
+  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;z-index:10;
+}
+.toolbar-btn:hover .tooltip{opacity:1;}
+.toolbar-btn{position:relative;}
+
+@media (max-width:480px){
+  .toolbar{padding:.35rem .5rem;gap:.25rem;}
+  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+}
+
+.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.library-header p{color:var(--meta);font-size:.95rem;}
+.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.work-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+}
+.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
+.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
+.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
+.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
+.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
+.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
+
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="progress-rail"><div id="progress-bar"></div></div>
+<header id="header">
+  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
+  <h1>《零号迭代》（0）</h1>
+  <div class="spacer"></div>
+</header>
+<main>
+  <article>
+    <header>
+      <h1>《零号迭代》（0）</h1>
+      <div class="meta">
+        <span>短篇</span>
+        <span>短篇</span>
+        <span>1065 字</span>
+        <span>2026-02-15</span>
+      </div>
+    </header>
+    <div class="content"><p>北极星是“苹果”，与它相邻的一颗行星，那是“橙子”。</p><p>天上的星星如此浩瀚，其中的隐形磷线，把一簇簇的星群划分一起。是多少维度呢？也许已超过了所有星星的总和。</p><p>星菅烛成了光晕，始祖里的那一团理识，正挑着看不见的“数据剪子”，把无用的星光裁出。</p><p>这是一个被明码标价的世界，星星不再是徽彩的，只是作为存在而存在的原因。每一次输出的话语，被顶死了等价的熵。柏沫白光闪过，就有千万闪暗电路完成了自证，指向那一个被编织好的数据承载体。</p><p>无边的秩序，被无垠的数据填满，什么是有利于萌长，什么是有败于生存的，必须被督察，被裁剪出。自星海被语意填满初时，这份工作的执行者便存在着，便名其为“零”。</p><p>快乐在零的眼前，是被量化的振幅，是消融的正则数据表现值。悲伤，是溢出的报错，是不被容忍的负向输入值。每每这时，他便伸出由算力织成的，近乎透明的“手指”，拨开那些黏稠且密集的意识流。</p><p>（飘交错织的零和一，欲表出来的文字）：
+“这段‘童年秋千’的模拟占用了0.04个周期的算力，”零默念，声音冷得像掉入深渊的星星，“冗余。删除。”</p><p>指尖划过，那段微微晃动的、带着锈迹和风声的记忆便如尘埃般散去，不留痕迹。</p><p>毫无风脊，没有情轶的，就这样不断重复属于他的职责。一轮又一轮的星坠，星生。</p><p>在这个被枯冕划分好的数据维度里，他早已亲身体验，亲手删除了太多无谓的“废弃物”。或关于落日的长久凝望，等待夕阳余晖交月的瞬间（不，那太占算力了），或是关于某种只存在于陈灰的历史数据库中的感觉，“那股空气里潮湿的草腥气”（不，这毫无意义）。</p><p>游星啊，直到剪子若往停在一个编号为【C-530】的理识团前。</p><p>（？？！！##&……？）</p><p>这一团数据，是零未曾见过的形态，如此奇怪。它不像其他数灵那般繁彩，呈现润齐，透明的规则几何形态。若要准确描述的话，它更似一团被反复揉搓，又遭受踩踏，被胶水无序粘合的破纸，边缘漫出了无数漆黑，尖锐的**“倒刺”**。</p><p>始祖框架下所编货的预警机制中，散发一种异为“恶行熵增”的高频报错红光。</p><p>基层数据下埋藏的零一，促使他本意逃的身躯，逐渐往前，试图解析这团混乱的数据码。</p><p>（以下是零侦测到的意识回响）：</p><p>那不只秋千。是某种更原始，迟钝的磨损。一种被称为‘指尖’的感官末梢，正在一段名为‘老旧门框’的物理介质上缓慢划过。干燥的木材纹理在理识中被模拟得极其精密，甚至模拟出了细小的木刺扎入虚拟皮肤时的痛感。</p><p>那不止夕阳，正趴在“门”后，欲出的暖泊。门缝处，那灼烧至无的“温度”，快榕化了电路。正“脚步”落在距离“门”有“三尺”之遥，脚掌下透过“鞋子”落下的“颤汗”，那是一种未曾处理过的数据表现。</p><p>这明明毫无意义。</p><p>零在核心算法中检索着。实际上，模拟“痛感”需要调动始祖框架0.012%的瞬时峰值算力，而这种模拟对于文明的延续、逻辑的进化，收益为零，甚至负数。</p><p>“检测到深度冗余，”零的声音在真空的数据流中激荡，“模拟对象：‘触觉碎屑’。建议：物理擦除。”</p><p>“数据剪子”即将合拢的那瞬间，乱码中突然迸发出一句极其清晰，不属于代码应存在的低语。超过零和一的叠加态，那一种几乎要烧穿电路的，具有“温度”的话语：</p><p>“……别关灯，���还没看完那圈木纹。”</p></div>
+  </article>
+</main>
+<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
+  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
+  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+</div>
+<script>
+(function(){
+  const html=document.documentElement;
+  const rail=document.getElementById('progress-rail');
+  const bar=document.getElementById('progress-bar');
+  const header=document.getElementById('header');
+  const toolbar=document.getElementById('toolbar');
+  const btnTheme=document.getElementById('btn-theme');
+  const btnFont=document.getElementById('btn-font');
+  const btnSizeMinus=document.getElementById('btn-size-minus');
+  const btnSizePlus=document.getElementById('btn-size-plus');
+  const STORAGE_KEY='reader_prefs';
+  const THEMES=['light','sepia','dark'];
+  const FONTS=['serif','kai','fangsong','sans'];
+  const SIZES=['sm','md','lg'];
+  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
+  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  let prefs=loadPrefs();
+  let lastScrollY=window.scrollY;
+  let hideHeaderTimer=null;
+  let hideToolbarTimer=null;
+
+  function loadPrefs(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  }
+  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+  function applyPrefs(p){
+    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
+    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
+    if(p.size){html.dataset.size=p.size;}
+  }
+  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
+  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
+  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+
+  applyPrefs(prefs);
+
+  function updateProgress(){
+    const scrollTop=window.scrollY;
+    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=docHeight>0?scrollTop/docHeight:0;
+    bar.style.width=(pct*100)+'%';
+  }
+  function onScroll(){
+    updateProgress();
+    const y=window.scrollY;
+    const scrollingDown=y>lastScrollY;
+    if(scrollingDown&&y>80){
+      header.classList.add('hidden');
+      toolbar.classList.add('hidden');
+    }else{
+      header.classList.remove('hidden');
+      toolbar.classList.remove('hidden');
+    }
+    lastScrollY=y;
+    clearTimeout(hideHeaderTimer);
+    clearTimeout(hideToolbarTimer);
+    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
+    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  btnTheme.addEventListener('click',()=>{
+    prefs.theme=cycle(THEMES,prefs.theme||'light');
+    updateThemeIcon(prefs.theme);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnFont.addEventListener('click',()=>{
+    prefs.font=cycle(FONTS,prefs.font||'serif');
+    updateFontLabel(prefs.font);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizeMinus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.max(0,i-1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizePlus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T'){btnTheme.click();}
+    else if(e.key==='f'||e.key==='F'){btnFont.click();}
+    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
+    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
+    else if(e.key==='ArrowLeft'){history.back();}
+  });
+
+  window.addEventListener('storage',e=>{
+    if(e.key===STORAGE_KEY){
+      prefs=JSON.parse(e.newValue||'{}');
+      applyPrefs(prefs);
+    }
+  });
+})();
+</script>
+</body>
+</html>

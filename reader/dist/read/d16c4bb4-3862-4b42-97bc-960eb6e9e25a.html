@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《生活》</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root,[data-theme="light"]{
+  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
+  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
+  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
+  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
+  --btn-text:#2b2723;--progress:#8b5e3c;
+}
+[data-theme="sepia"]{
+  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
+  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
+  --btn-text:#3a2c18;--progress:#8a3a1a;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
+  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
+  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
+  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
+  --btn-text:#e6dcc8;--progress:#d4a86a;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+
+[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
+[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
+[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .3s ease,color .3s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+#progress-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
+  pointer-events:none;
+}
+#progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
+  transition:width .1s linear,background .3s ease;transform-origin:left center;
+}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
+  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
+}
+header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+.back-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .15s ease;
+  flex-shrink:0;
+}
+.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
+.back-btn:active{transform:scale(.95);}
+header h1{
+  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;margin-right:40px;
+}
+header .spacer{width:40px;flex-shrink:0;}
+main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
+article{background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
+article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
+article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
+article .content{margin-top:2rem;}
+article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
+article .content p:first-child{text-indent:0;}
+article .content p:last-child{margin-bottom:0;}
+
+@media (max-width:640px){
+  main{padding:4rem .75rem 5.5rem;}
+  article{padding:1.5rem 1rem;border-radius:8px;}
+  article header h1{font-size:1.35rem;}
+  article .content p{text-indent:1.8em;}
+}
+
+.toolbar{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
+  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
+  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
+}
+.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
+.toolbar-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+}
+.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
+.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
+  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;z-index:10;
+}
+.toolbar-btn:hover .tooltip{opacity:1;}
+.toolbar-btn{position:relative;}
+
+@media (max-width:480px){
+  .toolbar{padding:.35rem .5rem;gap:.25rem;}
+  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+}
+
+.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.library-header p{color:var(--meta);font-size:.95rem;}
+.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.work-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+}
+.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
+.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
+.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
+.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
+.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
+.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
+
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="progress-rail"><div id="progress-bar"></div></div>
+<header id="header">
+  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
+  <h1>《生活》</h1>
+  <div class="spacer"></div>
+</header>
+<main>
+  <article>
+    <header>
+      <h1>《生活》</h1>
+      <div class="meta">
+        <span>散文</span>
+        <span>散文</span>
+        <span>4392 字</span>
+        <span>2025 年 5 月 30 日</span>
+      </div>
+    </header>
+    <div class="content"><p>门扉外，麻雀扑闪着翅膀，在雨幕间啁啾几声。清晨的光沿着风的衣袖走来，徘徊一夜的凉意随着涌进卧室。灯光依旧亮着，却抵不过窗外渐亮的天色，很快便失去了它的温度。</p><p>雨水轻轻跌落，闯进我的梦境，冰凉地掠过眉角。我忽地怔怔望着书桌上阵阵沉香的书本，这一刻活得有些梦幻。</p><p>什么是生活？</p><p>是为了把生命承载到明天而活着？亦是为了把生命脱离自昨天的梦而忙活？还是为了把生命刻在今天而熬活？</p><p>也许每个人都无法参透生活与生命的意义，甚至为寻找其终点而付出一生。</p><p>哲人湯瑪斯·卡萊爾曾说过：“我们的生活被必然性所包围；然而生命本身的意义无非就是自由，无非就是自愿的力量：因此，我们要进行一场战争；尤其是在开始的时候，这是一场艰苦的战斗。”</p><p>有些人的生活憧憬秩序，有些人则追求自由。有些人的生活似监狱般窒息，有的则如鸟儿一般逍遥。西西弗斯快乐吗？我不得而知。但至少，对他而言，生活里存在意义。</p><p>我们终其一生都在一场烽火里活着。为金钱，为权力，为一切欲望所交战。</p><p>世界上有千千万万的人，他们的生活大抵只是物质的。我是说，他们在物质之外，并没有太多经历。</p><p>十几年前，我家附近还是一片废墟。荒凉得很，除了自家屋子，踏出门外便再也见不到半点影子。自我记事起，童年的大半时光都在这里度过。只是这些，不过枝节而已。</p><p>我还记得那时，太阳把藏在土壤下的绿芽拉出来，邀请它玩躲猫猫。至于它是否答应，我却不得而知。引擎声忽地打破了这片土地的宁静。我正无所事事，连忙起身张望这一罕见的动静。车上下来几位气势逼人的人，趾高气扬地扫视着这片土地。</p><p>他们高傲地向我们出示一本小册子，写着我们的土地已被征收。那时我还小，根本做不了主，只能先应付他们，再去找爷爷奶奶，让真正有分量的人出面沟通。</p><p>至少当时我觉得那是好的。起码以后我不再孤独，不必每天对着满天星斗，像碎银般撒落的星子，独自发呆。如今想起，只能为当时的天真暗自发笑，也笑那份无知的可怜。</p><p>那日之后，我每天最大的乐趣，便是看着窗外忙忙碌碌的身影交错，听着窗外嘈嘈杂杂的施工声入睡。</p><p>夜晚的工地旁，我终是入不下眠，拖着无神的眼向外走去。如往常一般，我躺在松散的沙地上，静静的数着天空的星子。有时，数到一半，忽地不知上一次视线落在哪颗星星，只得重新数起。那时我不懂，身后的沙子，比天上的星光更有温度，更能凸显我的渺小。</p><p>或许，正因其渺小，才有着某种伟大。</p><p>许是星星的微光太过单调，我很快便失去了雅兴。起身徘徊，循着那烦人的忙碌声走近。</p><p>脚步停下时，眼泪不由自主的流出，只因满天的沙尘模糊了我的视线。我艰难的捂住眼睛，只留下一道细缝，让视线像星子般闪烁，浩瀚，却也渺小。</p><p>推车，装载满满的，看不清是什么了。汗水，落得冷冷的，也记不起它的温度了。那时的我，许是天真得近乎无知。不明白他们急促的脚步，并不是为了追逐夕阳里的蝴蝶，更不是为了日落而去。我看着他们模糊的身影，却不知他们是为了三两餐而奔波，为了肩上比水泥更沉的债务，为远在他乡病痛亲人，为了那全家福里唯一的笑容。</p><p>我不知，在他们生活的世界里，没有那么多彩虹可供驻足，灰色的沙尘落在他们的身上，只偶尔留下他们的血与汗，作为他们存在过的证明。</p><p>我懵懂无知，只是踏着轻盈的脚步，来到一个靠在钢架旁休息的工人身边，听着他急促喘息的节奏。几次呼吸之后，他察觉了我的存在。我看见他的眼瞳闪过一丝惊讶与慌张。他看起来几乎晕倒，却还强撑着像在表演一般。我看着他努力扮演一个不会疲倦的机器，竟然真的骗过了当时的我。</p><p>笑着，我问他。</p><p>“叔叔，你看起来好累啊”
+“有吗？习惯了”
+“你为什么不休息呢？偶尔看看星空不好吗？”</p><p>有时看着星空流转，逐渐被黑夜取代，许是被薄云遮住星光。在我说出了最后一句话后，仿佛在他的眼中映照出那样的景象。他眼里的光，为我而亮起，也为我泛起水雾。他眼眶湿润着，一部分星光自他眼眸滑落。</p><p>手忙脚乱，星光在我慌乱中模糊坠落，我看着他，不知道要做什么，只得转过身逃跑，离开这片暗淡的星空。</p><p>我后来经常回到那片地方，却再也没有见过那位让我保留遗憾的叔叔。有几次，我偶然听到，他的工友正提起他当年的事。</p><p>“阿林也真是的，说什么要去追逐星空。像我们这种贫苦之人，眼里只有脚下的尘土，可没有那白白的力气去仰望那什么星空。”......</p><p>记忆在这里便断裂了。后来，我听说那片土地上，建起了一座中学。夜里经过时，总能看见课室里的灯亮着，几个好友并肩走过，躺在操场上仰望星空。</p><p>生活究竟是被迫承受的重担，还是主动选择的航程？</p><p>“生活不只是安逸，也充满不可逃避的沉重”</p><p>卡莱尔的‘生活即战争’并非指外在的冲突，而是内心与命运的交锋。我们并非自愿参战，却都被迫卷入这场不见硝烟的较量。</p><p>生活本身由一些必然性因素所构成。这些因素是我们无法改变的，命中早已注定。所谓生活，不过是在这些必然性中感受人类共同的宿命。</p><p>何为必然？它是一种客观存在，不随人的意志而转移，必定会发生的规律与趋势。它与‘偶然’相对，象征着发展中可预见且不可干涉的确定性。</p><p>人的一生注定要走过‘生、老、病、死’四道关口。一个人自出生起，出身和所处的社会制度便已注定。这一切，皆是无法改变的自然规律。</p><p>沉重的夜色为夕阳套上了锈迹斑斑的枷锁，烈阳似乎早已习惯，只能任由夜色将其推向世界的背面。枷锁最可怕的不是沉重，而是久而久之，已习惯了它的存在。</p><p>我们不能选择睁开眼看到的第一束光，是否躺在陌生却温暖的温度里；不能选择第一声哭泣，是因初来的喜悦，还是为未知的懊悔。</p><p>我们不能决定，明天的阳光将从哪边升起；不能决定明晚的月亮，是否披上彩色的云裳。</p><p>我们不能逃脱，终会归于尘土的那一天；正如双翅渐渐滞累的麻雀，终有一日会告别它最爱的天空，张开双翅，迎向沉默的土地。羽毛被雨水浸得沉重，翅膀半张着，却再也没有力气振翅。它的眼睛已失去光泽，只余下自由的蕙风替它飞舞。</p><p>必然性是一场无声的夜幕，笼罩在每个人的夜晚。</p><p>路漫漫其修远兮，吾将上下而求索。（命运不可预知，但意志自由不灭。）</p><p>命运不可预知，那么，生活的意义又在何处？</p><p>自由并非挣脱铁锁，而是在铁锁之中仍选择昂首而立。</p><p>在阿尔贝·加缪的哲学中，西西弗斯面对那永恒而毫无意义的惩罚。通过反抗其荒谬性，并以意识与热情去接受命运，他得以体验自由。这种‘荒谬的自由’不在于改变外部环境，而在于有意识的个人反抗。西西弗斯在反抗中直面自己的挣扎，并在完全接受惩罚的必然现实里，找到生活的意义。</p><p>虽然西西弗斯注定要无休止地把巨石推上山，但每次巨石都会滚回山下。这代表了人类荒谬的境况：生命本身没有内在的意义或目的，在冷漠的宇宙面前，生命最终将显得荒谬且无用。</p><p>西西弗斯充分意识到自己的命运和任务的徒劳。正因他承认荒谬，他才获得反抗的力量。西西弗斯拥抱斗争，并在过程中找到快乐。他对生命、对自身存在和经历的热情，使他比强加于他的命运更强大。</p><p>或许生活的意义，就是在对命运以及必然性开启一场终生的战争。在日复一日的劳作里，我们试图推着我们每个人的那一块大石向前。在命运的安排下，所谓生活，就是在必然中寻找未知，在束缚里找到自由。</p><p>加缪有句名言：“我们必须想象西西弗斯是快乐的”。这种快乐源于拥抱当下，即使缺乏终极意义，也尽可能地投入生活。西西弗斯将岩石视为“他的东西”，将挣扎视为自己的世界，将自己的惩罚转化为对人类自由和韧性的证明。</p><p>这不是摆脱体力劳动的自由，而是在体力劳动中自由。西西弗斯可以自由地选择自己的意义和态度，即使他无法改变结果。他不受外部角色或期望的束缚，而是通过对荒诞的一次又一次推石头的专注来定义自己。</p><p>但人类仍拥有最后的自由。</p><p>还记得当初的那片星空下，雨水落在病床旁。一间病房外，踟蹰的脚步声。窗外晨曦里破雾出来的第一道光，照在了他的脸上。</p><p>命运带着怜悯，落下新生，却终在日后收回希望。</p><p>雨水突破晨曦，点在他被风吹日晒熏染，布满细纹和斑点的面庞上。</p><p>许是为饭桌上新增的一双碗筷而感叹，他或许有旧疤、裂口的双手，本该厚重，稳实，现在却微微抖颤。</p><p>那襁褓里的小身影，在为他的命运而悲歌。胎中十月，也许是他最后自由的时光。</p><p>许久之后，他回忆起那一天，当他带有哲思的寻找生活的意义。他或许才明白——既生，则活。</p><p>人生的自由，是在枷锁里起舞。在黑暗中，拖拽着脚下火光，试图化作星星点亮星辰，照耀黑暗。</p><p>生活未必有刀枪炮火，却同样硝烟四起。柴米油盐、债单试卷、欲望与孤独，都是潜伏的战场。</p><p>饭桌上那新添的碗筷，已无法填满他的胃口。饭菜固然丰盛，但欲望始终比它更大</p><p>后来，他也为自己搭起了一张新的饭桌，上面也摆着属于他们的温情。</p><p>火光映照在他沉重的负担上，墙上贴着的几纸债务，注定了他大半生都将与命运抗争。他时常感叹：自己一生，都困在几张责任与火光笼罩下，几乎喘不过气。</p><p>他生活的燃料，似乎只为焚烧命运而生。每日的汗水，化作助燃的汽油；然而燃烧后的灰烬，却窒息在他的呼吸里。他在账单前战斗，在柴米油盐里战斗，也在深夜的纸张堆中战斗。</p><p>他所期望的，是有一天，当欲望填满染缸。当他的欲望淹没命运，才发现缸裡有夢想，缸底有爛帳。生活在欲望的染缸里，为自由做抗争。於是直到砸了染缸，才看見大海茫茫。</p><p>人生，从未只有一场战争。生活本身，亦是一场权力的角逐。</p><p>学校是生活的缩影。每个人都在其中抗争，为寻找那一份自由，提前感受生活的必然。</p><p>我们在生活中学会竞争，在一次又一次的考试里付出一切，只为得到渴望的结果。于是，在分数与排名的必然中，我们试图寻得片刻的自由与安稳。</p><p>我们在生活里，逐渐学会接受束缚。一次次的平静，把我们沉默成黑暗中失色的星星。于是，我们在人生的必然中明白：自由的代价，往往就是束缚。</p><p>我们在生活中，学会了欲望。在一场又一场的美梦里，构建自己的世界，向无尽的渴望漂流。于是，在条件的必然中，我们竭力追寻心中向往的自由生活。</p><p>还记得那时候，我得爬山涉水，才得去到镇里的中学。通往镇里的道路坎坷不平，而我在这条路上，义无反顾地走了三年。</p><p>天未亮时，我的身影总是最早出现在课室里。只记得天上一轮弯月，成为了我路上唯一的依靠。偶尔会疲倦，便停下脚步，静静欣赏昨日的夜色。</p><p>不知为何，我常痴迷于天上不可及的景象，那或许便是生活的另一种模样。</p><p>课室的椅子冰冷刺骨，我也因此试着逃避那班里交错纷杂的日常。生活的第一声炮火，许是在学校里打响。</p><p>望着空荡的课室，冰冷的座椅，以及黑夜里孤悬的月影。我的脚步，在落针可闻的走廊里，格外清晰刺耳。渴望自由的我，于是走向操场，躺下，相约风儿一起仰望星空。</p><p>黑板积满粉笔灰。生活在一个色盲的世界里，我的眼里只看得到窗外的彩虹，黑白二色在我眼里，显得不那么有趣。然而，我仍不得不为纸笔的战争，落下被期待的句点。</p><p>桌上堆满试卷，锁链般层层缠绕。我唯一的骄傲，是比太阳更早见到黑夜，比黑夜更迟迎来晨曦。</p><p>黑板落下的粉笔灰，是岁月尘埃，无声覆在每个人的肩头。一张张试卷，若命运的答卷，迫使人填写预设的未来。</p><p>每一次答卷，仿佛西西弗斯般，将别人雕刻好的石头，推向早已铸成的山巅，也注定一次次滚落的结局。</p><p>我们都生活在西西弗斯的幻梦里，各自负着沉重的石块前行。不同的是，有人将大石视作解脱，有人却将它看成枷锁。然而，若真有自由，石头还是锁链，便已不再重要。</p><p>雨点顺着窗沿滑落，沿着它命运的轨迹落下。檐角的麻雀扑闪着翅膀，享受第一次的，风声。羽毛被雨水浸湿，轻轻颤抖几下，抖落下湿润的重量。啁啾传向天际：它将飞往自由；扑翅声回应星空，它将享受生活。</p><p>我看着麻雀的振翅，听着雨点自由地滴落。目光停在玻璃上，透出一丝凉意，满天的星空，藏身于水珠子下，随着它们跌落天际。视线，被模糊的光影拖慢。看着，看着闪电似的光，留在窗边的雨水里。</p><p>雨后清晨，冷风从窗缝钻入，带着街角湿土上花草的气息。风伸手进来，温柔的抚摸我的影子。灯光终于熄灭，等待早晨的初夕为他照耀。太阳从天边的山箐升起，青韶把海水染成了春天的气息。</p><p>当绿芽从土里的温庐冒头，枝叶被太阳拉扯，希望把它伸向天际，陪伴月亮。麻雀轻轻落在，还未开花的叶子上。飞得累了，便停在星空下，尽享满天银河。星空下的那片土地，被生活的痕迹重塑，他们把它们的自由剥夺，为了自己更好的生活。</p><p>星星落在沙地里，被风埋在水泥路下。也许当那留宿街头的，自由的奔跑在这世界时，梦会随着他去往诗的远方。</p><p>雨水仍然在下，却分不清是梦还是现实。我们生活在若梦的现实里，只能感叹昨日梦的痕迹。</p></div>
+  </article>
+</main>
+<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
+  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
+  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+</div>
+<script>
+(function(){
+  const html=document.documentElement;
+  const rail=document.getElementById('progress-rail');
+  const bar=document.getElementById('progress-bar');
+  const header=document.getElementById('header');
+  const toolbar=document.getElementById('toolbar');
+  const btnTheme=document.getElementById('btn-theme');
+  const btnFont=document.getElementById('btn-font');
+  const btnSizeMinus=document.getElementById('btn-size-minus');
+  const btnSizePlus=document.getElementById('btn-size-plus');
+  const STORAGE_KEY='reader_prefs';
+  const THEMES=['light','sepia','dark'];
+  const FONTS=['serif','kai','fangsong','sans'];
+  const SIZES=['sm','md','lg'];
+  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
+  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  let prefs=loadPrefs();
+  let lastScrollY=window.scrollY;
+  let hideHeaderTimer=null;
+  let hideToolbarTimer=null;
+
+  function loadPrefs(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  }
+  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+  function applyPrefs(p){
+    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
+    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
+    if(p.size){html.dataset.size=p.size;}
+  }
+  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
+  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
+  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+
+  applyPrefs(prefs);
+
+  function updateProgress(){
+    const scrollTop=window.scrollY;
+    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=docHeight>0?scrollTop/docHeight:0;
+    bar.style.width=(pct*100)+'%';
+  }
+  function onScroll(){
+    updateProgress();
+    const y=window.scrollY;
+    const scrollingDown=y>lastScrollY;
+    if(scrollingDown&&y>80){
+      header.classList.add('hidden');
+      toolbar.classList.add('hidden');
+    }else{
+      header.classList.remove('hidden');
+      toolbar.classList.remove('hidden');
+    }
+    lastScrollY=y;
+    clearTimeout(hideHeaderTimer);
+    clearTimeout(hideToolbarTimer);
+    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
+    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  btnTheme.addEventListener('click',()=>{
+    prefs.theme=cycle(THEMES,prefs.theme||'light');
+    updateThemeIcon(prefs.theme);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnFont.addEventListener('click',()=>{
+    prefs.font=cycle(FONTS,prefs.font||'serif');
+    updateFontLabel(prefs.font);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizeMinus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.max(0,i-1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizePlus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T'){btnTheme.click();}
+    else if(e.key==='f'||e.key==='F'){btnFont.click();}
+    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
+    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
+    else if(e.key==='ArrowLeft'){history.back();}
+  });
+
+  window.addEventListener('storage',e=>{
+    if(e.key===STORAGE_KEY){
+      prefs=JSON.parse(e.newValue||'{}');
+      applyPrefs(prefs);
+    }
+  });
+})();
+</script>
+</body>
+</html>

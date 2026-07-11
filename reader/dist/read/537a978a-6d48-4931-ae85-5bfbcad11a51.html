@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《2元7毛》</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root,[data-theme="light"]{
+  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
+  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
+  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
+  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
+  --btn-text:#2b2723;--progress:#8b5e3c;
+}
+[data-theme="sepia"]{
+  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
+  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
+  --btn-text:#3a2c18;--progress:#8a3a1a;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
+  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
+  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
+  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
+  --btn-text:#e6dcc8;--progress:#d4a86a;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+
+[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
+[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
+[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .3s ease,color .3s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+#progress-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
+  pointer-events:none;
+}
+#progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
+  transition:width .1s linear,background .3s ease;transform-origin:left center;
+}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
+  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
+}
+header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+.back-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .15s ease;
+  flex-shrink:0;
+}
+.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
+.back-btn:active{transform:scale(.95);}
+header h1{
+  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;margin-right:40px;
+}
+header .spacer{width:40px;flex-shrink:0;}
+main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
+article{background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
+article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
+article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
+article .content{margin-top:2rem;}
+article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
+article .content p:first-child{text-indent:0;}
+article .content p:last-child{margin-bottom:0;}
+
+@media (max-width:640px){
+  main{padding:4rem .75rem 5.5rem;}
+  article{padding:1.5rem 1rem;border-radius:8px;}
+  article header h1{font-size:1.35rem;}
+  article .content p{text-indent:1.8em;}
+}
+
+.toolbar{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
+  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
+  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
+}
+.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
+.toolbar-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+}
+.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
+.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
+  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;z-index:10;
+}
+.toolbar-btn:hover .tooltip{opacity:1;}
+.toolbar-btn{position:relative;}
+
+@media (max-width:480px){
+  .toolbar{padding:.35rem .5rem;gap:.25rem;}
+  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+}
+
+.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.library-header p{color:var(--meta);font-size:.95rem;}
+.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.work-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+}
+.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
+.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
+.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
+.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
+.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
+.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
+
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="progress-rail"><div id="progress-bar"></div></div>
+<header id="header">
+  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
+  <h1>《2元7毛》</h1>
+  <div class="spacer"></div>
+</header>
+<main>
+  <article>
+    <header>
+      <h1>《2元7毛》</h1>
+      <div class="meta">
+        <span>短篇</span>
+        <span>短篇</span>
+        <span>1828 字</span>
+        <span>2026-03-28</span>
+      </div>
+    </header>
+    <div class="content"><p>01：27
+白色，灯光是亮的，街道只剩路灯和便利店招牌的光。</p><p>偶尔也有几辆车行过，徐徐地，或快速地。</p><p>风吹过，塑料软门帘正彼此摩挲。感应灯偶尔也会响起，播放那千篇一律的铃声。</p><p>鞋垫上没有脚印。</p><p>除了凄清突兀的铃声外，只有那冷藏柜的压缩机，每隔几分钟发出的低鸣声。</p><p>01：28
+陈国明的右手搭在玻璃台面上，旧疤从虎口延伸至寸口。</p><p>十一点到目前为止，只有两个顾客。</p><p>在凌晨一点整，店里进了个客人。</p><p>他一头撞进那门帘里，湿冷的塑料条像冰冻的章鱼触手般，缠绕着他的肩膀。</p><p>头顶的感应灯，在他踉跄的脚步走远后的两秒，才急促地响起。</p><p>他的脚尖死死抵着地砖缝隙，鞋底反复碾磨着地面，蹭出一串短促而刺耳的嘶嘶声。呼吸里带着发酵后的酸腐气。</p><p>他来到堆满酒的冰柜前，努力眯着眼睛。</p><p>然后在旁边的冰柜，拿了一瓶纸盒装的草莓牛奶，结账。</p><p>快踏出店口时，他拍了拍脑门，转身向陈国明告借开瓶器。</p><p>陈国明看着他，没说什么，把他手中的那瓶草莓牛奶拿走，然后又选了一罐啤酒。</p><p>瓶盖开后，递给他。</p><p>他站在门外的路灯下，看着陈国明，白色的招牌在眼里闪耀，晃成了破碎的金箔。</p><p>一点十五，门外有一个外卖员，牵着掉漆的黄色电瓶充电。</p><p>透过霜白的玻璃，陈国明看着那一个骑士。</p><p>他在门外站了十二分钟，眼不断在刺眼的手机屏幕和亮眼的招牌上闪过，不断徘徊着，小碎步，眼神没有离开过电瓶。</p><p>十二分钟过了，那屏幕突然亮起。</p><p>骑士看了一眼手机，又抬头看着招牌。</p><p>陈国明收到了一个线上订单，一瓶草莓牛奶，和一个棒棒糖。</p><p>骑士走入店里，拨开塑料门帘。</p><p>感应铃声响了一次。</p><p>把那两样物品放入袋子后，陈国明便递给骑士。</p><p>“嘀嘀。”</p><p>电瓶开了，骑士走了。</p><p>轮胎旋转，溅起了碎石。</p><p>感应器感应到了什么。</p><p>响了一下。</p><p>没有人。</p><p>只是微风。</p><p>01：37</p><p>感应铃声响了。</p><p>门帘被撩起时，那一排的塑料门帘依偎在她的肩头。</p><p>招牌的光被折射，被揉碎成一块一块的光，照在她散乱的头发上。</p><p>鞋垫上，沾上褐色的泥泞。</p><p>那双白色的运动鞋，有些许残破。</p><p>鞋跟已经塌下来了，鞋尖裂出一条口。</p><p>走一步，就会有开合的拍击声。</p><p>左脚鞋带松了，拖在地上，被磨损得结了球，独立的丝线被聚成了一个打不开的死结。</p><p>地面传来闷响。</p><p>她右肩斜挂着书包，坠得很低。</p><p>袖口边也发黄了，杂乱的毛刺条条分明。</p><p>01：39</p><p>她走至冷藏柜前，从柜底，扫视至柜顶。</p><p>一个扫完后，便往旁边挪一小步。</p><p>重复。</p><p>01：47
+她最后拿了一瓶矿泉水，500毫升的。</p><p>陈国明看到她在250毫升的那一排停了好久，只是最后才选择了别的。</p><p>01：48
+收银台前，扫码，报价。</p><p>2元7毛。</p><p>她摸索着裤脚的口袋，从左裤带拿出了一元整。</p><p>放下书包，在书本夹页之间，摸出了几枚硬币。</p><p>5毛。</p><p>她又从外套的兜子里，拿出了一元。</p><p>最后在另一本书，找到了2毛。</p><p>她找到什么，就放在收银台上。</p><p>刚刚好。</p><p>收了钱后，她便走了。</p><p>匆匆忙忙地。</p><p>只带走那一瓶500毫升的矿泉水。</p><p>01：56
+门帘被掀开，合上。</p><p>发出声响。</p><p>陈国明低头，看见柜台上，零散的硬币旁，有一个白色信封。</p><p>他看着那封信封，停了四秒钟。</p><p>然后他走到门口。</p><p>向左。</p><p>向右看。</p><p>街道上只有他。</p><p>之前的脚印也全都消失了。</p><p>02：00
+陈国明回到柜台后，坐下，拿出一份报纸。</p><p>读了几面，把那封信封夹在中间，放在收银机旁边。</p><p>他从褐色的旧书包，摸索出一包咖啡粉。又给自己泡了一杯咖啡。</p><p>柜台上，保温杯压着报纸边缘，冷气的风吹过时，没有掀起那个报纸。</p><p>02：06
+便利店里只有陈国明。</p><p>他看着报纸凸起的部分，回想刚才的时刻。</p><p>他看见她数零钱的方式，一枚一枚，反复数过。</p><p>02：20
+一个男人进来，买了一只香烟，付钱。没有看到那封信封。</p><p>走至门外，点起火。</p><p>便利店里，只剩咖啡和余烟盘旋。</p><p>烟绕过了塑料门帘，感应灯没有闪。</p><p>02：27
+他喝了一口咖啡。</p><p>很苦。</p><p>04：30
+瓶子里的咖啡已经喝完了，瓶底的粉末结块了。</p><p>墙上的时针又走了两步。</p><p>便利店没有新脚步。</p><p>04：31
+陈国明把报纸拿起来，抽出里面的信封。</p><p>然后把报纸折好，放回收银机旁。</p><p>关上保温杯后，看了一眼时钟。</p><p>05：50
+天快亮了。</p><p>招牌的白光，与天的深紫色参在一起。</p><p>路灯还在亮着，但已经显得多余。</p><p>陈国明听见冷藏柜的轰鸣声，如此清晰。</p><p>05：51
+阿辉的短信来了。</p><p>“给我留个茶叶蛋。”</p><p>电热锅的透明盖子，长满水汽。</p><p>掀开时，倾斜的锅盖把水汽汇聚，成为一颗大水珠。</p><p>滑落，滴在油膜上。</p><p>陈国明随手拿了一个塑料袋，漏勺在锅底回旋。</p><p>在袋子装入一个深褐色的茶叶蛋，纹路还算完美。</p><p>勒紧一个死结，放在一旁。</p><p>05：54
+陈国明又把信封拿起来，放在裤子的左口袋里。</p><p>露出一个角。</p><p>信封有一点软了。</p><p>陈国明坐回柜台后，左手搭在柜台上。</p><p>那道旧疤是朝上的。</p><p>06：00
+感应灯又响起了。</p><p>阿辉进来，啰嗦很多。</p><p>陈国明没兴趣听，只应了一声。</p><p>拿起柜台上的背包。</p><p>轮班。</p><p>06：04
+感应灯响起了，在陈国明背面。</p><p>早晨的空气是冷的，带着凌晨的湿气。</p><p>路灯暗下了。</p><p>陈国明走出巷子，来到马路边。</p><p>早晨的马路，车子有些许多。</p><p>或是徐徐地过，或是快速地过。</p><p>陈国明停在行人过街按钮前，手靠在标志上，黄色的灯闪了几下。</p><p>灯绿了。</p><p>他向前走，眼里仔细观察着马路。</p><p>对街也有人走来，不断错过肩膀。</p><p>然后他看见她了。</p><p>一样的书包，一样的鞋子。</p><p>她从马路对面走过来。</p><p>她徐徐地走来。</p><p>眼睛盯着路。</p><p>他快速地走去。</p><p>眼睛盯着她。</p><p>陈国明的手伸进裤子的右口袋，摸索，找寻着。</p><p>她没有抬头。</p><p>他没有停留。</p><p>他们又走向了对角的街口。</p><p>灯红了。</p><p>陈国明看着她，走向便利店的巷口。</p><p>06：06
+陈国明的手停在口袋，一股细密的冷意顺着指甲缝钻进皮肉。</p><p>06：10
+口袋里什么也没有。</p><p>只是马路上多了一封信封。</p><p>被碾过了。</p></div>
+  </article>
+</main>
+<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
+  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
+  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+</div>
+<script>
+(function(){
+  const html=document.documentElement;
+  const rail=document.getElementById('progress-rail');
+  const bar=document.getElementById('progress-bar');
+  const header=document.getElementById('header');
+  const toolbar=document.getElementById('toolbar');
+  const btnTheme=document.getElementById('btn-theme');
+  const btnFont=document.getElementById('btn-font');
+  const btnSizeMinus=document.getElementById('btn-size-minus');
+  const btnSizePlus=document.getElementById('btn-size-plus');
+  const STORAGE_KEY='reader_prefs';
+  const THEMES=['light','sepia','dark'];
+  const FONTS=['serif','kai','fangsong','sans'];
+  const SIZES=['sm','md','lg'];
+  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
+  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  let prefs=loadPrefs();
+  let lastScrollY=window.scrollY;
+  let hideHeaderTimer=null;
+  let hideToolbarTimer=null;
+
+  function loadPrefs(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  }
+  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+  function applyPrefs(p){
+    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
+    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
+    if(p.size){html.dataset.size=p.size;}
+  }
+  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
+  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
+  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+
+  applyPrefs(prefs);
+
+  function updateProgress(){
+    const scrollTop=window.scrollY;
+    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=docHeight>0?scrollTop/docHeight:0;
+    bar.style.width=(pct*100)+'%';
+  }
+  function onScroll(){
+    updateProgress();
+    const y=window.scrollY;
+    const scrollingDown=y>lastScrollY;
+    if(scrollingDown&&y>80){
+      header.classList.add('hidden');
+      toolbar.classList.add('hidden');
+    }else{
+      header.classList.remove('hidden');
+      toolbar.classList.remove('hidden');
+    }
+    lastScrollY=y;
+    clearTimeout(hideHeaderTimer);
+    clearTimeout(hideToolbarTimer);
+    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
+    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  btnTheme.addEventListener('click',()=>{
+    prefs.theme=cycle(THEMES,prefs.theme||'light');
+    updateThemeIcon(prefs.theme);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnFont.addEventListener('click',()=>{
+    prefs.font=cycle(FONTS,prefs.font||'serif');
+    updateFontLabel(prefs.font);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizeMinus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.max(0,i-1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizePlus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T'){btnTheme.click();}
+    else if(e.key==='f'||e.key==='F'){btnFont.click();}
+    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
+    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
+    else if(e.key==='ArrowLeft'){history.back();}
+  });
+
+  window.addEventListener('storage',e=>{
+    if(e.key===STORAGE_KEY){
+      prefs=JSON.parse(e.newValue||'{}');
+      applyPrefs(prefs);
+    }
+  });
+})();
+</script>
+</body>
+</html>

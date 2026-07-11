@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《半身》</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root,[data-theme="light"]{
+  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
+  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
+  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
+  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
+  --btn-text:#2b2723;--progress:#8b5e3c;
+}
+[data-theme="sepia"]{
+  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
+  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
+  --btn-text:#3a2c18;--progress:#8a3a1a;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
+  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
+  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
+  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
+  --btn-text:#e6dcc8;--progress:#d4a86a;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+
+[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
+[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
+[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .3s ease,color .3s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+#progress-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
+  pointer-events:none;
+}
+#progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
+  transition:width .1s linear,background .3s ease;transform-origin:left center;
+}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
+  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
+}
+header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+.back-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .15s ease;
+  flex-shrink:0;
+}
+.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
+.back-btn:active{transform:scale(.95);}
+header h1{
+  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;margin-right:40px;
+}
+header .spacer{width:40px;flex-shrink:0;}
+main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
+article{background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
+article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
+article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
+article .content{margin-top:2rem;}
+article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
+article .content p:first-child{text-indent:0;}
+article .content p:last-child{margin-bottom:0;}
+
+@media (max-width:640px){
+  main{padding:4rem .75rem 5.5rem;}
+  article{padding:1.5rem 1rem;border-radius:8px;}
+  article header h1{font-size:1.35rem;}
+  article .content p{text-indent:1.8em;}
+}
+
+.toolbar{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
+  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
+  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
+}
+.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
+.toolbar-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+}
+.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
+.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
+  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;z-index:10;
+}
+.toolbar-btn:hover .tooltip{opacity:1;}
+.toolbar-btn{position:relative;}
+
+@media (max-width:480px){
+  .toolbar{padding:.35rem .5rem;gap:.25rem;}
+  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+}
+
+.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.library-header p{color:var(--meta);font-size:.95rem;}
+.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.work-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+}
+.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
+.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
+.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
+.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
+.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
+.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
+
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="progress-rail"><div id="progress-bar"></div></div>
+<header id="header">
+  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
+  <h1>《半身》</h1>
+  <div class="spacer"></div>
+</header>
+<main>
+  <article>
+    <header>
+      <h1>《半身》</h1>
+      <div class="meta">
+        <span>散文</span>
+        <span>散文</span>
+        <span>1570 字</span>
+        <span>2026-04-11</span>
+      </div>
+    </header>
+    <div class="content"><p>我今天去看他了。</p><p>房间的格子，又多了。上一次也许我只是简略地算过，这房间有几张相片。得出来的，约只是一百二十四。</p><p>但这次，我数过了。格子的数量足够容纳三百五十二个坛。</p><p>有些格子，末端写了名字。有些是空的，等待有人将它占走。还有一些写着“长生灵位”。</p><p>格子的相片，他还是一样的脸。些许不同的是，他左侧数去几格，本写着“长生灵位”的，又被换上名字了，还粘上相片。</p><p>房间里，佛像正对着冷气和玻璃大门。那玻璃门，需要些许力气才能打开。而至于那冷气，好似只有我们来时才会被打开。冷气的遥控器，被藏在佛像的后面。平日没人的时候，只有那反复念着佛号的播音器，在房间中回荡。</p><p>我坐在他相片前，四个柜子的距离。只要有人，尝试打开玻璃门时，就能看到我侧身而不动的身躯。</p><p>我在盯着他的相片。</p><p>他没有笑，也没有变。</p><p>我就这么看着，看着。</p><p>眼睛随即干涸了，眨了眨眼后，不自觉地移上。</p><p>我这才发现，他顶上的格子，是属于一位比他还要年长的长辈。</p><p>不一样的是，他格子右下，作为装饰的循环金色花状，却不见了。</p><p>上面还有胶水残留的印记。</p><p>如果拉开一些距离，会看到不断循环的图案，在某个地方突然少了一个角。</p><p>我巡视一圈，在地上找不到那个缺失的形状。</p><p>而视线下坠时，又发现格子与格子之间的木制空间，长出了黑褐色的霉菌。</p><p>上一次来时，还没到这么明显的地步。</p><p>然后身体左侧，传来玻璃门滑槽的吱呀声。在两秒后，门被打开了。</p><p>我随即站起来，找了一个面向玻璃门的位置，坐下。</p><p>进来的是一家子，带着食物来。他们坐在佛像的左侧，面对着格子。然后有把塑料盒装的食物，一个一个拿出来，摆在地上。</p><p>我听到他们说：“这个拜过了，这个还没拜过。”</p><p>也许他们说的是食物，不是人。</p><p>塑料盖被打开了，一个房间同时触发了耳鼻和皮肤的开关。</p><p>我又听到钱币被抛掷在地上的声音，转过头看着他们时，才发现他们在对着食物和先人抛硬币。我不知道这是为了什么。先人怎会再次迷恋金钱，和那已经冷却的食物呢？</p><p>房间里的味道有些臭酸了，参杂着不断循环的佛号。我起身，打开门，向外走去。</p><p>关上玻璃门时，佛号的声音逐渐小下来了，但是随即又从右侧传来。我转过身，好奇地走过。他的房间旁，是两个法师的专属灵位。有两个照片，灯是开着的。法师的相片比任何人的还要大几倍。</p><p>再走过一个房间时，我的脚步停了下来。看着没关上门的房间，灯是暗下的，犹豫了一下，然后走了进去。这个房间没有灯，没有冷气；只是有同样的佛尊，和一直循环的佛号。</p><p>我站在房间的最中央，所有格子的相片都在面朝着我。我向左前方移了一步，来到一个相片偏大的格子前。他是一个人的父亲，是一个人的儿子，是一个人的挚爱，是一个人的牧师。</p><p>他是笑着的，看着我。</p><p>佛号还在回响着，我看着他，停了两秒。</p><p>不知怎么，我竟感到胸口一阵沉闷，好似被扭上几个活结。</p><p>这感觉，一直持续到我的影子从黑暗中离开。</p><p>我离开了这一个房间，然后又进入隔壁的另一个房间。</p><p>一样的位置，一样的佛号，和一样的感觉。</p><p>走出那个房间，来到大厅。</p><p>大厅有灯，有三宝尊像，有一幅很美的画。</p><p>和那个暗房间比起来，这里显得更和谐。</p><p>再接着走，就可以看到一排又一排的骨灰柜。</p><p>柜子上的格子，沾满了相片，写满了字。</p><p>我的脚步慢了下来，转头，看着肩膀划过的名字。他们在我脑海里亮起，又随即离开。我没有刻意去抓住，留下他们。</p><p>他们不属于任何人，包括我。</p><p>安静的大厅随后传来脚步声，是他们，他们到了。</p><p>我走到玻璃门前，看着盘腿而坐的他们。</p><p>我们约有一年未聚了，而每一年，只有在这几天会聚到一起。</p><p>我坐在玻璃门后，面向他的相片，手怀抱着腿。</p><p>他们是他生命最后两年的朋友，也是时常来看他的人们。</p><p>我们就这样坐着，围着他的格子前，说了好多话。在他的面前，我们很少提到他的名字。</p><p>黑斑相比一个小时前，好似长得更繁杂了。相片是静止的，它无法推开霉菌。</p><p>我们说完了话，围得更靠近，拍了一张照。</p><p>临走之前，我的脑中突然有一个念头，就是打开隔板，再次看着已经骨烬的他。</p><p>我伸出手，指尖却只是感受到玻璃板的冷。</p><p>我叹了一小口气，小心缓慢地关上那层隔板。</p><p>我们走了。</p><p>但他还在那儿。</p><p>隔板被关上了。走远，玻璃门快被关上时，我忽地意识到一个事情。</p><p>但这个念头在我脑海中闪过一瞬，便又走了。</p><p>直到回程的路上，我才想起。</p><p>这么多相片，几乎所有都是取半腰之上的。</p><p>所有照片都是半身的。</p><p>没有腿，没有手。</p><p>只是肩膀，和不笑的脸。</p><p>他们的下半身去哪里了？</p><p>我们常说，期望逝者可以来我们梦里。</p><p>可没脚的人们，又怎么寻得你的路呢？</p><p>留在世上的，</p><p>只有半个人。</p></div>
+  </article>
+</main>
+<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
+  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
+  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+</div>
+<script>
+(function(){
+  const html=document.documentElement;
+  const rail=document.getElementById('progress-rail');
+  const bar=document.getElementById('progress-bar');
+  const header=document.getElementById('header');
+  const toolbar=document.getElementById('toolbar');
+  const btnTheme=document.getElementById('btn-theme');
+  const btnFont=document.getElementById('btn-font');
+  const btnSizeMinus=document.getElementById('btn-size-minus');
+  const btnSizePlus=document.getElementById('btn-size-plus');
+  const STORAGE_KEY='reader_prefs';
+  const THEMES=['light','sepia','dark'];
+  const FONTS=['serif','kai','fangsong','sans'];
+  const SIZES=['sm','md','lg'];
+  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
+  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  let prefs=loadPrefs();
+  let lastScrollY=window.scrollY;
+  let hideHeaderTimer=null;
+  let hideToolbarTimer=null;
+
+  function loadPrefs(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  }
+  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+  function applyPrefs(p){
+    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
+    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
+    if(p.size){html.dataset.size=p.size;}
+  }
+  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
+  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
+  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+
+  applyPrefs(prefs);
+
+  function updateProgress(){
+    const scrollTop=window.scrollY;
+    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=docHeight>0?scrollTop/docHeight:0;
+    bar.style.width=(pct*100)+'%';
+  }
+  function onScroll(){
+    updateProgress();
+    const y=window.scrollY;
+    const scrollingDown=y>lastScrollY;
+    if(scrollingDown&&y>80){
+      header.classList.add('hidden');
+      toolbar.classList.add('hidden');
+    }else{
+      header.classList.remove('hidden');
+      toolbar.classList.remove('hidden');
+    }
+    lastScrollY=y;
+    clearTimeout(hideHeaderTimer);
+    clearTimeout(hideToolbarTimer);
+    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
+    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  btnTheme.addEventListener('click',()=>{
+    prefs.theme=cycle(THEMES,prefs.theme||'light');
+    updateThemeIcon(prefs.theme);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnFont.addEventListener('click',()=>{
+    prefs.font=cycle(FONTS,prefs.font||'serif');
+    updateFontLabel(prefs.font);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizeMinus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.max(0,i-1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizePlus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T'){btnTheme.click();}
+    else if(e.key==='f'||e.key==='F'){btnFont.click();}
+    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
+    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
+    else if(e.key==='ArrowLeft'){history.back();}
+  });
+
+  window.addEventListener('storage',e=>{
+    if(e.key===STORAGE_KEY){
+      prefs=JSON.parse(e.newValue||'{}');
+      applyPrefs(prefs);
+    }
+  });
+})();
+</script>
+</body>
+</html>

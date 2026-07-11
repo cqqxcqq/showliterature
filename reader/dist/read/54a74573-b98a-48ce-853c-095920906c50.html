@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《不相交的平行线》</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+:root,[data-theme="light"]{
+  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
+  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
+  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
+  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
+  --btn-text:#2b2723;--progress:#8b5e3c;
+}
+[data-theme="sepia"]{
+  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
+  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
+  --btn-text:#3a2c18;--progress:#8a3a1a;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
+  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
+  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
+  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
+  --btn-text:#e6dcc8;--progress:#d4a86a;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+
+[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
+[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
+[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+
+*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .3s ease,color .3s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+
+#progress-rail{
+  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
+  pointer-events:none;
+}
+#progress-bar{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
+  transition:width .1s linear,background .3s ease;transform-origin:left center;
+}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
+  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
+}
+header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
+.back-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,transform .15s ease;
+  flex-shrink:0;
+}
+.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
+.back-btn:active{transform:scale(.95);}
+header h1{
+  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:center;margin-right:40px;
+}
+header .spacer{width:40px;flex-shrink:0;}
+main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
+article{background:var(--paper);border:1px solid var(--border);
+  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
+article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
+article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
+article .content{margin-top:2rem;}
+article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
+article .content p:first-child{text-indent:0;}
+article .content p:last-child{margin-bottom:0;}
+
+@media (max-width:640px){
+  main{padding:4rem .75rem 5.5rem;}
+  article{padding:1.5rem 1rem;border-radius:8px;}
+  article header h1{font-size:1.35rem;}
+  article .content p{text-indent:1.8em;}
+}
+
+.toolbar{
+  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
+  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
+  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 4px 20px var(--shadow);
+  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
+}
+.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
+.toolbar-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--btn-bg);border:1px solid var(--toolbar-border);
+  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+}
+.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
+.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
+.tooltip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
+  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s ease;z-index:10;
+}
+.toolbar-btn:hover .tooltip{opacity:1;}
+.toolbar-btn{position:relative;}
+
+@media (max-width:480px){
+  .toolbar{padding:.35rem .5rem;gap:.25rem;}
+  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+}
+
+.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.library-header p{color:var(--meta);font-size:.95rem;}
+.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
+.work-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
+  display:flex;flex-direction:column;text-decoration:none;color:inherit;
+}
+.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
+.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
+.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
+.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
+.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
+.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
+.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
+
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<div id="progress-rail"><div id="progress-bar"></div></div>
+<header id="header">
+  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
+  <h1>《不相交的平行线》</h1>
+  <div class="spacer"></div>
+</header>
+<main>
+  <article>
+    <header>
+      <h1>《不相交的平行线》</h1>
+      <div class="meta">
+        <span>短篇</span>
+        <span>短篇</span>
+        <span>5479 字</span>
+        <span>2026 年 3 月  8 日</span>
+      </div>
+    </header>
+    <div class="content"><p>被子的温度刚刚好，足够容纳我蜷缩着的身躯，以及刺痛着眼角的手机。我手指不断往下划，一直划到对话框的最上端，然后不断刷新着，这个我已看过千万次的对话。</p><p>最后一条讯息，是在昨天凌晨三点五十分。我鼓起勇气，发送很长的讯息，里面写了什么，都不重要；重要的是，他还没回复我。</p><p>他的头像忽然亮起灯来，他在线了，我颤抖的手指在屏幕上打出："你在吗？能打个电话吗？"。我并不确定他是否阅读了我的那个讯息，但我只知道，他说他累了，要睡了。</p><p>我打开他的朋友圈，最上端的一则，是他在康城的一座桥下，拍的一张照片，配文写到“离开一个熟悉的地方，才能活出真正的自己”</p><p>我当时没有在意他写了什么，只是在夜色下反复注意着照片里的每一处细节。现在再看回，也许他说离开，指的就是离开我。</p><p>有一刻我想删除对话框，把这段回忆放开，可手指悬挂在删除键时，我突然停下了。如果我真的删除了他，我就会失去他。</p><p>所以我决定，保留。甚至决定，继续等待。</p><p>我在朋友圈内，发了一则只我可见的贴文，放进一个名为“等待”的列表，我要记录他每一个没有回复我的日子。</p><p>这是我等待他的第一天。</p><p>窗外的风不断涌进来，在被褥里只漏出天灵盖的我，头发被吹得凌乱，我没有整理。</p><p>眼皮在剧烈的光线后，本能地闭了起来，手里紧握着的手机，也渐渐地松了开。然后我听到自己打鼾的声音，颤抖了身体，连忙醒了过来，打开暗淡的屏幕，对话框里多了我的一条："好，明天见哦"。但他，仍然没有回复。</p><p>三周前，他从我的世界消失了。没有死亡，没有爆发的争执。只是一个平凡的日子后，我和他挥手告别，回复晚安。然后就没有明天了。</p><p>他改了手机号，他搬离了这座城市，就连他在这里认识最亲密的朋友也联系不上他。</p><p>椅子的尺寸刚刚好，容得下身旁三个好闺蜜，还有我背脊出汗的衣服。小丽凑近我，说：“别等了。他不会回的。”另一个声音插进来：“直接删了吧。”“对，删了。反正——”。</p><p>我没有听完她们说什么。</p><p>我出汗的指尖，汗水在被我触碰衣角擦干后，在屏幕快速地闪过。向左滑动对话框，选择删除。</p><p>“你是否确定删除，此操作不可返回。”</p><p>“是”。</p><p>我没有停下，在相册找到名为“他♡”后，看着分类下的“2397张照片”，指尖在删除的按钮上停了三秒，然后按下了。找到垃圾桶，清空。</p><p>那是一种复杂的感觉，就像卡在牙缝里的青菜，突然滑动至食道般，一开始是轻松的快感，可随即陷入难言的不舍与懊悔之中。</p><p>我转头，对着已经暗淡的三盏桌灯，轻声地吹哨道：“我可以做到，我可以忘记他”。</p><p>联系人置顶列表变得空荡荡，我搜索为他取的一个备注，返回的是“无法找到此联系人”。就像他不曾存在过，或，那应该是我不曾容纳过的他。</p><p>--------------------------------------------------------------------------------------------------------</p><p>微信置顶的对话框，他的头像依旧暗淡。上一次在线时间显示“三天前”，现在是“十四天前”。我在心里一天一天数着。</p><p>已经十五天了。</p><p>早晨六点，我的闹钟响起。疲倦的我已经厌倦了这恼人的闹钟声，手臂沉重地拖着指尖戳在“关闭闹钟”那一栏。然后抱着烦怨睡去。</p><p>六点十二分，闹钟声再次响起，当我听到这个声音时，再疲倦的身躯，都在这个声音下醒过。这是我自己设置的。他十六天前，留下的最后一则，提醒我起床的语音，那是我偷偷在通话时，保存下来的。</p><p>每一次被他的声音叫醒，我又会返回置顶的对话框，不断刷新着对话，看着我们过往的讯息，总是幻想加载完成后，他会在线，会连忙回复我给他的讯息。</p><p>“也许他已经回复了呢？”</p><p>没有。</p><p>中午三点的课时，我把手机放在裤兜，教授在上课，我却在等待，等什么呢？</p><p>一个可能性，一个概率极小，极其不合理，却有一丝可能的可能性。</p><p>也许他会在下课，还是在上课时，回复我的讯息。</p><p>时针来到了下课的时间，我拿起手机。</p><p>没有。</p><p>晚上十一点，被子是冷的。拿起手机，打开微信，点进置顶的对话框。</p><p>这些动作已经是反射性的习惯了，甚至不需要任何大脑的讯号。</p><p>手指自动下滑，找到一样的最后的讯息。“先睡了，明天再聊”。</p><p>我读了一遍。</p><p>再读了一遍。</p><p>找不出他隐藏在字符里的讯息，那个可以解释他为什么离我而去的原因。</p><p>有个白色的身影在屏幕前浮现，他看着我的眼眶，说：“他这么做一定有他的苦衷”。</p><p>然后那白色的身影被染黑，更沉重的声音反驳道：“你怎么这么傻，他不会回来了”。</p><p>这两个身影的战役，比十四天前，刚刚萌生的更加激烈了。</p><p>我看着窗外的月亮，在心里编造着，逃避的借口。</p><p>“也许他的手机坏了，换了新的手机，新的电话卡，现在只是忘了我微信的名字。”</p><p>“也许他就站在一个我平常走过的路上，在晴天下撑着伞，等待着我注意到他。”</p><p>备忘录，我划了四次，才划到尾端，第一天，第四天......然后第十四天。</p><p>我开了新的一页，记下了第十五天。</p><p>十五天末端，最后一句写到：“十五天了，我还在这里，你还在吗？”</p><p>手机里所有有他的置顶都消失了，他消失的这阵子，有种莫名的轻松。</p><p>早晨的阳光不再似之前一般，成为绿芽成长的枷锁。早晨的阳光是温暖的，设定的闹钟，日复一日变得越发清脆。</p><p>醒来的第一件事，收拾杂乱的被褥，打开封闭的窗口，让头发染上黄金色。不再打开手机，期待虚空那个人的回复。</p><p>我亲手打破了十六日前，我每日都会遵守的习惯。</p><p>早上悠闲的时间似乎有一丝空洞。</p><p>我不再挂念他，可风吹过时，想起他曾经为我披上带有他的气味的外套，那时的情景。我转头，感受到他的身形。</p><p>我开始忘记了他的样子，他的那颗痣长在哪儿了。</p><p>我开始忘记了他的声音，他安慰我时，泪水因他的频率而停住，他的那些话语，那些声波的形状，长什么样了。</p><p>我开始忘记了，努力回想时，记忆却在腐烂。</p><p>讲堂里，教授提起了记忆遗忘的心理学。我无意听到这个词时，身体颤抖一下。</p><p>我似乎刻意去遗忘他，导致我丢失了他。这在心理学叫做动机性遗忘，爱具有动机性，遗忘也是。</p><p>“动机性遗忘是大脑为了保护心里平衡，而进行的主动性遗忘。”</p><p>我不是在遗忘他，我是在拼命地把他从我记忆里杀死。</p><p>下课后，我走过我和他尝光顾的咖啡店。落座时，没有抬头点单。五分钟后，老板拿着两杯饮料来到我面前。</p><p>“你已经十六天没来了。欸，对了，话说今天怎么没看到他啊？”</p><p>那一刻，他的脸突然清晰地浮现在我脑子里。我甚至可以听到他说的话：“拿铁喝腻了，下次来喝抹茶吧。”</p><p>我摇了摇头，把这段回忆甩开。</p><p>“当作他死了吧”</p><p>我看着老板，眼里的荒芜对着老板说到。</p><p>老板的眼睛闪过惊讶，然后沉没，被一个难以描述的眼神替换。叹气一声后，把属于我的那杯放在我面前，然后走了。</p><p>“等等，把他的那杯给我。”</p><p>桌子上，摆着我和他的最爱口味。我一边划动着手机，一边饮着属于我的那杯。等杯子的浮沫沉下后，带着他的那杯离去。</p><p>路上，我尝了一口。然后转身把它丢进垃圾桶里。</p><p>好甜。</p><p>回到宿舍的床上，想起刚才的甜味。明明之前我如此沉溺在这种甜蜜，可为何他不在了，又如此厌恶甜蜜呢？</p><p>我打开了之前删除的云备份。</p><p>我想看一眼之前的他，我们。</p><p>“只是看一眼。这不会打破规则。”我对自己说到。</p><p>我翻到了那张在咖啡馆拍的照片，他坐在我刚刚坐着的位置，我坐在他的腿上。</p><p>我们看起来很幸福。</p><p>我突然意识到，我的遗忘做的越彻底，对他的思念就越深。</p><p>每一次刻意的删除，逃避，都是在承认他对我的重要性。</p><p>一个无关紧要的人，你怎么会花费心思遗忘他呢？</p><p>这是他死了的第十五天
+（这是他活在我备忘录的第十五天）</p><p>我的心里装着他不完整的样子
+（我的闹钟装着他不真实的声音）</p><p>遗忘
+（等待）</p><p>我拒绝等待，因为这样我才不用面对他已离开的事实
+（我拒绝遗忘，因为这样他才不会完全地死去）</p><p>但无论选择什么，痛苦都在那里。</p><p>备忘录已经写到了第三十页，我已经习惯了，习惯每一天想挂念他。</p><p>我的手机似乎越来越耗电了，不知道是不是我每一天检查六十次讯息的原因。</p><p>一开始的期待与不安已经消逝了，转为一个麻木的执着。</p><p>我不再为他编织幻想，美梦。</p><p>取而代之的，那些备忘是我写给他的，要被焚烧的，我正在为他的存在而守灵。</p><p>对话框那条我看过一千五百次的“先睡了，明天再聊”，已经成为了心里的一个锚点，被钉在那里，我无法逃离。只能围绕着他，不断在深渊里转圈，没有意义，无法放下。</p><p>他的身影在那家咖啡店已经有三十一天不在了，我还是每日前往咖啡店，坐在每次我们坐在的位置，的左边。眼角稍起，依然能看到十五日前我坐在那里的身影。大脑重构，依然能瞧见他模糊面庞和身躯。</p><p>我的手机已经没有了他的哪怕一丝痕迹。</p><p>这种清洁，带来不了自由，只有额外的痛苦。</p><p>每当我放下手机，环绕咖啡厅里别人身旁的人，与对方抛媚眼，闲聊时，我就会感到一种奇怪的嫉妒。为什么他们可以有，我呢？</p><p>已经选择放弃了拥有的权力。</p><p>我一边等待，一边怀疑，也许他永远不会回来。</p><p>我一边尝试遗忘，一边却又怀疑，也许我永远都忘不了。</p><p>无论选择什么，我，都改变不了什么。</p><p>痛苦，不会因为遗忘而消失。</p><p>痛苦，也不会因为等待而减轻。</p><p>存在，就是痛苦。
+--------------------------------------------------------------------------------------------------------
+望着正点二十分，还在埋头翻看对话框的我，同宿舍的舍友忍不住了。</p><p>她说：“妳已经两个月没好好吃饭了，成天拿着手机翻看，别做梦了，他不会回复了，更不会回来了。”</p><p>是啊，原来已经两个月了。</p><p>我低下头，凌乱的头发阻挡着四周的漆黑，把我和手机罩起来，我的眼睛，一打开，只看见对话框里的他。偶尔屏幕暗淡时，还能看到一个头发散乱，眼睛无神的人。</p><p>我不确定那是不是自己。</p><p>我没有反驳我的室友，她是对的。</p><p>我无法控制，无法阻止。</p><p>我累了，睡到早晨六点。</p><p>醒来后，还是疲累，于是用仅剩的一丝力气，让室友帮我点名，我不知道周围有没有人，我只知道我又睡去了。</p><p>我在梦里度过了一整个下午，看着六十一天前我精神美丽的面庞。</p><p>在梦里，我依然能感受到胸口被手机压住，那是一种摆脱不了的负担。</p><p>我试图告诉自己：“放弃吧，醒来吧”。</p><p>只是每一次这样说，又害怕会再一次失去。</p><p>失去他是一个意外，我无法控制。</p><p>但我逐渐失去了我，放弃了他，这是我的一个选择，我自甘堕落。</p><p>他离去，我是受害者。</p><p>我失去，我是那凶手。</p><p>也许他不会回来了，而我也应该回来了。也许他在另一个城市，已经过上另一个人生。我就不必，在这个城市，过上另一个不属于我的人生。</p><p>也许他已经忘记了我，但我未曾忘了他。</p><p>我没在等他，我在供奉心里那尊虚幻的可能性。</p><p>我又跌入更深处的梦里了，不甘愿放弃的梦里。</p><p>如果我继续等待，我就会一直活在自己不想看见的虚幻之中。</p><p>但如果我放弃，就等同于浪费了之前三年有和没他的记忆。</p><p>放弃吧，只不过什么都没有。</p><p>继续吧，你还能保持拥有“等待”这一诅咒。</p><p>所以，我还是选择等待。</p><p>等待，我不相信他会回来。</p><p>只是因为“等待”是我唯一的寄托。</p><p>第六十一次光临没有他的咖啡馆，我异常地累，如常点了两杯饮料后，我在木制椅子上沉地睡去。</p><p>我梦到了他。</p><p>我们肩对肩，坐在这座咖啡馆，我每次坐的位置前方。</p><p>我看着梦里的“我”被他披上外套。</p><p>我还记得相册里有这么一张相片，那是咖啡馆老板在我们第一次光顾时拍的，他说这的瞬间很甜，于是拍下来送给我们。</p><p>他搂着我的肩膀。</p><p>“我”笑得很开心，那是我看过最甜美的笑容。如今的我，丢失了相片，丢失了过往的自己，丢失了这副笑容，</p><p>丢失了他。</p><p>我在梦里很开心，看着他模糊的面庞，我很开心。</p><p>直到我意识到，他是假的。</p><p>我试图张开我还未擦干的嘴，用带有他最爱的饮料味的口，告诉他，我并没有真的遗忘他。</p><p>但我张不开嘴。</p><p>我开始疯狂地尝试，甚至在声带喊叫，嘶哑，想要拼凑出那一句话来。</p><p>但我张不开嘴。</p><p>我在梦开始后三十二分钟后醒来，周围的灯光逐渐暗淡，模糊的光。</p><p>伸手想揉揉未睡醒的眼时，带下湿润的痕迹。</p><p>我看着桌上被清空的饮料，和一张相片。</p><p>上面是我，是我在笑着，梦里开不了的口，原来在现实中正说着。</p><p>笑得好甜，我喜欢。</p><p>谢谢老板。</p><p>天色暗了，咖啡厅早该打烊了。我快起脚步，走向门外，回去宿舍。</p><p>我没有看到老板。</p><p>回到宿舍，被子依然是冷的。只是或许相比之前，变得稍微温暖了。</p><p>我望着窗外被风吹过的树，轻微的风，并不会吹倒一颗大树。</p><p>遗忘是假的，我只能选择性去删除那些伤人的记忆。</p><p>但感受，无法被删除。</p><p>也许我应该承认，我放不下他。</p><p>凌晨三点，我无法睡下，我已经成为了一个僵尸。没有了血色，没有了生机的呼吸。心跳动，鼻子呼吸，只是为了让大脑重复执行那一套流水线的动作。</p><p>打开手机，找到置顶，刷新一百次。</p><p>然后夜来了，打开备忘录。</p><p>已经写满了第八十六页，虽然其中有几页是不断重复着相同的话语。</p><p>“我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？我还在这里，你还在吗？”</p><p>思念有了形状，那是低梦的呓语。</p><p>等待不再为了等待，只是维持着供奉的香火，怕心中那尊崇高的神像会瓦解，坠落。</p><p>我常常在没有他的梦里惊醒，我的梦渐渐少了，只有三次。</p><p>第一次，是在咖啡馆梦见他之后的夜晚，我不断在梦中追逐，追逐天上暗黑的太阳，那是被围起来，他的头像。</p><p>第二次，是他死了后第六十八天，我快要忘了他，可我又梦回咖啡馆里的情景。他的咖啡，和老板的相片。</p><p>第三次，是在昨晚，第八十七天，我的身旁被千万的提线木偶包围，每一个木偶，分享着他身体或精神的某一个部位。我在木偶群中巡视，全都不像。只有一个，拥有他的痣点的。我想要跑过去拥抱他，可我的双脚却动不了。</p><p>我放弃了假装遗忘，我永远也放下不了，遗忘不了他。我已经习惯了挂念。我已经习惯了，每一天欺骗着自己，然后又返回看着那一张老板送我的相片，想象那场梦里的我和他，还有现实里的我。
+--------------------------------------------------------------------------------------------------------
+我在康城的桥下遇到了他，不是梦里，是在现实。</p><p>目光撇到他的瞬间，瞳孔缩成一颗微小的球。</p><p>怎么会，他不是不会回来了吗？</p><p>我扫过头发，幻想着他看到我如此邋遢时的惊讶和下意识的厌恶。</p><p>他还未看到我。</p><p>我躲在一颗树后，只是探出头来。</p><p>这时，我才发现，他穿了一件深红色的外套，外套上，有一支白皙的手，顺着颈处一路往下，直到他的右手，一把握住。</p><p>顺着那支手，我瞧见了那女人的模样。</p><p>我的世界停止了。</p><p>阳光变为固体的光剑，风凝固在空气中。</p><p>我从未见过的一个女人，可又如此熟悉。</p><p>她的眉角挑起来时，睫毛弯曲的弧度，完美地与我一百日前，依靠在他身躯时的弧度，一模一样。</p><p>我想假装没看见，想要离开。</p><p>可他们聊了五十七句话，围绕着河畔散步了一圈半后，便走了，我一直盯着，直到那深红的外套在天际消失。</p><p>天空下起了细雨，我的脚步，沉重，故意施力，踏在积水的路坑中，褐色的水溅起，洒到裤脚。</p><p>好冷啊，之前的这些时候，我头上总是会有一把只容得下我的雨伞，撑着伞的人，只有披下来的短发盖着额头，然后在雨中笑着。</p><p>好冷啊，原来他不再为我撑伞了。</p><p>我在路边买了一只塑料伞，费劲心思打开，却连最基本的推开的忘了怎么做。然后我把这把伞丢在路边，一步一步和自己淋着雨回去宿舍。</p><p>回到宿舍的我，没洗漱，我已经习惯自己的邋遢了。可是，我面前显示出的我，不再漆黑模糊。</p><p>镜子里，我才发觉我可笑的样子，头发像被扯过的毛线球，眼神像是落入泥坑的八号台球。</p><p>你好丑啊。</p><p>他好幸福啊。</p><p>被子被染湿了，我蜷缩在这唯一能带给我温暖的栖息地里，又再一次重复那枯燥的流程。只不过在看了那个最后的讯息最后一眼后，向左滑动对话框，选择删除。</p><p>“你是否确定删除，此操作不可返回。”</p><p>“是”。</p><p>我没有停下，在相册找到名为“他♡”后，看着分类下的“2396张照片”，指尖在删除的按钮上停了两秒，然后按下了。找到垃圾桶，清空。</p><p>我睡下了，做了一个好梦，梦里，没有他。
+--------------------------------------------------------------------------------------------------------
+被子的温度刚刚好，足够容纳我舒展开的身躯。</p><p>我们都习惯了去逃避，在面对完成不了的困境时，总是想着如何避免，怎么逃脱。</p><p>爱情中，倘若你为一个人的离去而伤心，别尝试等待，别尝试遗忘。</p><p>等待的本质是遗忘，遗忘的本身就是痛苦。</p><p>既然等待和遗忘都很痛苦，那么，该怎么办？</p><p>别执着于等待他回来，也别执着于遗忘他的存在。</p><p>只是让他成为我生命里的碎渣，就像被子的温度一样，足够，也不过分。
+温暖，但不燃烧般炙热。</p><p>这样活着，也不错。</p></div>
+  </article>
+</main>
+<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
+  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
+  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+</div>
+<script>
+(function(){
+  const html=document.documentElement;
+  const rail=document.getElementById('progress-rail');
+  const bar=document.getElementById('progress-bar');
+  const header=document.getElementById('header');
+  const toolbar=document.getElementById('toolbar');
+  const btnTheme=document.getElementById('btn-theme');
+  const btnFont=document.getElementById('btn-font');
+  const btnSizeMinus=document.getElementById('btn-size-minus');
+  const btnSizePlus=document.getElementById('btn-size-plus');
+  const STORAGE_KEY='reader_prefs';
+  const THEMES=['light','sepia','dark'];
+  const FONTS=['serif','kai','fangsong','sans'];
+  const SIZES=['sm','md','lg'];
+  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
+  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  let prefs=loadPrefs();
+  let lastScrollY=window.scrollY;
+  let hideHeaderTimer=null;
+  let hideToolbarTimer=null;
+
+  function loadPrefs(){
+    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  }
+  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+  function applyPrefs(p){
+    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
+    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
+    if(p.size){html.dataset.size=p.size;}
+  }
+  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
+  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
+  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+
+  applyPrefs(prefs);
+
+  function updateProgress(){
+    const scrollTop=window.scrollY;
+    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
+    const pct=docHeight>0?scrollTop/docHeight:0;
+    bar.style.width=(pct*100)+'%';
+  }
+  function onScroll(){
+    updateProgress();
+    const y=window.scrollY;
+    const scrollingDown=y>lastScrollY;
+    if(scrollingDown&&y>80){
+      header.classList.add('hidden');
+      toolbar.classList.add('hidden');
+    }else{
+      header.classList.remove('hidden');
+      toolbar.classList.remove('hidden');
+    }
+    lastScrollY=y;
+    clearTimeout(hideHeaderTimer);
+    clearTimeout(hideToolbarTimer);
+    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
+    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  btnTheme.addEventListener('click',()=>{
+    prefs.theme=cycle(THEMES,prefs.theme||'light');
+    updateThemeIcon(prefs.theme);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnFont.addEventListener('click',()=>{
+    prefs.font=cycle(FONTS,prefs.font||'serif');
+    updateFontLabel(prefs.font);
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizeMinus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.max(0,i-1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+  btnSizePlus.addEventListener('click',()=>{
+    const i=SIZES.indexOf(prefs.size||'md');
+    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    savePrefs(prefs);
+    applyPrefs(prefs);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T'){btnTheme.click();}
+    else if(e.key==='f'||e.key==='F'){btnFont.click();}
+    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
+    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
+    else if(e.key==='ArrowLeft'){history.back();}
+  });
+
+  window.addEventListener('storage',e=>{
+    if(e.key===STORAGE_KEY){
+      prefs=JSON.parse(e.newValue||'{}');
+      applyPrefs(prefs);
+    }
+  });
+})();
+</script>
+</body>
+</html>
