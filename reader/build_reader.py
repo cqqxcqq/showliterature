@@ -108,14 +108,14 @@ READER_CSS = SHARED_CSS + """
   transition:color .2s ease;
 }
 .back-link:hover{color:var(--accent);}
-.reader{padding:5rem 1.5rem 7rem;max-width:680px;margin:0 auto;}
+.reader{padding:5rem 1.5rem 7rem;max-width:820px;margin:0 auto;}
 .reader-header{text-align:center;margin-bottom:3rem;}
 .reader-header h1{font-size:1.75rem;font-weight:600;color:var(--text);margin-bottom:.6rem;line-height:1.5;letter-spacing:.04em;}
 .reader-header .meta{font-size:.85rem;color:var(--meta);display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;}
 .reader-header .meta span{display:inline-flex;align-items:center;}
 .reader-header .meta .dot{margin:0 .15rem;opacity:.4;}
 .reader-body p{
-  margin-bottom:1.6em;text-indent:2em;line-height:inherit;color:var(--text);
+  margin-bottom:2em;text-indent:2em;line-height:inherit;color:var(--text);
 }
 .reader-body p:last-child{margin-bottom:0;}
 
@@ -335,7 +335,7 @@ def build_library(works):
 </a>''')
     works_html = '<div class="work-list">' + ''.join(items) + '</div>' if items else '<p style="text-align:center;color:var(--meta);padding:4rem 0;">暂无作品</p>'
     html = LIBRARY_HTML.format(
-        theme='light', font='serif', size='md',
+        theme='dark', font='serif', size='md',
         title='书架',
         count=len(works),
         total_chars=total_chars,
@@ -350,7 +350,7 @@ def build_library(works):
 def build_reader(work):
     paragraphs = ''.join(f'<p>{p}</p>' for p in split_paragraphs(work['content']))
     html = READER_HTML.format(
-        theme='light', font='serif', size='md',
+        theme='dark', font='serif', size='md',
         title=work['title'],
         type=work.get('type', ''),
         char_count=work.get('char_count', 0),
