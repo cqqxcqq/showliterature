@@ -5,6 +5,7 @@ Reads data/works.json, generates static HTML files to reader/dist/
 """
 
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -22,160 +23,143 @@ GOOGLE_FONTS = (
     "&display=swap"
 )
 
-# ─── CSS (inline) ───
-CSS = f"""@import url('{GOOGLE_FONTS}');
+# ─── Shared CSS ───
+SHARED_CSS = f"""@import url('{GOOGLE_FONTS}');
+
+*,*::before,*::after{{box-sizing:border-box;margin:0;padding:0;}}
+html{{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}}
 
 :root,[data-theme="light"]{{
-  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
-  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
-  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
-  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
-  --btn-text:#2b2723;--progress:#8b5e3c;
+  --bg:#f5f0e8;--text:#2b2520;--text-soft:#6b5e52;
+  --meta:#a09283;--accent:#9a6d4a;--accent-hover:#7a5235;
+  --toolbar-bg:rgba(245,240,232,.92);--toolbar-border:rgba(0,0,0,.06);
+  --btn-active-bg:#9a6d4a;--btn-active-text:#fff;
 }}
 [data-theme="sepia"]{{
-  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --bg:#e4d5b8;--text:#3a2c18;--text-soft:#6b5a42;
   --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
-  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
-  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
-  --btn-text:#3a2c18;--progress:#8a3a1a;
+  --toolbar-bg:rgba(228,213,184,.92);--toolbar-border:rgba(0,0,0,.08);
+  --btn-active-bg:#8a3a1a;--btn-active-text:#fff;
 }}
 [data-theme="dark"]{{
-  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
-  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
-  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
-  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
-  --btn-text:#e6dcc8;--progress:#d4a86a;
+  --bg:#14110d;--text:#d8ceb8;--text-soft:#9a8e7a;
+  --meta:#6b6050;--accent:#c9a06c;--accent-hover:#ddb87e;
+  --toolbar-bg:rgba(20,17,13,.92);--toolbar-border:rgba(255,255,255,.06);
+  --btn-active-bg:#c9a06c;--btn-active-text:#14110d;
 }}
 
-[data-font="serif"] body{{font-family:'Noto Serif SC','Songti SC','STSong',serif;}}
-[data-font="kai"] body{{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}}
-[data-font="fangsong"] body{{font-family:'FangSong','STFangsong',serif;}}
-[data-font="sans"] body{{font-family:'Noto Sans SC','PingFang SC',sans-serif;}}
+[data-font="serif"] body{{font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;}}
+[data-font="kai"] body{{font-family:'Kaiti SC','STKaiti','KaiTi','SimKai',serif;}}
+[data-font="fangsong"] body{{font-family:'FangSong','STFangsong','FangSong_GB2312',serif;}}
+[data-font="sans"] body{{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;}}
 
-[data-size="sm"] body{{font-size:.96rem;line-height:1.95;}}
-[data-size="md"] body{{font-size:1.1rem;line-height:2.05;}}
-[data-size="lg"] body{{font-size:1.28rem;line-height:2.2;}}
+[data-size="sm"] body{{font-size:1rem;line-height:2;letter-spacing:.02em;}}
+[data-size="md"] body{{font-size:1.125rem;line-height:2.15;letter-spacing:.02em;}}
+[data-size="lg"] body{{font-size:1.3rem;line-height:2.3;letter-spacing:.02em;}}
 
-*,::before,::after{{box-sizing:border-box;margin:0;padding:0;}}
-html{{scroll-behavior:smooth;}}
 body{{
   background:var(--bg);color:var(--text);
-  transition:background .3s ease,color .3s ease;
+  transition:background .35s ease,color .35s ease;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-}}
-
-#progress-rail{{
-  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
-  pointer-events:none;
-}}
-#progress-bar{{
-  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
-  transition:width .1s linear,background .3s ease;transform-origin:left center;
-}}
-
-header{{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
-  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
-}}
-header.hidden{{transform:translateY(-100%);opacity:0;pointer-events:none;}}
-.back-btn{{
-  display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--btn-bg);border:1px solid var(--toolbar-border);
-  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
-  transition:background .2s ease,border-color .2s ease,transform .15s ease;
-  flex-shrink:0;
-}}
-.back-btn:hover{{background:var(--btn-hover);transform:scale(1.05);}}
-.back-btn:active{{transform:scale(.95);}}
-header h1{{
-  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  text-align:center;margin-right:40px;
-}}
-header .spacer{{width:40px;flex-shrink:0;}}
-main{{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}}
-article{{background:var(--paper);border:1px solid var(--border);
-  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
-  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}}
-article header{{position:static;padding:0;border:none;background:none;backdrop-filter:none;}}
-article header h1{{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}}
-article header .meta{{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}}
-article .content{{margin-top:2rem;}}
-article .content p{{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}}
-article .content p:first-child{{text-indent:0;}}
-article .content p:last-child{{margin-bottom:0;}}
-
-@media (max-width:640px){{
-  main{{padding:4rem .75rem 5.5rem;}}
-  article{{padding:1.5rem 1rem;border-radius:8px;}}
-  article header h1{{font-size:1.35rem;}}
-  article .content p{{text-indent:1.8em;}}
-}}
-
-.toolbar{{
-  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
-  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
-  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
-  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  box-shadow:0 4px 20px var(--shadow);
-  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
-}}
-.toolbar.hidden{{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}}
-.toolbar-btn{{
-  display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--btn-bg);border:1px solid var(--toolbar-border);
-  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
-  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
-}}
-.toolbar-btn:hover{{background:var(--btn-hover);transform:scale(1.08);}}
-.toolbar-btn:active{{transform:scale(.95);}}
-.toolbar-btn.active{{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}}
-.toolbar-divider{{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}}
-.tooltip{{
-  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
-  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
-  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
-  transition:opacity .2s ease;z-index:10;
-}}
-.toolbar-btn:hover .tooltip{{opacity:1;}}
-.toolbar-btn{{position:relative;}}
-
-@media (max-width:480px){{
-  .toolbar{{padding:.35rem .5rem;gap:.25rem;}}
-  .toolbar-btn{{width:36px;height:36px;font-size:.75rem;}}
-}}
-
-.library{{padding:3rem 1rem;max-width:800px;margin:0 auto;}}
-.library-header{{text-align:center;margin-bottom:3rem;}}
-.library-header h1{{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}}
-.library-header p{{color:var(--meta);font-size:.95rem;}}
-.work-grid{{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}}
-.work-card{{
-  background:var(--paper);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
-  display:flex;flex-direction:column;text-decoration:none;color:inherit;
-}}
-.work-card:hover{{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}}
-.work-card .title{{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}}
-.work-card .meta-row{{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}}
-.work-card .meta-row span{{display:flex;align-items:center;gap:.3rem;}}
-.work-card .excerpt{{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}}
-.work-card .read-hint{{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}}
-.work-card:hover .read-hint{{opacity:1;transform:translateY(0);}}
-.empty-state{{text-align:center;padding:4rem 1rem;color:var(--meta);}}
-.empty-state svg{{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}}
-
-@media (prefers-reduced-motion:reduce){{
-  *,::before,::after{{transition-duration:.01ms!important;animation-duration:.01ms!important;}}
+  min-height:100vh;
 }}
 """
 
-# ─── Library Page Template ───
+# ─── Library CSS ───
+LIBRARY_CSS = SHARED_CSS + """
+.back-link{
+  position:fixed;top:0;left:0;z-index:10;
+  padding:1.25rem 1.5rem;
+  font-size:.9rem;color:var(--meta);text-decoration:none;
+  transition:color .2s ease;
+}
+.back-link:hover{color:var(--accent);}
+.library{padding:5rem 1.5rem 4rem;max-width:720px;margin:0 auto;}
+.library-header{text-align:center;margin-bottom:3rem;}
+.library-header h1{font-size:1.8rem;font-weight:600;color:var(--text);margin-bottom:.5rem;letter-spacing:.05em;}
+.library-header p{color:var(--meta);font-size:.9rem;}
+.work-list{display:flex;flex-direction:column;gap:.125rem;}
+.work-item{
+  display:block;padding:1.1rem 1.25rem;
+  text-decoration:none;color:inherit;
+  border-radius:8px;transition:background .2s ease;
+}
+.work-item:hover{background:rgba(0,0,0,.03);}
+[data-theme="dark"] .work-item:hover{background:rgba(255,255,255,.04);}
+.work-item .wi-title{font-size:1.05rem;font-weight:500;color:var(--text);margin-bottom:.35rem;line-height:1.5;}
+.work-item .wi-meta{font-size:.8rem;color:var(--meta);display:flex;gap:.75rem;flex-wrap:wrap;}
+.work-item .wi-excerpt{font-size:.85rem;color:var(--text-soft);margin-top:.4rem;line-height:1.7;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+@media (max-width:640px){
+  .library{padding:4rem 1rem 3rem;}
+  .back-link{padding:1rem 1.25rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;}
+}
+"""
+
+# ─── Reader CSS ───
+READER_CSS = SHARED_CSS + """
+.back-link{
+  position:fixed;top:0;left:0;z-index:10;
+  padding:1.25rem 1.5rem;
+  font-size:.9rem;color:var(--meta);text-decoration:none;
+  transition:color .2s ease;
+}
+.back-link:hover{color:var(--accent);}
+.reader{padding:5rem 1.5rem 7rem;max-width:680px;margin:0 auto;}
+.reader-header{text-align:center;margin-bottom:3rem;}
+.reader-header h1{font-size:1.75rem;font-weight:600;color:var(--text);margin-bottom:.6rem;line-height:1.5;letter-spacing:.04em;}
+.reader-header .meta{font-size:.85rem;color:var(--meta);display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;}
+.reader-header .meta span{display:inline-flex;align-items:center;}
+.reader-header .meta .dot{margin:0 .15rem;opacity:.4;}
+.reader-body p{
+  margin-bottom:1.6em;text-indent:2em;line-height:inherit;color:var(--text);
+}
+.reader-body p:last-child{margin-bottom:0;}
+
+.toolbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  gap:0;padding:.65rem 1rem;
+  background:var(--toolbar-bg);
+  border-top:1px solid var(--toolbar-border);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:background .35s ease,border-color .35s ease,transform .3s ease,opacity .3s ease;
+}
+.toolbar.hidden{transform:translateY(100%);opacity:0;pointer-events:none;}
+.toolbar-group{display:flex;align-items:center;gap:0;}
+.toolbar-divider{width:1px;height:18px;background:var(--toolbar-border);margin:0 .6rem;flex-shrink:0;}
+.toolbar-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:36px;height:36px;padding:0 .5rem;
+  border:none;border-radius:6px;background:transparent;
+  color:var(--text-soft);font-size:.85rem;font-weight:400;cursor:pointer;
+  font-family:inherit;white-space:nowrap;
+  transition:background .15s ease,color .15s ease;
+}
+.toolbar-btn:hover{background:rgba(0,0,0,.05);}
+[data-theme="dark"] .toolbar-btn:hover{background:rgba(255,255,255,.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{
+  background:var(--btn-active-bg);color:var(--btn-active-text);font-weight:500;
+}
+.toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
+
+@media (max-width:640px){
+  .reader{padding:4rem 1.25rem 6.5rem;}
+  .back-link{padding:1rem 1.25rem;}
+  .toolbar{padding:.55rem .75rem;}
+  .toolbar-btn{min-width:32px;height:32px;font-size:.8rem;padding:0 .4rem;}
+  .toolbar-divider{margin:0 .4rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;}
+}
+"""
+
+# ─── Library HTML Template ───
 LIBRARY_HTML = """<!DOCTYPE html>
 <html lang="zh-CN" data-theme="{theme}" data-font="{font}" data-size="{size}">
 <head>
@@ -189,11 +173,7 @@ LIBRARY_HTML = """<!DOCTYPE html>
 <style>{css}</style>
 </head>
 <body>
-<header>
-  <div class="spacer"></div>
-  <h1>{title}</h1>
-  <div class="spacer"></div>
-</header>
+<a href="../index.html" class="back-link">← 返回</a>
 <main class="library">
   <header class="library-header">
     <h1>{title}</h1>
@@ -205,7 +185,7 @@ LIBRARY_HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
-# ─── Reader Page Template ───
+# ─── Reader HTML Template ───
 READER_HTML = """<!DOCTYPE html>
 <html lang="zh-CN" data-theme="{theme}" data-font="{font}" data-size="{size}">
 <head>
@@ -219,165 +199,113 @@ READER_HTML = """<!DOCTYPE html>
 <style>{css}</style>
 </head>
 <body>
-<div id="progress-rail"><div id="progress-bar"></div></div>
-<header id="header">
-  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
-  <h1>{title}</h1>
-  <div class="spacer"></div>
-</header>
-<main>
-  <article>
-    <header>
-      <h1>{title}</h1>
-      <div class="meta">
-        <span>{type}</span>
-        <span>{category}</span>
-        <span>{char_count} 字</span>
-        <span>{writing_date}</span>
-      </div>
-    </header>
-    <div class="content">{paragraphs}</div>
-  </article>
+<a href="../index.html" class="back-link">← 返回</a>
+<main class="reader">
+  <header class="reader-header">
+    <h1>{title}</h1>
+    <div class="meta">
+      <span>{type}</span><span class="dot">·</span>
+      <span>{char_count} 字</span><span class="dot">·</span>
+      <span>{writing_date}</span>
+    </div>
+  </header>
+  <div class="reader-body">{paragraphs}</div>
 </main>
-<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
-  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
-  <div class="toolbar-divider" aria-hidden="true"></div>
-  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
-  <div class="toolbar-divider" aria-hidden="true"></div>
-  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
-  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+<div class="toolbar" id="toolbar">
+  <div class="toolbar-group">
+    <button class="toolbar-btn theme-btn" id="btn-theme">亮</button>
+  </div>
+  <div class="toolbar-divider"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn size-btn" id="btn-size-minus">A-</button>
+    <button class="toolbar-btn size-btn" id="btn-size-plus">A+</button>
+  </div>
+  <div class="toolbar-divider"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn font-btn" id="btn-font">宋</button>
+  </div>
 </div>
 <script>{reader_js}</script>
 </body>
 </html>"""
 
-# ─── Library Page JS ───
-LIB_JS = """
-(function(){
-  const html=document.documentElement;
-  const STORAGE_KEY='reader_prefs';
-  function loadPrefs(){
-    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
-  }
-  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
-  function apply(p){
-    if(p.theme) html.dataset.theme=p.theme;
-    if(p.font) html.dataset.font=p.font;
-    if(p.size) html.dataset.size=p.size;
-  }
-  const prefs=loadPrefs();
-  apply(prefs);
-  window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY){apply(JSON.parse(e.newValue||'{}'));}});
-})();
-"""
+# ─── Library JS ───
+LIB_JS = """(function(){
+  var h=document.documentElement,K='reader_prefs';
+  function l(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+  function a(p){if(p.theme)h.dataset.theme=p.theme;if(p.font)h.dataset.font=p.font;if(p.size)h.dataset.size=p.size;}
+  a(l());
+  window.addEventListener('storage',function(e){if(e.key===K)a(JSON.parse(e.newValue||'{}'));});
+})();"""
 
-# ─── Reader Page JS ───
-READER_JS = """
-(function(){
-  const html=document.documentElement;
-  const rail=document.getElementById('progress-rail');
-  const bar=document.getElementById('progress-bar');
-  const header=document.getElementById('header');
-  const toolbar=document.getElementById('toolbar');
-  const btnTheme=document.getElementById('btn-theme');
-  const btnFont=document.getElementById('btn-font');
-  const btnSizeMinus=document.getElementById('btn-size-minus');
-  const btnSizePlus=document.getElementById('btn-size-plus');
-  const STORAGE_KEY='reader_prefs';
-  const THEMES=['light','sepia','dark'];
-  const FONTS=['serif','kai','fangsong','sans'];
-  const SIZES=['sm','md','lg'];
-  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
-  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
-  let prefs=loadPrefs();
-  let lastScrollY=window.scrollY;
-  let hideHeaderTimer=null;
-  let hideToolbarTimer=null;
+# ─── Reader JS ───
+READER_JS = """(function(){
+  var h=document.documentElement;
+  var toolbar=document.getElementById('toolbar');
+  var btnTheme=document.getElementById('btn-theme');
+  var btnFont=document.getElementById('btn-font');
+  var btnSizeMinus=document.getElementById('btn-size-minus');
+  var btnSizePlus=document.getElementById('btn-size-plus');
+  var K='reader_prefs';
+  var THEMES=['light','sepia','dark'];
+  var THEME_LABELS={'light':'亮','sepia':'护','dark':'暗'};
+  var FONTS=['serif','kai','fangsong','sans'];
+  var FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  var SIZES=['sm','md','lg'];
+  var p=l(),lastY=0,timer=null;
 
-  function loadPrefs(){
-    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  function l(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+  function s(v){localStorage.setItem(K,JSON.stringify(v));}
+  function apply(v){
+    if(v.theme){h.dataset.theme=v.theme;btnTheme.textContent=THEME_LABELS[v.theme]||'亮';}
+    if(v.font){h.dataset.font=v.font;btnFont.textContent=FONT_LABELS[v.font]||'宋';}
+    if(v.size){h.dataset.size=v.size;}
   }
-  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
-  function applyPrefs(p){
-    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
-    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
-    if(p.size){html.dataset.size=p.size;}
-  }
-  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
-  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
-  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+  function cycle(arr,cur){var i=arr.indexOf(cur);return arr[(i+1)%arr.length];}
+  apply(p);
 
-  applyPrefs(prefs);
+  btnTheme.addEventListener('click',function(){
+    p.theme=cycle(THEMES,p.theme||'light');
+    apply(p);s(p);
+  });
+  btnFont.addEventListener('click',function(){
+    p.font=cycle(FONTS,p.font||'serif');
+    apply(p);s(p);
+  });
+  btnSizeMinus.addEventListener('click',function(){
+    var i=SIZES.indexOf(p.size||'md');
+    p.size=SIZES[Math.max(0,i-1)];
+    apply(p);s(p);
+  });
+  btnSizePlus.addEventListener('click',function(){
+    var i=SIZES.indexOf(p.size||'md');
+    p.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    apply(p);s(p);
+  });
 
-  function updateProgress(){
-    const scrollTop=window.scrollY;
-    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
-    const pct=docHeight>0?scrollTop/docHeight:0;
-    bar.style.width=(pct*100)+'%';
-  }
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T')btnTheme.click();
+    else if(e.key==='f'||e.key==='F')btnFont.click();
+    else if(e.key==='-'||e.key==='_')btnSizeMinus.click();
+    else if(e.key==='='||e.key==='+')btnSizePlus.click();
+    else if(e.key==='ArrowLeft')history.back();
+  });
+
   function onScroll(){
-    updateProgress();
-    const y=window.scrollY;
-    const scrollingDown=y>lastScrollY;
-    if(scrollingDown&&y>80){
-      header.classList.add('hidden');
-      toolbar.classList.add('hidden');
-    }else{
-      header.classList.remove('hidden');
-      toolbar.classList.remove('hidden');
-    }
-    lastScrollY=y;
-    clearTimeout(hideHeaderTimer);
-    clearTimeout(hideToolbarTimer);
-    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
-    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+    var y=window.scrollY;
+    if(y>lastY&&y>100){toolbar.classList.add('hidden');}
+    else{toolbar.classList.remove('hidden');}
+    lastY=y;
+    clearTimeout(timer);
+    timer=setTimeout(function(){if(window.scrollY>100)toolbar.classList.add('hidden');},2500);
   }
   window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',updateProgress);
-  updateProgress();
 
-  btnTheme.addEventListener('click',()=>{
-    prefs.theme=cycle(THEMES,prefs.theme||'light');
-    updateThemeIcon(prefs.theme);
-    savePrefs(prefs);
-    applyPrefs(prefs);
+  window.addEventListener('storage',function(e){
+    if(e.key===K){p=JSON.parse(e.newValue||'{}');apply(p);}
   });
-  btnFont.addEventListener('click',()=>{
-    prefs.font=cycle(FONTS,prefs.font||'serif');
-    updateFontLabel(prefs.font);
-    savePrefs(prefs);
-    applyPrefs(prefs);
-  });
-  btnSizeMinus.addEventListener('click',()=>{
-    const i=SIZES.indexOf(prefs.size||'md');
-    prefs.size=SIZES[Math.max(0,i-1)];
-    savePrefs(prefs);
-    applyPrefs(prefs);
-  });
-  btnSizePlus.addEventListener('click',()=>{
-    const i=SIZES.indexOf(prefs.size||'md');
-    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
-    savePrefs(prefs);
-    applyPrefs(prefs);
-  });
-
-  document.addEventListener('keydown',e=>{
-    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
-    if(e.key==='t'||e.key==='T'){btnTheme.click();}
-    else if(e.key==='f'||e.key==='F'){btnFont.click();}
-    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
-    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
-    else if(e.key==='ArrowLeft'){history.back();}
-  });
-
-  window.addEventListener('storage',e=>{
-    if(e.key===STORAGE_KEY){
-      prefs=JSON.parse(e.newValue||'{}');
-      applyPrefs(prefs);
-    }
-  });
-})();
-"""
+})();"""
 
 def load_works():
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
@@ -387,36 +315,32 @@ def load_works():
     return works
 
 def split_paragraphs(content):
-    """Split content into paragraphs, handling both \\r\\n\\r\\n and \\n\\n."""
-    import re
     paras = re.split(r'\r?\n\r?\n', content.strip())
     return [p.strip() for p in paras if p.strip()]
 
 def build_library(works):
     total_chars = sum(w.get('char_count', 0) for w in works)
-    cards = []
+    items = []
     for w in works:
-        excerpt = split_paragraphs(w['content'])[0][:120] + '…'
-        cards.append(f'''
-  <a href="read/{w['id']}.html" class="work-card">
-    <div class="title">{w['title']}</div>
-    <div class="meta-row">
-      <span>{w.get('type','')}</span>
-      <span>{w.get('category','')}</span>
-      <span>{w.get('char_count',0)} 字</span>
-      <span>{w.get('writing_date','')}</span>
-    </div>
-    <div class="excerpt">{excerpt}</div>
-    <div class="read-hint">阅读全文 →</div>
-  </a>''')
-    works_html = f'<div class="work-grid">{"".join(cards)}</div>' if cards else '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg><p>暂无作品</p></div>'
+        paras = split_paragraphs(w['content'])
+        excerpt = paras[0][:100] + '…' if paras else ''
+        items.append(f'''<a href="read/{w['id']}.html" class="work-item">
+  <div class="wi-title">{w['title']}</div>
+  <div class="wi-meta">
+    <span>{w.get('type','')}</span>
+    <span>{w.get('char_count',0)} 字</span>
+    <span>{w.get('writing_date','')}</span>
+  </div>
+  <div class="wi-excerpt">{excerpt}</div>
+</a>''')
+    works_html = '<div class="work-list">' + ''.join(items) + '</div>' if items else '<p style="text-align:center;color:var(--meta);padding:4rem 0;">暂无作品</p>'
     html = LIBRARY_HTML.format(
         theme='light', font='serif', size='md',
         title='书架',
         count=len(works),
         total_chars=total_chars,
         works_html=works_html,
-        css=CSS,
+        css=LIBRARY_CSS,
         fonts_url=GOOGLE_FONTS,
         lib_js=LIB_JS
     )
@@ -428,12 +352,11 @@ def build_reader(work):
     html = READER_HTML.format(
         theme='light', font='serif', size='md',
         title=work['title'],
-        type=work.get('type',''),
-        category=work.get('category',''),
-        char_count=work.get('char_count',0),
-        writing_date=work.get('writing_date',''),
+        type=work.get('type', ''),
+        char_count=work.get('char_count', 0),
+        writing_date=work.get('writing_date', ''),
         paragraphs=paragraphs,
-        css=CSS,
+        css=READER_CSS,
         fonts_url=GOOGLE_FONTS,
         reader_js=READER_JS
     )
@@ -441,7 +364,6 @@ def build_reader(work):
     print(f"Generated read/{work['id']}.html")
 
 def main():
-    # Clean dist
     if DIST_DIR.exists():
         shutil.rmtree(DIST_DIR)
     DIST_DIR.mkdir(parents=True)
@@ -454,13 +376,11 @@ def main():
     for w in works:
         build_reader(w)
 
-    # Copy works.json for client fallback
     shutil.copy2(DATA_FILE, DIST_DIR / 'works.json')
     print(f"Copied works.json to dist/")
 
-    # Write vercel.json
     vercel_config = {'outputDirectory': 'dist'}
-    (ROOT / 'reader' / 'vercel.json').write_text(json.dumps(vercel_config, indent=2), encoding='utf-8')
+    (ROOT / 'vercel.json').write_text(json.dumps(vercel_config, indent=2), encoding='utf-8')
     print("Created vercel.json")
 
     print(f"\nBuild complete! Output: {DIST_DIR}")

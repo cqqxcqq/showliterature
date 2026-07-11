@@ -10,291 +10,196 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
 <style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
 
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+
 :root,[data-theme="light"]{
-  --bg:#f5f1e8;--paper:#fdfbf6;--text:#2b2723;--text-soft:#5a5249;
-  --meta:#94887a;--accent:#8b5e3c;--accent-hover:#6e4a2e;
-  --border:#e8e0d0;--shadow:rgba(43,39,35,.08);--toolbar-bg:rgba(253,251,246,.9);
-  --toolbar-border:#e8e0d0;--btn-bg:#f5f1e8;--btn-hover:#ebe5d8;--btn-active:#8b5e3c;
-  --btn-text:#2b2723;--progress:#8b5e3c;
+  --bg:#f5f0e8;--text:#2b2520;--text-soft:#6b5e52;
+  --meta:#a09283;--accent:#9a6d4a;--accent-hover:#7a5235;
+  --toolbar-bg:rgba(245,240,232,.92);--toolbar-border:rgba(0,0,0,.06);
+  --btn-active-bg:#9a6d4a;--btn-active-text:#fff;
 }
 [data-theme="sepia"]{
-  --bg:#e8dcbe;--paper:#efe3c7;--text:#3a2c18;--text-soft:#5b4830;
+  --bg:#e4d5b8;--text:#3a2c18;--text-soft:#6b5a42;
   --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
-  --border:#ddd0b8;--shadow:rgba(58,44,24,.1);--toolbar-bg:rgba(239,227,199,.92);
-  --toolbar-border:#ddd0b8;--btn-bg:#e8dcbe;--btn-hover:#ddd0b8;--btn-active:#8a3a1a;
-  --btn-text:#3a2c18;--progress:#8a3a1a;
+  --toolbar-bg:rgba(228,213,184,.92);--toolbar-border:rgba(0,0,0,.08);
+  --btn-active-bg:#8a3a1a;--btn-active-text:#fff;
 }
 [data-theme="dark"]{
-  --bg:#14110d;--paper:#1a1612;--text:#e6dcc8;--text-soft:#b3a78f;
-  --meta:#756a55;--accent:#d4a86a;--accent-hover:#e6bd82;
-  --border:#2a241c;--shadow:rgba(0,0,0,.3);--toolbar-bg:rgba(26,22,18,.92);
-  --toolbar-border:#2a241c;--btn-bg:#1e1a15;--btn-hover:#2a241c;--btn-active:#d4a86a;
-  --btn-text:#e6dcc8;--progress:#d4a86a;
+  --bg:#14110d;--text:#d8ceb8;--text-soft:#9a8e7a;
+  --meta:#6b6050;--accent:#c9a06c;--accent-hover:#ddb87e;
+  --toolbar-bg:rgba(20,17,13,.92);--toolbar-border:rgba(255,255,255,.06);
+  --btn-active-bg:#c9a06c;--btn-active-text:#14110d;
 }
 
-[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong',serif;}
-[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi',serif;}
-[data-font="fangsong"] body{font-family:'FangSong','STFangsong',serif;}
-[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC',sans-serif;}
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi','SimKai',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong','FangSong_GB2312',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;}
 
-[data-size="sm"] body{font-size:.96rem;line-height:1.95;}
-[data-size="md"] body{font-size:1.1rem;line-height:2.05;}
-[data-size="lg"] body{font-size:1.28rem;line-height:2.2;}
+[data-size="sm"] body{font-size:1rem;line-height:2;letter-spacing:.02em;}
+[data-size="md"] body{font-size:1.125rem;line-height:2.15;letter-spacing:.02em;}
+[data-size="lg"] body{font-size:1.3rem;line-height:2.3;letter-spacing:.02em;}
 
-*,::before,::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
 body{
   background:var(--bg);color:var(--text);
-  transition:background .3s ease,color .3s ease;
+  transition:background .35s ease,color .35s ease;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
 }
 
-#progress-rail{
-  position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:1000;
-  pointer-events:none;
+.back-link{
+  position:fixed;top:0;left:0;z-index:10;
+  padding:1.25rem 1.5rem;
+  font-size:.9rem;color:var(--meta);text-decoration:none;
+  transition:color .2s ease;
 }
-#progress-bar{
-  height:100%;width:0%;background:linear-gradient(90deg,var(--progress),var(--accent-hover));
-  transition:width .1s linear,background .3s ease;transform-origin:left center;
+.back-link:hover{color:var(--accent);}
+.reader{padding:5rem 1.5rem 7rem;max-width:680px;margin:0 auto;}
+.reader-header{text-align:center;margin-bottom:3rem;}
+.reader-header h1{font-size:1.75rem;font-weight:600;color:var(--text);margin-bottom:.6rem;line-height:1.5;letter-spacing:.04em;}
+.reader-header .meta{font-size:.85rem;color:var(--meta);display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;}
+.reader-header .meta span{display:inline-flex;align-items:center;}
+.reader-header .meta .dot{margin:0 .15rem;opacity:.4;}
+.reader-body p{
+  margin-bottom:1.6em;text-indent:2em;line-height:inherit;color:var(--text);
 }
-
-header{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:.75rem 1rem;display:flex;align-items:center;gap:.75rem;
-  background:var(--toolbar-bg);border-bottom:1px solid var(--toolbar-border);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  transition:transform .3s ease,opacity .3s ease,background .3s ease,border-color .3s ease;
-}
-header.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;}
-.back-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--btn-bg);border:1px solid var(--toolbar-border);
-  color:var(--btn-text);font-size:1.2rem;cursor:pointer;
-  transition:background .2s ease,border-color .2s ease,transform .15s ease;
-  flex-shrink:0;
-}
-.back-btn:hover{background:var(--btn-hover);transform:scale(1.05);}
-.back-btn:active{transform:scale(.95);}
-header h1{
-  flex:1;font-size:.95rem;font-weight:500;color:var(--text);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  text-align:center;margin-right:40px;
-}
-header .spacer{width:40px;flex-shrink:0;}
-main{padding:4.5rem 1rem 6rem;max-width:680px;margin:0 auto;}
-article{background:var(--paper);border:1px solid var(--border);
-  border-radius:12px;padding:2.5rem 2rem;box-shadow:0 2px 12px var(--shadow);
-  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease;}
-article header{position:static;padding:0;border:none;background:none;backdrop-filter:none;}
-article header h1{font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
-article header .meta{font-size:.85rem;color:var(--meta);display:flex;flex-wrap:wrap;gap:.75rem;}
-article .content{margin-top:2rem;}
-article .content p{margin-bottom:1.5em;text-indent:2em;line-height:inherit;color:var(--text);}
-article .content p:first-child{text-indent:0;}
-article .content p:last-child{margin-bottom:0;}
-
-@media (max-width:640px){
-  main{padding:4rem .75rem 5.5rem;}
-  article{padding:1.5rem 1rem;border-radius:8px;}
-  article header h1{font-size:1.35rem;}
-  article .content p{text-indent:1.8em;}
-}
+.reader-body p:last-child{margin-bottom:0;}
 
 .toolbar{
-  position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;
-  display:flex;align-items:center;gap:.35rem;padding:.4rem .6rem;
-  background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
-  border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  box-shadow:0 4px 20px var(--shadow);
-  transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .3s ease,transform .3s ease;
-}
-.toolbar.hidden{opacity:0;transform:translateX(-50%) translateY(100%);pointer-events:none;}
-.toolbar-btn{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--btn-bg);border:1px solid var(--toolbar-border);
-  color:var(--btn-text);font-size:.85rem;font-weight:500;cursor:pointer;
-  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .15s ease;
+  gap:0;padding:.65rem 1rem;
+  background:var(--toolbar-bg);
+  border-top:1px solid var(--toolbar-border);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:background .35s ease,border-color .35s ease,transform .3s ease,opacity .3s ease;
 }
-.toolbar-btn:hover{background:var(--btn-hover);transform:scale(1.08);}
+.toolbar.hidden{transform:translateY(100%);opacity:0;pointer-events:none;}
+.toolbar-group{display:flex;align-items:center;gap:0;}
+.toolbar-divider{width:1px;height:18px;background:var(--toolbar-border);margin:0 .6rem;flex-shrink:0;}
+.toolbar-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:36px;height:36px;padding:0 .5rem;
+  border:none;border-radius:6px;background:transparent;
+  color:var(--text-soft);font-size:.85rem;font-weight:400;cursor:pointer;
+  font-family:inherit;white-space:nowrap;
+  transition:background .15s ease,color .15s ease;
+}
+.toolbar-btn:hover{background:rgba(0,0,0,.05);}
+[data-theme="dark"] .toolbar-btn:hover{background:rgba(255,255,255,.08);}
 .toolbar-btn:active{transform:scale(.95);}
-.toolbar-btn.active{background:var(--btn-active);border-color:var(--btn-active);color:#fff;}
-.toolbar-divider{width:1px;height:24px;background:var(--toolbar-border);margin:0 .2rem;}
-.tooltip{
-  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
-  background:var(--btn-active);color:#fff;padding:.35rem .6rem;border-radius:6px;
-  font-size:.7rem;white-space:nowrap;opacity:0;pointer-events:none;
-  transition:opacity .2s ease;z-index:10;
+.toolbar-btn.active{
+  background:var(--btn-active-bg);color:var(--btn-active-text);font-weight:500;
 }
-.toolbar-btn:hover .tooltip{opacity:1;}
-.toolbar-btn{position:relative;}
+.toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
-@media (max-width:480px){
-  .toolbar{padding:.35rem .5rem;gap:.25rem;}
-  .toolbar-btn{width:36px;height:36px;font-size:.75rem;}
+@media (max-width:640px){
+  .reader{padding:4rem 1.25rem 6.5rem;}
+  .back-link{padding:1rem 1.25rem;}
+  .toolbar{padding:.55rem .75rem;}
+  .toolbar-btn{min-width:32px;height:32px;font-size:.8rem;padding:0 .4rem;}
+  .toolbar-divider{margin:0 .4rem;}
 }
-
-.library{padding:3rem 1rem;max-width:800px;margin:0 auto;}
-.library-header{text-align:center;margin-bottom:3rem;}
-.library-header h1{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:.5rem;}
-.library-header p{color:var(--meta);font-size:.95rem;}
-.work-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));}
-.work-card{
-  background:var(--paper);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:transform .2s ease,box-shadow .2s ease,border-color .3s ease,background .3s ease;
-  display:flex;flex-direction:column;text-decoration:none;color:inherit;
-}
-.work-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:var(--accent);}
-.work-card .title{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem;line-height:1.4;}
-.work-card .meta-row{display:flex;gap:1rem;font-size:.8rem;color:var(--meta);margin-bottom:.75rem;flex-wrap:wrap;}
-.work-card .meta-row span{display:flex;align-items:center;gap:.3rem;}
-.work-card .excerpt{font-size:.85rem;color:var(--text-soft);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.work-card .read-hint{font-size:.75rem;color:var(--accent);margin-top:.75rem;font-weight:500;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease;}
-.work-card:hover .read-hint{opacity:1;transform:translateY(0);}
-.empty-state{text-align:center;padding:4rem 1rem;color:var(--meta);}
-.empty-state svg{width:64px;height:64px;margin-bottom:1rem;opacity:.5;}
-
 @media (prefers-reduced-motion:reduce){
-  *,::before,::after{transition-duration:.01ms!important;animation-duration:.01ms!important;}
+  *,*::before,*::after{transition-duration:.01ms!important;}
 }
 </style>
 </head>
 <body>
-<div id="progress-rail"><div id="progress-bar"></div></div>
-<header id="header">
-  <a href="../index.html" class="back-btn" aria-label="返回书架">←</a>
-  <h1>《谎言》</h1>
-  <div class="spacer"></div>
-</header>
-<main>
-  <article>
-    <header>
-      <h1>《谎言》</h1>
-      <div class="meta">
-        <span>散文</span>
-        <span>散文</span>
-        <span>3701 字</span>
-        <span>2026-07-07</span>
-      </div>
-    </header>
-    <div class="content"><p>你们第一次见面的咖啡馆里，你送了她一束花，里面有九十九朵玫瑰花。你单膝跪在她的面前，眼里有着比冬天新雪还要洁白的真诚。你向她撒了一个谎，说你会爱她直到所有玫瑰枯萎。她眼里闪过一丝惊讶，随即颤动的眉角向你展现了她最直白的惧怕。</p><p>她不知道的是，你在送她花束之前，已经把里面的一朵玫瑰取出，用一只仿真的假玫瑰替代。所以你向她许下爱的谎言，因为你知道总有一朵会留下来。</p><p>你们后来把那束花，放在出租屋里狭小的餐桌中央，所以你们每当坐在一起享受餐食时，桌上一朵一朵枯萎的玫瑰成为了你们共同的话题与理想。</p><p>这件出租屋是你们的第一件约定。你们从村里牵着手逃来城镇后，那时镇里你们忙忙碌碌，牵着大包小包的行李与对方的手，在镇里奔波许久，才找到这一间实惠的出租屋。房东阿姨在看到你们的第一眼时，你依稀可以通过湿润与沉重的眼角看到她在思念着从前的青春。所以房东阿姨撒了一个细微的谎，她在租赁合同里，违背说好的价钱，把房租降低了二成五，还不收水电费。</p><p>而你们那时是兴奋却慌张的，你们握紧了彼此的手，转头看了对方一眼后，身子直起，朝着房东阿姨鞠躬，齐声声的说了谢谢。</p><p>你们兴奋地扫视着这一件温暖的屋子，你们把那束玫瑰放在了餐桌中央。你和她，坐在餐桌前，一遍又一遍地数过玫瑰的数量。</p><p>九十九朵。</p><p>你们在公园的湖泊赏月散步时，偶然看到了两只猫。那两只猫也是并肩而行的，你把它们带回了家。</p><p>你把那一只橘猫取名叫做“永永”，她把另一只狸花猫取名叫“远远”。</p><p>你们把永永和远远带回家时，它们奔向了中央的餐桌，围着玫瑰转动着。或许是玫瑰凋落的气息吸引了它们，你们也闲来无事，怀里有着两只小猫。你们坐在彼此面前，视线有玫瑰花束与对方。</p><p>但玫瑰在那时候开始凋落了，你看着一瓣玫瑰从枝子上剥落，随即是下一个。你在花束中不断扫视，终于让你找出了那与其他玫瑰没有显著区别的玫瑰。她一瓣一瓣拾起桌上掉落的花瓣，你握住她的手，你们看着对方。</p><p>“你花了多少钱买玫瑰啊。”</p><p>“秘密。”</p><p>八十二朵。</p><p>房东阿姨格外喜欢永永。每次她送来小吃街的夜宵时，总会闯入你们的屋内，她会坐在餐桌前，很用力地揉捏永永的脸颊。你问过她为什么这么痴迷于永永，她告诉你说永永身上的花纹她曾经也熟悉过。</p><p>“哎呀，真可爱呀，我真喜欢。永永是不是也喜欢我啊。”</p><p>“是的，永永很喜欢你呢。”</p><p>即使你知道永永在房东走后，会陷入深深的沉睡。甚至你一度怀疑它的异常是因为宵夜的气息打扰了它的睡眠。可直到你看到，在房东走后，永永急匆匆地投入你的怀中悲鸣时。你知道，它不喜欢房东。</p><p>但你不知道为什么，你向房东和你自己撒了谎。</p><p>永永不喜欢房东。</p><p>你和她坐在餐桌前，享受着房东送来的夜宵，是一串串的烧烤。</p><p>“你为什么要对房东说谎啊，永永明明不喜欢她啊！”</p><p>“我是被迫的，你要相信我，我也当然直到永永不喜欢她啊，可......”</p><p>还未说完，她便已经站了起来，回到卧室反锁了门。你拿起手机写了好长一个道歉讯息发给她后，便随手把手机放在了桌上，收拾掉落的玫瑰花瓣。剩下的：</p><p>六十七朵。</p><p>你在镇里找了一份工作，工资填满你们和两只猫的饭碗之后，便所剩无几。</p><p>有时候，你会忙到很晚，但你不会忘记带夜宵。</p><p>你在一次的晚归，坐在餐桌前，和她享受宵夜时，那两只小猫已经睡去了。你这时和她许下了第二件约定。</p><p>“我保证，以后如果这个时间你还没看到我，那一定是我还在为你挑选宵夜呢。”</p><p>“嗯，我会记得的。”</p><p>六十四朵。</p><p>一天，天未亮时你便起了身。你小心翼翼地把压在身子的被子挪开。躺在你身旁的她似乎察觉了周围的变化，把被子拉得更紧了些。你站在床边，看着她的背影。你转过身，把窗帘拉上。天还是暗的。</p><p>你走出去，在外面关门时，透过门缝，你似乎看到她的眼里的光，但只是一时，你也以为自己看错了，你再次看去的时候，她的眼角是关闭的。你轻声关上了门。</p><p>七点，你来到火车站，买了一张回乡的车票。手机响起了，是她的讯息。</p><p>”你去哪儿了，今天不是星期日吗。“</p><p>”老板今天叫我加班，但我保证一定准时回家。“</p><p>”你说的哦。“</p><p>你把手机放回裤兜里，坐在候车大厅上，看着显示屏，等待着你的火车的到来。</p><p>九点，你随着人流挤进了狭窄的火车内，你没有带行李，兜里只有手机，和装着两张火车票的钱包，一张是去的，一张是回程的。</p><p>她的电话打来了，你给她订的专属铃声回响在火车里，但当你掏出手机时，恰好挂断。她留下讯息给你。</p><p>”永永生病了，我带它去看医生。“</p><p>”啊，好，一定要等我回来，注意安全。“</p><p>你看着最后一条讯息，她已读，没回。</p><p>你的脑中闪过很多，但火车的到站声剪断了你的思绪。</p><p>你随着人流，走出火车站。</p><p>面前是你熟悉又陌生的场景，你顺着你记忆里的那一条路，走回你抚育你的村里。</p><p>你记忆里的街坊是好客的，每当村里有人误入还是迷路时，你会陪在长辈身旁，把那些新来的人引入村里，看着长辈介绍着村里这些天发生的大小事。</p><p>但今天你站在村门口，家家户户的大门都变得冷清。你知道为什么，所以你一步步地走着，直到你家门前。</p><p>十一点，太阳正烧得旺盛，你看到老去的乡亲们整齐地坐在你家大门前。</p><p>”你回来了啊“</p><p>”嗯，我哥他，怎么的了。“</p><p>小时候和你玩得最好的伙伴走到你的面前，乡坊们看着，他们看你时陌生疏离的眼神，让你明白了原来你自从离开乡里之后变了好多。</p><p>你小时候的玩伴没说什么，只是向前拍拍你的肩膀后，便走了。</p><p>下午一点，你站在他的棺前，不断回忆着你们过往的点滴。但你发现，你在与他分离好久后，你什么都想不起了。</p><p>你哭了。</p><p>下午三点，村子驶进一辆灵车，守候在村口前。</p><p>你作为他的弟弟，亲手为每一个认识他的人分发了一个裹着红色包装的喜糖。你一个一个送出去，分完后，你脑海里想起了她，她也认识，但可惜的是糖在村里分完了。</p><p>这时，你再次收到了她的简讯。</p><p>”加班也别忘了吃午餐呀，别太压力啊，有什么东西你也可以和我倾诉。“</p><p>你在荧幕回复了她一个爱心。</p><p>你不知道为什么她会在这时候发给你这一句话，你也没多想。</p><p>下午五点，乡坊围在村口，你和其他认识的同辈乡坊，把棺材扛上灵车内。</p><p>灵车的后备箱关上。</p><p>你左右握着你最爱的人的手，你们一步一步地，追逐着灵车和他，但你们没追上。你只可惜你没有第三只手，无法抓着另一个你挚爱的人。</p><p>晚上七点，你回到村里，回到你小时候的家。餐桌上，没有了玫瑰，只有你怀念许久的饭菜。</p><p>”儿啊，这些年，去镇里奔波，有想家吗？“</p><p>”想啊。“</p><p>你说的是真话。</p><p>你在餐桌前诉说了好多，你的思念，你的遗憾，你的努力。</p><p>晚上九点，你吃完饭了，但你还想留着。</p><p>回程的票写着的是十点。</p><p>你还记得你的约定。你看到了她的讯息。</p><p>”加班了吗？“</p><p>”嗯，我会回来的，别担心。“</p><p>晚上九点二十，你和村里的人打完招呼后，便走出了村口。</p><p>通往火车站的路有路灯，你在这条路上，回想起那时你和她怎么牵着手在这一条路上一直走，走到镇里。你在这条路上，反复回想起数个小时前，灵车驶过的路线。</p><p>晚上九点四十五，你到了火车站。</p><p>你踏入火车里，由于疲累你便闭眼睡去了。</p><p>晚上十点三十，你似乎听到熟悉的铃声，那是她为你设的来电铃声，但那声音微乎其微。火车屏幕上显示还有一分钟就要到站了。你收拾好自己，看向窗外熟悉的景色。</p><p>晚上十一点，你在冷清的街上走着，不久，你一边低头看手机，一边跑了起来。这一条街上是你们常来的小吃街，今天不知道为什么没有营业。但你还记着你们的约定。你跑向两公里外的烧烤店，买了几只串串后，便打车回到了你们的出租屋。</p><p>晚上十二点，你站在门前。小心地打开门，进入，把手中的袋子放在餐桌上。</p><p>令你奇怪的是，餐桌上的玫瑰花瓣没有被清理，在上面睡着的是永永，它没生病。</p><p>你把永永身旁的花瓣一瓣一瓣拾起，正要倒进垃圾桶里。</p><p>你在餐桌上看到了一颗裹着红色包装的喜糖。</p><p>你明白了什么，但什么都没做。只是坐在餐桌旁，数着。</p><p>四十四朵。</p><p>隔天，你在客厅的地毯上醒来，盖着你的是卧室的被子。</p><p>你睁开眼，看到她把昨天的烧烤重新加热，此时正享受着。</p><p>”醒了啊，快，还热着呢。“</p><p>她对你说。</p><p>”嗯，好，等我，我先去洗漱。“</p><p>你带着手机，来到洗漱间的镜子前。你先是写了一个讯息给你的上司，向他请了一天的假。然后你看着镜子里自己还泛着血丝的眼角，你用力地洗刷着你的眼圈。</p><p>当你走出去时，她为你留下了你最爱的烤土豆片和考五花肉。</p><p>”谢谢。“</p><p>”跟我还说谢谢？“</p><p>桌子上的喜糖消失了，你抬头时她正看着你。你似乎可以看到她通红的眼角。</p><p>她走回卧室，门半掩着。</p><p>你吃完后，收拾桌上的包装和花瓣。</p><p>你看到垃圾桶里，有一张昨天的回程票，晚上九点。</p><p>你回到餐桌前，你看着那一朵没有任何要凋零的痕迹的玫瑰，还有周围的玫瑰。</p><p>三十朵。</p><p>一天，你出去买早餐的时候，忘了关门。</p><p>你在人来人往的小吃街走着的时候，裤兜里的手机震动得剧烈。</p><p>是她的电话。</p><p>你接起。</p><p>”远远不见了。“</p><p>说完这句，她便挂断了电话。你能听到她语气里的着急与害怕，于是你把刚买的早餐，随手扔在身旁的铁皮垃圾桶盖上。</p><p>你急匆匆地跑回去，裤兜里的手机没有响起。</p><p>回程中，你在你们常去的公园看到了她，她此时正蹲在绿化带旁。</p><p>”远远，远远。“</p><p>她一声又一声地呼唤着她亲自取的名字，你陪着她，也如此呼唤着。但你发现，你用着叫永永的声调去叫着远远。</p><p>你陪着她找，从你们第一次见到永永和远远的湖边，到你们带着永永和远远散步的公园，再到你们的小区楼下。你们找了好久好久。</p><p>找不到。</p><p>她失落地走回湖边，你伴在她的身旁，你不知道说什么。</p><p>她蹲在湖边，看着湖面的倒影。</p><p>她说了一句话。</p><p>”其实，她一直都想走的。“</p><p>你不知道怎么回，也不知道她说的是不是真的。</p><p>你沉默着。</p><p>远远走后，家里只剩永永。</p><p>自从远远走后，永永变得不一样了。它不再像从前那样活泼，甚至房东来的时候它也不会挣扎了。它只剩那束越来越少了的玫瑰束与它作伴。</p><p>你看着永永，不自觉地又数起了玫瑰。</p><p>十二朵。</p><p>那天之后，沉默便变得越来越多。</p><p>你还会从外面买回夜宵，甚至你会有时早早地便回来。</p><p>但你们只是吃着，看着。</p><p>话变得越来越少，花也变得越来越少。</p><p>你有时回来，回到卧室时，会发现永永正趴在飘窗上，背对着你。</p><p>永永看着远远的地方。</p><p>房东也很少来了，你也不见得永永变得活泼起来。</p><p>你回到餐桌，仔细地清理花瓣时，那时花已经很少了，甚至你可以一朵一朵地看清楚。</p><p>两朵。</p><p>你发现了。</p><p>两朵不会枯萎的花。</p><p>你拿了起来，看了看。一朵是你放的，花的底部还有贴着的价格签。你买的玫瑰，有着刺眼的死红。</p><p>可另外一朵的颜色有一些不同，花用的都是染色的布料。但花瓣边缘已经起了毛边，你不断抚摸玫瑰的边。但它不是锋利的。</p><p>它是假花。</p><p>两朵。</p><p>你把那两朵假花放回花束里。
+<a href="../index.html" class="back-link">← 返回</a>
+<main class="reader">
+  <header class="reader-header">
+    <h1>《谎言》</h1>
+    <div class="meta">
+      <span>散文</span><span class="dot">·</span>
+      <span>3701 字</span><span class="dot">·</span>
+      <span>2026-07-07</span>
+    </div>
+  </header>
+  <div class="reader-body"><p>你们第一次见面的咖啡馆里，你送了她一束花，里面有九十九朵玫瑰花。你单膝跪在她的面前，眼里有着比冬天新雪还要洁白的真诚。你向她撒了一个谎，说你会爱她直到所有玫瑰枯萎。她眼里闪过一丝惊讶，随即颤动的眉角向你展现了她最直白的惧怕。</p><p>她不知道的是，你在送她花束之前，已经把里面的一朵玫瑰取出，用一只仿真的假玫瑰替代。所以你向她许下爱的谎言，因为你知道总有一朵会留下来。</p><p>你们后来把那束花，放在出租屋里狭小的餐桌中央，所以你们每当坐在一起享受餐食时，桌上一朵一朵枯萎的玫瑰成为了你们共同的话题与理想。</p><p>这件出租屋是你们的第一件约定。你们从村里牵着手逃来城镇后，那时镇里你们忙忙碌碌，牵着大包小包的行李与对方的手，在镇里奔波许久，才找到这一间实惠的出租屋。房东阿姨在看到你们的第一眼时，你依稀可以通过湿润与沉重的眼角看到她在思念着从前的青春。所以房东阿姨撒了一个细微的谎，她在租赁合同里，违背说好的价钱，把房租降低了二成五，还不收水电费。</p><p>而你们那时是兴奋却慌张的，你们握紧了彼此的手，转头看了对方一眼后，身子直起，朝着房东阿姨鞠躬，齐声声的说了谢谢。</p><p>你们兴奋地扫视着这一件温暖的屋子，你们把那束玫瑰放在了餐桌中央。你和她，坐在餐桌前，一遍又一遍地数过玫瑰的数量。</p><p>九十九朵。</p><p>你们在公园的湖泊赏月散步时，偶然看到了两只猫。那两只猫也是并肩而行的，你把它们带回了家。</p><p>你把那一只橘猫取名叫做“永永”，她把另一只狸花猫取名叫“远远”。</p><p>你们把永永和远远带回家时，它们奔向了中央的餐桌，围着玫瑰转动着。或许是玫瑰凋落的气息吸引了它们，你们也闲来无事，怀里有着两只小猫。你们坐在彼此面前，视线有玫瑰花束与对方。</p><p>但玫瑰在那时候开始凋落了，你看着一瓣玫瑰从枝子上剥落，随即是下一个。你在花束中不断扫视，终于让你找出了那与其他玫瑰没有显著区别的玫瑰。她一瓣一瓣拾起桌上掉落的花瓣，你握住她的手，你们看着对方。</p><p>“你花了多少钱买玫瑰啊。”</p><p>“秘密。”</p><p>八十二朵。</p><p>房东阿姨格外喜欢永永。每次她送来小吃街的夜宵时，总会闯入你们的屋内，她会坐在餐桌前，很用力地揉捏永永的脸颊。你问过她为什么这么痴迷于永永，她告诉你说永永身上的花纹她曾经也熟悉过。</p><p>“哎呀，真可爱呀，我真喜欢。永永是不是也喜欢我啊。”</p><p>“是的，永永很喜欢你呢。”</p><p>即使你知道永永在房东走后，会陷入深深的沉睡。甚至你一度怀疑它的异常是因为宵夜的气息打扰了它的睡眠。可直到你看到，在房东走后，永永急匆匆地投入你的怀中悲鸣时。你知道，它不喜欢房东。</p><p>但你不知道为什么，你向房东和你自己撒了谎。</p><p>永永不喜欢房东。</p><p>你和她坐在餐桌前，享受着房东送来的夜宵，是一串串的烧烤。</p><p>“你为什么要对房东说谎啊，永永明明不喜欢她啊！”</p><p>“我是被迫的，你要相信我，我也当然直到永永不喜欢她啊，可......”</p><p>还未说完，她便已经站了起来，回到卧室反锁了门。你拿起手机写了好长一个道歉讯息发给她后，便随手把手机放在了桌上，收拾掉落的玫瑰花瓣。剩下的：</p><p>六十七朵。</p><p>你在镇里找了一份工作，工资填满你们和两只猫的饭碗之后，便所剩无几。</p><p>有时候，你会忙到很晚，但你不会忘记带夜宵。</p><p>你在一次的晚归，坐在餐桌前，和她享受宵夜时，那两只小猫已经睡去了。你这时和她许下了第二件约定。</p><p>“我保证，以后如果这个时间你还没看到我，那一定是我还在为你挑选宵夜呢。”</p><p>“嗯，我会记得的。”</p><p>六十四朵。</p><p>一天，天未亮时你便起了身。你小心翼翼地把压在身子的被子挪开。躺在你身旁的她似乎察觉了周围的变化，把被子拉得更紧了些。你站在床边，看着她的背影。你转过身，把窗帘拉上。天还是暗的。</p><p>你走出去，在外面关门时，透过门缝，你似乎看到她的眼里的光，但只是一时，你也以为自己看错了，你再次看去的时候，她的眼角是关闭的。你轻声关上了门。</p><p>七点，你来到火车站，买了一张回乡的车票。手机响起了，是她的讯息。</p><p>”你去哪儿了，今天不是星期日吗。“</p><p>”老板今天叫我加班，但我保证一定准时回家。“</p><p>”你说的哦。“</p><p>你把手机放回裤兜里，坐在候车大厅上，看着显示屏，等待着你的火车的到来。</p><p>九点，你随着人流挤进了狭窄的火车内，你没有带行李，兜里只有手机，和装着两张火车票的钱包，一张是去的，一张是回程的。</p><p>她的电话打来了，你给她订的专属铃声回响在火车里，但当你掏出手机时，恰好挂断。她留下讯息给你。</p><p>”永永生病了，我带它去看医生。“</p><p>”啊，好，一定要等我回来，注意安全。“</p><p>你看着最后一条讯息，她已读，没回。</p><p>你的脑中闪过很多，但火车的到站声剪断了你的思绪。</p><p>你随着人流，走出火车站。</p><p>面前是你熟悉又陌生的场景，你顺着你记忆里的那一条路，走回你抚育你的村里。</p><p>你记忆里的街坊是好客的，每当村里有人误入还是迷路时，你会陪在长辈身旁，把那些新来的人引入村里，看着长辈介绍着村里这些天发生的大小事。</p><p>但今天你站在村门口，家家户户的大门都变得冷清。你知道为什么，所以你一步步地走着，直到你家门前。</p><p>十一点，太阳正烧得旺盛，你看到老去的乡亲们整齐地坐在你家大门前。</p><p>”你回来了啊“</p><p>”嗯，我哥他，怎么的了。“</p><p>小时候和你玩得最好的伙伴走到你的面前，乡坊们看着，他们看你时陌生疏离的眼神，让你明白了原来你自从离开乡里之后变了好多。</p><p>你小时候的玩伴没说什么，只是向前拍拍你的肩膀后，便走了。</p><p>下午一点，你站在他的棺前，不断回忆着你们过往的点滴。但你发现，你在与他分离好久后，你什么都想不起了。</p><p>你哭了。</p><p>下午三点，村子驶进一辆灵车，守候在村口前。</p><p>你作为他的弟弟，亲手为每一个认识他的人分发了一个裹着红色包装的喜糖。你一个一个送出去，分完后，你脑海里想起了她，她也认识，但可惜的是糖在村里分完了。</p><p>这时，你再次收到了她的简讯。</p><p>”加班也别忘了吃午餐呀，别太压力啊，有什么东西你也可以和我倾诉。“</p><p>你在荧幕回复了她一个爱心。</p><p>你不知道为什么她会在这时候发给你这一句话，你也没多想。</p><p>下午五点，乡坊围在村口，你和其他认识的同辈乡坊，把棺材扛上灵车内。</p><p>灵车的后备箱关上。</p><p>你左右握着你最爱的人的手，你们一步一步地，追逐着灵车和他，但你们没追上。你只可惜你没有第三只手，无法抓着另一个你挚爱的人。</p><p>晚上七点，你回到村里，回到你小时候的家。餐桌上，没有了玫瑰，只有你怀念许久的饭菜。</p><p>”儿啊，这些年，去镇里奔波，有想家吗？“</p><p>”想啊。“</p><p>你说的是真话。</p><p>你在餐桌前诉说了好多，你的思念，你的遗憾，你的努力。</p><p>晚上九点，你吃完饭了，但你还想留着。</p><p>回程的票写着的是十点。</p><p>你还记得你的约定。你看到了她的讯息。</p><p>”加班了吗？“</p><p>”嗯，我会回来的，别担心。“</p><p>晚上九点二十，你和村里的人打完招呼后，便走出了村口。</p><p>通往火车站的路有路灯，你在这条路上，回想起那时你和她怎么牵着手在这一条路上一直走，走到镇里。你在这条路上，反复回想起数个小时前，灵车驶过的路线。</p><p>晚上九点四十五，你到了火车站。</p><p>你踏入火车里，由于疲累你便闭眼睡去了。</p><p>晚上十点三十，你似乎听到熟悉的铃声，那是她为你设的来电铃声，但那声音微乎其微。火车屏幕上显示还有一分钟就要到站了。你收拾好自己，看向窗外熟悉的景色。</p><p>晚上十一点，你在冷清的街上走着，不久，你一边低头看手机，一边跑了起来。这一条街上是你们常来的小吃街，今天不知道为什么没有营业。但你还记着你们的约定。你跑向两公里外的烧烤店，买了几只串串后，便打车回到了你们的出租屋。</p><p>晚上十二点，你站在门前。小心地打开门，进入，把手中的袋子放在餐桌上。</p><p>令你奇怪的是，餐桌上的玫瑰花瓣没有被清理，在上面睡着的是永永，它没生病。</p><p>你把永永身旁的花瓣一瓣一瓣拾起，正要倒进垃圾桶里。</p><p>你在餐桌上看到了一颗裹着红色包装的喜糖。</p><p>你明白了什么，但什么都没做。只是坐在餐桌旁，数着。</p><p>四十四朵。</p><p>隔天，你在客厅的地毯上醒来，盖着你的是卧室的被子。</p><p>你睁开眼，看到她把昨天的烧烤重新加热，此时正享受着。</p><p>”醒了啊，快，还热着呢。“</p><p>她对你说。</p><p>”嗯，好，等我，我先去洗漱。“</p><p>你带着手机，来到洗漱间的镜子前。你先是写了一个讯息给你的上司，向他请了一天的假。然后你看着镜子里自己还泛着血丝的眼角，你用力地洗刷着你的眼圈。</p><p>当你走出去时，她为你留下了你最爱的烤土豆片和考五花肉。</p><p>”谢谢。“</p><p>”跟我还说谢谢？“</p><p>桌子上的喜糖消失了，你抬头时她正看着你。你似乎可以看到她通红的眼角。</p><p>她走回卧室，门半掩着。</p><p>你吃完后，收拾桌上的包装和花瓣。</p><p>你看到垃圾桶里，有一张昨天的回程票，晚上九点。</p><p>你回到餐桌前，你看着那一朵没有任何要凋零的痕迹的玫瑰，还有周围的玫瑰。</p><p>三十朵。</p><p>一天，你出去买早餐的时候，忘了关门。</p><p>你在人来人往的小吃街走着的时候，裤兜里的手机震动得剧烈。</p><p>是她的电话。</p><p>你接起。</p><p>”远远不见了。“</p><p>说完这句，她便挂断了电话。你能听到她语气里的着急与害怕，于是你把刚买的早餐，随手扔在身旁的铁皮垃圾桶盖上。</p><p>你急匆匆地跑回去，裤兜里的手机没有响起。</p><p>回程中，你在你们常去的公园看到了她，她此时正蹲在绿化带旁。</p><p>”远远，远远。“</p><p>她一声又一声地呼唤着她亲自取的名字，你陪着她，也如此呼唤着。但你发现，你用着叫永永的声调去叫着远远。</p><p>你陪着她找，从你们第一次见到永永和远远的湖边，到你们带着永永和远远散步的公园，再到你们的小区楼下。你们找了好久好久。</p><p>找不到。</p><p>她失落地走回湖边，你伴在她的身旁，你不知道说什么。</p><p>她蹲在湖边，看着湖面的倒影。</p><p>她说了一句话。</p><p>”其实，她一直都想走的。“</p><p>你不知道怎么回，也不知道她说的是不是真的。</p><p>你沉默着。</p><p>远远走后，家里只剩永永。</p><p>自从远远走后，永永变得不一样了。它不再像从前那样活泼，甚至房东来的时候它也不会挣扎了。它只剩那束越来越少了的玫瑰束与它作伴。</p><p>你看着永永，不自觉地又数起了玫瑰。</p><p>十二朵。</p><p>那天之后，沉默便变得越来越多。</p><p>你还会从外面买回夜宵，甚至你会有时早早地便回来。</p><p>但你们只是吃着，看着。</p><p>话变得越来越少，花也变得越来越少。</p><p>你有时回来，回到卧室时，会发现永永正趴在飘窗上，背对着你。</p><p>永永看着远远的地方。</p><p>房东也很少来了，你也不见得永永变得活泼起来。</p><p>你回到餐桌，仔细地清理花瓣时，那时花已经很少了，甚至你可以一朵一朵地看清楚。</p><p>两朵。</p><p>你发现了。</p><p>两朵不会枯萎的花。</p><p>你拿了起来，看了看。一朵是你放的，花的底部还有贴着的价格签。你买的玫瑰，有着刺眼的死红。</p><p>可另外一朵的颜色有一些不同，花用的都是染色的布料。但花瓣边缘已经起了毛边，你不断抚摸玫瑰的边。但它不是锋利的。</p><p>它是假花。</p><p>两朵。</p><p>你把那两朵假花放回花束里。
 她从卧室走出来，坐在你的对面。</p><p>你们中间隔着一个花束，两朵花。</p><p>你坐在餐桌前，看着花束。</p><p>两朵。</p><p>你数了好久。</p></div>
-  </article>
 </main>
-<div class="toolbar" id="toolbar" role="toolbar" aria-label="阅读设置">
-  <button class="toolbar-btn" id="btn-theme" aria-label="切换主题" title="主题"><span class="icon">☀</span><span class="tooltip">切换主题</span></button>
-  <div class="toolbar-divider" aria-hidden="true"></div>
-  <button class="toolbar-btn" id="btn-font" aria-label="切换字体" title="字体"><span class="icon">字</span><span class="tooltip">切换字体</span></button>
-  <div class="toolbar-divider" aria-hidden="true"></div>
-  <button class="toolbar-btn" id="btn-size-minus" aria-label="缩小字体" title="缩小字体">A−</button>
-  <button class="toolbar-btn" id="btn-size-plus" aria-label="放大字体" title="放大字体">A+</button>
+<div class="toolbar" id="toolbar">
+  <div class="toolbar-group">
+    <button class="toolbar-btn theme-btn" id="btn-theme">亮</button>
+  </div>
+  <div class="toolbar-divider"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn size-btn" id="btn-size-minus">A-</button>
+    <button class="toolbar-btn size-btn" id="btn-size-plus">A+</button>
+  </div>
+  <div class="toolbar-divider"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn font-btn" id="btn-font">宋</button>
+  </div>
 </div>
-<script>
-(function(){
-  const html=document.documentElement;
-  const rail=document.getElementById('progress-rail');
-  const bar=document.getElementById('progress-bar');
-  const header=document.getElementById('header');
-  const toolbar=document.getElementById('toolbar');
-  const btnTheme=document.getElementById('btn-theme');
-  const btnFont=document.getElementById('btn-font');
-  const btnSizeMinus=document.getElementById('btn-size-minus');
-  const btnSizePlus=document.getElementById('btn-size-plus');
-  const STORAGE_KEY='reader_prefs';
-  const THEMES=['light','sepia','dark'];
-  const FONTS=['serif','kai','fangsong','sans'];
-  const SIZES=['sm','md','lg'];
-  const THEME_ICONS={'light':'☀','sepia':'☕','dark':'🌙'};
-  const FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
-  let prefs=loadPrefs();
-  let lastScrollY=window.scrollY;
-  let hideHeaderTimer=null;
-  let hideToolbarTimer=null;
+<script>(function(){
+  var h=document.documentElement;
+  var toolbar=document.getElementById('toolbar');
+  var btnTheme=document.getElementById('btn-theme');
+  var btnFont=document.getElementById('btn-font');
+  var btnSizeMinus=document.getElementById('btn-size-minus');
+  var btnSizePlus=document.getElementById('btn-size-plus');
+  var K='reader_prefs';
+  var THEMES=['light','sepia','dark'];
+  var THEME_LABELS={'light':'亮','sepia':'护','dark':'暗'};
+  var FONTS=['serif','kai','fangsong','sans'];
+  var FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  var SIZES=['sm','md','lg'];
+  var p=l(),lastY=0,timer=null;
 
-  function loadPrefs(){
-    try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch{return {};}
+  function l(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+  function s(v){localStorage.setItem(K,JSON.stringify(v));}
+  function apply(v){
+    if(v.theme){h.dataset.theme=v.theme;btnTheme.textContent=THEME_LABELS[v.theme]||'亮';}
+    if(v.font){h.dataset.font=v.font;btnFont.textContent=FONT_LABELS[v.font]||'宋';}
+    if(v.size){h.dataset.size=v.size;}
   }
-  function savePrefs(p){localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
-  function applyPrefs(p){
-    if(p.theme){html.dataset.theme=p.theme;updateThemeIcon(p.theme);}
-    if(p.font){html.dataset.font=p.font;updateFontLabel(p.font);}
-    if(p.size){html.dataset.size=p.size;}
-  }
-  function updateThemeIcon(t){btnTheme.querySelector('.icon').textContent=THEME_ICONS[t]||'☀';}
-  function updateFontLabel(f){btnFont.querySelector('.icon').textContent=FONT_LABELS[f]||'字';}
-  function cycle(arr,current){const i=arr.indexOf(current);return arr[(i+1)%arr.length];}
+  function cycle(arr,cur){var i=arr.indexOf(cur);return arr[(i+1)%arr.length];}
+  apply(p);
 
-  applyPrefs(prefs);
+  btnTheme.addEventListener('click',function(){
+    p.theme=cycle(THEMES,p.theme||'light');
+    apply(p);s(p);
+  });
+  btnFont.addEventListener('click',function(){
+    p.font=cycle(FONTS,p.font||'serif');
+    apply(p);s(p);
+  });
+  btnSizeMinus.addEventListener('click',function(){
+    var i=SIZES.indexOf(p.size||'md');
+    p.size=SIZES[Math.max(0,i-1)];
+    apply(p);s(p);
+  });
+  btnSizePlus.addEventListener('click',function(){
+    var i=SIZES.indexOf(p.size||'md');
+    p.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    apply(p);s(p);
+  });
 
-  function updateProgress(){
-    const scrollTop=window.scrollY;
-    const docHeight=document.documentElement.scrollHeight-window.innerHeight;
-    const pct=docHeight>0?scrollTop/docHeight:0;
-    bar.style.width=(pct*100)+'%';
-  }
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T')btnTheme.click();
+    else if(e.key==='f'||e.key==='F')btnFont.click();
+    else if(e.key==='-'||e.key==='_')btnSizeMinus.click();
+    else if(e.key==='='||e.key==='+')btnSizePlus.click();
+    else if(e.key==='ArrowLeft')history.back();
+  });
+
   function onScroll(){
-    updateProgress();
-    const y=window.scrollY;
-    const scrollingDown=y>lastScrollY;
-    if(scrollingDown&&y>80){
-      header.classList.add('hidden');
-      toolbar.classList.add('hidden');
-    }else{
-      header.classList.remove('hidden');
-      toolbar.classList.remove('hidden');
-    }
-    lastScrollY=y;
-    clearTimeout(hideHeaderTimer);
-    clearTimeout(hideToolbarTimer);
-    hideHeaderTimer=setTimeout(()=>{if(window.scrollY>80)header.classList.add('hidden');},2000);
-    hideToolbarTimer=setTimeout(()=>{if(window.scrollY>80)toolbar.classList.add('hidden');},2000);
+    var y=window.scrollY;
+    if(y>lastY&&y>100){toolbar.classList.add('hidden');}
+    else{toolbar.classList.remove('hidden');}
+    lastY=y;
+    clearTimeout(timer);
+    timer=setTimeout(function(){if(window.scrollY>100)toolbar.classList.add('hidden');},2500);
   }
   window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',updateProgress);
-  updateProgress();
 
-  btnTheme.addEventListener('click',()=>{
-    prefs.theme=cycle(THEMES,prefs.theme||'light');
-    updateThemeIcon(prefs.theme);
-    savePrefs(prefs);
-    applyPrefs(prefs);
+  window.addEventListener('storage',function(e){
+    if(e.key===K){p=JSON.parse(e.newValue||'{}');apply(p);}
   });
-  btnFont.addEventListener('click',()=>{
-    prefs.font=cycle(FONTS,prefs.font||'serif');
-    updateFontLabel(prefs.font);
-    savePrefs(prefs);
-    applyPrefs(prefs);
-  });
-  btnSizeMinus.addEventListener('click',()=>{
-    const i=SIZES.indexOf(prefs.size||'md');
-    prefs.size=SIZES[Math.max(0,i-1)];
-    savePrefs(prefs);
-    applyPrefs(prefs);
-  });
-  btnSizePlus.addEventListener('click',()=>{
-    const i=SIZES.indexOf(prefs.size||'md');
-    prefs.size=SIZES[Math.min(SIZES.length-1,i+1)];
-    savePrefs(prefs);
-    applyPrefs(prefs);
-  });
-
-  document.addEventListener('keydown',e=>{
-    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
-    if(e.key==='t'||e.key==='T'){btnTheme.click();}
-    else if(e.key==='f'||e.key==='F'){btnFont.click();}
-    else if(e.key==='-'||e.key==='_'){btnSizeMinus.click();}
-    else if(e.key==='='||e.key==='+'){btnSizePlus.click();}
-    else if(e.key==='ArrowLeft'){history.back();}
-  });
-
-  window.addEventListener('storage',e=>{
-    if(e.key===STORAGE_KEY){
-      prefs=JSON.parse(e.newValue||'{}');
-      applyPrefs(prefs);
-    }
-  });
-})();
-</script>
+})();</script>
 </body>
 </html>
