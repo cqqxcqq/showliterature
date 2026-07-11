@@ -311,7 +311,7 @@ def load_works():
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         data = json.load(f)
     works = [w for w in data.get('works', []) if not w.get('is_archived', False)]
-    works.sort(key=lambda w: (w.get('order', 999), w.get('added_date', '0000-00-00 00:00')))
+    works.sort(key=lambda w: w.get('added_date', '0000-00-00 00:00'), reverse=True)
     return works
 
 def split_paragraphs(content):
@@ -379,7 +379,7 @@ def main():
     shutil.copy2(DATA_FILE, DIST_DIR / 'works.json')
     print(f"Copied works.json to dist/")
 
-    vercel_config = {'outputDirectory': 'dist'}
+    vercel_config = {'outputDirectory': 'reader/dist'}
     (ROOT / 'vercel.json').write_text(json.dumps(vercel_config, indent=2), encoding='utf-8')
     print("Created vercel.json")
 
