@@ -174,6 +174,7 @@ LIBRARY_HTML = """<!DOCTYPE html>
 </head>
 <body>
 <a href="../index.html" class="back-link">← 返回</a>
+<a href="admin.html" class="back-link" style="left:auto;right:0;opacity:.4;font-size:.8rem;">管理</a>
 <main class="library">
   <header class="library-header">
     <h1>{title}</h1>
@@ -378,6 +379,12 @@ def main():
 
     shutil.copy2(DATA_FILE, DIST_DIR / 'works.json')
     print(f"Copied works.json to dist/")
+
+    # Copy admin page
+    admin_src = ROOT / 'reader' / 'admin.html'
+    if admin_src.exists():
+        shutil.copy2(admin_src, DIST_DIR / 'admin.html')
+        print("Copied admin.html to dist/")
 
     vercel_config = {'outputDirectory': 'reader/dist'}
     (ROOT / 'vercel.json').write_text(json.dumps(vercel_config, indent=2), encoding='utf-8')
