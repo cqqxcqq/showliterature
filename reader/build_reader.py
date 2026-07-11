@@ -173,14 +173,13 @@ LIBRARY_HTML = """<!DOCTYPE html>
 <style>{css}</style>
 </head>
 <body>
-<a href="../index.html" class="back-link">← 返回</a>
 <a href="admin.html" class="back-link" style="left:auto;right:0;opacity:.4;font-size:.8rem;">管理</a>
 <main class="library">
   <header class="library-header">
     <h1>{title}</h1>
-    <p>{count} 篇作品 · 共 {total_chars} 字</p>
+    <p id="lib-stats">加载中...</p>
   </header>
-  {works_html}
+  <div id="work-list"></div>
 </main>
 <script>{lib_js}</script>
 </body>
@@ -237,6 +236,32 @@ LIB_JS = """(function(){
   function a(p){if(p.theme)h.dataset.theme=p.theme;if(p.font)h.dataset.font=p.font;if(p.size)h.dataset.size=p.size;}
   a(l());
   window.addEventListener('storage',function(e){if(e.key===K)a(JSON.parse(e.newValue||'{}'));});
+
+  fetch('works.json').then(function(r){return r.json();}).then(function(data){
+    var works=(data.works||[]).filter(function(w){return !w.is_archived;});
+    works.sort(function(a,b){return (b.added_date||'').localeCompare(a.added_date||'');});
+    var totalChars=works.reduce(function(s,w){return s+(w.char_count||0);},0);
+    document.getElementById('lib-stats').textContent=works.length+' 篇作品 · 共 '+totalChars+' 字';
+    var list=document.getElementById('work-list');
+    if(works.length===0){list.innerHTML='<div style="text-align:center;padding:4rem 1rem;color:var(--text2);">暂无作品</div>';return;}
+    list.innerHTML='<div class="work-list">'+works.map(function(w){
+      var paras=(w.content||'').split(/\\r?\\n\\r?\\n/);
+      var excerpt=paras[0]?paras[0].substring(0,100)+'…':'';
+      return '<a href="read/'+w.id+'.html" class="work-item">'+
+        '<div class="wi-title">'+esc(w.title||'无标题')+'</div>'+
+        '<div class="wi-meta">'+
+          '<span>'+esc(w.type||'')+'</span>'+
+          '<span>'+(w.char_count||0)+' 字</span>'+
+          '<span>'+esc(w.writing_date||'')+'</span>'+
+        '</div>'+
+        '<div class="wi-excerpt">'+esc(excerpt)+'</div>'+
+      '</a>';
+    }).join('')+'</div>';
+  }).catch(function(e){
+    document.getElementById('work-list').innerHTML='<div style="text-align:center;padding:4rem 1rem;color:var(--text2);">加载作品失败</div>';
+  });
+
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 })();"""
 
 # ─── Reader JS ───
@@ -319,34 +344,16 @@ def split_paragraphs(content):
     paras = re.split(r'\r?\n\r?\n', content.strip())
     return [p.strip() for p in paras if p.strip()]
 
-def build_library(works):
-    total_chars = sum(w.get('char_count', 0) for w in works)
-    items = []
-    for w in works:
-        paras = split_paragraphs(w['content'])
-        excerpt = paras[0][:100] + '…' if paras else ''
-        items.append(f'''<a href="read/{w['id']}.html" class="work-item">
-  <div class="wi-title">{w['title']}</div>
-  <div class="wi-meta">
-    <span>{w.get('type','')}</span>
-    <span>{w.get('char_count',0)} 字</span>
-    <span>{w.get('writing_date','')}</span>
-  </div>
-  <div class="wi-excerpt">{excerpt}</div>
-</a>''')
-    works_html = '<div class="work-list">' + ''.join(items) + '</div>' if items else '<p style="text-align:center;color:var(--meta);padding:4rem 0;">暂无作品</p>'
+def build_library():
     html = LIBRARY_HTML.format(
         theme='dark', font='serif', size='md',
         title='书架',
-        count=len(works),
-        total_chars=total_chars,
-        works_html=works_html,
         css=LIBRARY_CSS,
         fonts_url=GOOGLE_FONTS,
         lib_js=LIB_JS
     )
     (DIST_DIR / 'index.html').write_text(html, encoding='utf-8')
-    print(f"Generated index.html with {len(works)} works")
+    print(f"Generated index.html (dynamic, loads works.json at runtime)")
 
 def build_reader(work):
     paragraphs = ''.join(f'<p>{p}</p>' for p in split_paragraphs(work['content']))
@@ -373,7 +380,7 @@ def main():
     works = load_works()
     print(f"Loaded {len(works)} works (archived excluded)")
 
-    build_library(works)
+    build_library()
     for w in works:
         build_reader(w)
 
