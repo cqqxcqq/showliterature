@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>723 字</span><span class="dot">·</span>
-      <span>2026-02-24</span>
+      <span>2026-02-24</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>墙皮经年氧化，裂出十三毫米深的纹路。一颗承载了十年重量的铁钉，在石灰层深处撑开一个荒芜的孔洞。生锈的螺纹与干燥的粉末彼此咬合，又彼此松动，直到风从没关紧的窗缝里侵入。相框开始在白墙上钝涩地摆动，落下银盐色的灰烬。</p><p>亚克力面板蒙着一层细小冷凝水珠，似是蚕虫，一点点吞噬相片的温度，那相纸里的人，脸上浮起一层溺水的肿。</p><p>相片刚冲洗出来那天，两张相似的脸从相纸上浮现。他用指尖捏着边缘，低头吹掉一粒灰，呼出的气在相片表面凝成一层薄雾，并于两秒后消逝。</p><p>风一吹，相框里就有一小片色彩剥落，原本的颜色，被沉重的灰与白，一寸一寸地取代。</p><p>相框，每时每刻，都在被某种看不见的力拉扯。铁与石灰，被风捧在手心揉搓，漫天落下铁白色的粉尘。那颗钉子，大半被锈蚀覆盖，只剩一小截泛着铁的原色，仍顽固地咬住墙面，不肯松口。</p><p>那件白衬衫的领口外侧，用蓝线缝着一个歪斜的星星。那是哥哥的杰作。他说过，等他穿不下了，就送给我，让我穿。</p><p>白翳吞噬了余下的色泽，留下霉菌。霉斑在潮湿的空气里扩散，漫过相片的边界，爬上悬挂相框的那根尼龙线。月光夜夜照在线上，把它晒得发白、发脆。数万根咬合的纤维逐根断裂，到最后，只剩一缕白丝撑着整面相框的重量。</p><p>十年前的今天，也有月光穿透过窗帘，在墙上勾勒出一道四方的白。那时这颗钉子还泛着新铁的亮，被一只手握着锤子，一下一下钉进米白的石灰墙。即使中途锤偏了一次，钉子弹飞，在地板上旋转，墙面留下一个带血的指印。它最终还是被牢牢钉住了。一双大手把相框挂上去，小心翼翼地扶正。</p><p>十年又零二秒后，那条线终究绷断了。</p><p>空气里回荡着十年未被扰动的气息。</p><p>相框面朝下落在地板上。白尘与褐锈在四周溅开。</p><p>那根断了的丝线在空中飘了一会儿，落在碎片旁边，没有声音，它耗尽了生命里最后一根神经。</p><p>墙上空出一个四方的白印。十年的月光没能晒透那个位置。</p><p>那是整面墙上，唯一还完好的部分。</p><p>相片里那张脸，始终朝着墙面。</p><p>衣柜里那件白衬衫，我始终没有穿上。领口的星星还是蓝的。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

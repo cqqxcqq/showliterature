@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>352 字</span><span class="dot">·</span>
-      <span>2025年 12 月 10 日</span>
+      <span>2025年 12 月 10 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>横草杂生的悬崖边，被雨水冲刷的泥土，一一掉落，等待着第一步脚印--它们撑着各色的梦，如同宇宙中的星星，迸发在山脉的脉络中。雨前的空气充满荆棘，参杂着草堆的腥臭和旧芽的恶臭，让风也不想再临，似乎快让万个春天凋零，从世界里排出。花落节分，竟有些芬芳。白花抢先吞噬玉兰，二者合一的花香飘散，化为空中雪白的彩雪，再如附在枝尾之银河，随时都可能绽放最深处的自由梦。那愿意等待的情啊，在尚且未被泪染红之前，用尽你的声音嘶喊，等待着下一年桥头下，被丢弃的玫瑰。最是茉莉，些许叠雪堆满了天空，等待最后一次冬雨驱散烂泥，使人忆起养者白头转黑，子情未报。此般永恒不逝的泪，哭得令人些许安慰，哭得令人释怀。花凋画也被彩毕了。最是密集的一笔遗憾，仿若将军擦拭碎剑，渐而片片消逝，起始怎意为利剑。乌鸦在窗外的路灯上独自饮酒，却找不着石子，靛颏继续流浪，百灵往返于每一声祈愿中。万般画面撕裂了春的杂乱，却也让人愁思相生。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

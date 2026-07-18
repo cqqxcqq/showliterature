@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>4392 字</span><span class="dot">·</span>
-      <span>2025 年 5 月 30 日</span>
+      <span>2025 年 5 月 30 日</span><span class="dot">·</span>
+      <span class="reading-time">约 11 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>门扉外，麻雀扑闪着翅膀，在雨幕间啁啾几声。清晨的光沿着风的衣袖走来，徘徊一夜的凉意随着涌进卧室。灯光依旧亮着，却抵不过窗外渐亮的天色，很快便失去了它的温度。</p><p>雨水轻轻跌落，闯进我的梦境，冰凉地掠过眉角。我忽地怔怔望着书桌上阵阵沉香的书本，这一刻活得有些梦幻。</p><p>什么是生活？</p><p>是为了把生命承载到明天而活着？亦是为了把生命脱离自昨天的梦而忙活？还是为了把生命刻在今天而熬活？</p><p>也许每个人都无法参透生活与生命的意义，甚至为寻找其终点而付出一生。</p><p>哲人湯瑪斯·卡萊爾曾说过：“我们的生活被必然性所包围；然而生命本身的意义无非就是自由，无非就是自愿的力量：因此，我们要进行一场战争；尤其是在开始的时候，这是一场艰苦的战斗。”</p><p>有些人的生活憧憬秩序，有些人则追求自由。有些人的生活似监狱般窒息，有的则如鸟儿一般逍遥。西西弗斯快乐吗？我不得而知。但至少，对他而言，生活里存在意义。</p><p>我们终其一生都在一场烽火里活着。为金钱，为权力，为一切欲望所交战。</p><p>世界上有千千万万的人，他们的生活大抵只是物质的。我是说，他们在物质之外，并没有太多经历。</p><p>十几年前，我家附近还是一片废墟。荒凉得很，除了自家屋子，踏出门外便再也见不到半点影子。自我记事起，童年的大半时光都在这里度过。只是这些，不过枝节而已。</p><p>我还记得那时，太阳把藏在土壤下的绿芽拉出来，邀请它玩躲猫猫。至于它是否答应，我却不得而知。引擎声忽地打破了这片土地的宁静。我正无所事事，连忙起身张望这一罕见的动静。车上下来几位气势逼人的人，趾高气扬地扫视着这片土地。</p><p>他们高傲地向我们出示一本小册子，写着我们的土地已被征收。那时我还小，根本做不了主，只能先应付他们，再去找爷爷奶奶，让真正有分量的人出面沟通。</p><p>至少当时我觉得那是好的。起码以后我不再孤独，不必每天对着满天星斗，像碎银般撒落的星子，独自发呆。如今想起，只能为当时的天真暗自发笑，也笑那份无知的可怜。</p><p>那日之后，我每天最大的乐趣，便是看着窗外忙忙碌碌的身影交错，听着窗外嘈嘈杂杂的施工声入睡。</p><p>夜晚的工地旁，我终是入不下眠，拖着无神的眼向外走去。如往常一般，我躺在松散的沙地上，静静的数着天空的星子。有时，数到一半，忽地不知上一次视线落在哪颗星星，只得重新数起。那时我不懂，身后的沙子，比天上的星光更有温度，更能凸显我的渺小。</p><p>或许，正因其渺小，才有着某种伟大。</p><p>许是星星的微光太过单调，我很快便失去了雅兴。起身徘徊，循着那烦人的忙碌声走近。</p><p>脚步停下时，眼泪不由自主的流出，只因满天的沙尘模糊了我的视线。我艰难的捂住眼睛，只留下一道细缝，让视线像星子般闪烁，浩瀚，却也渺小。</p><p>推车，装载满满的，看不清是什么了。汗水，落得冷冷的，也记不起它的温度了。那时的我，许是天真得近乎无知。不明白他们急促的脚步，并不是为了追逐夕阳里的蝴蝶，更不是为了日落而去。我看着他们模糊的身影，却不知他们是为了三两餐而奔波，为了肩上比水泥更沉的债务，为远在他乡病痛亲人，为了那全家福里唯一的笑容。</p><p>我不知，在他们生活的世界里，没有那么多彩虹可供驻足，灰色的沙尘落在他们的身上，只偶尔留下他们的血与汗，作为他们存在过的证明。</p><p>我懵懂无知，只是踏着轻盈的脚步，来到一个靠在钢架旁休息的工人身边，听着他急促喘息的节奏。几次呼吸之后，他察觉了我的存在。我看见他的眼瞳闪过一丝惊讶与慌张。他看起来几乎晕倒，却还强撑着像在表演一般。我看着他努力扮演一个不会疲倦的机器，竟然真的骗过了当时的我。</p><p>笑着，我问他。</p><p>“叔叔，你看起来好累啊”
@@ -190,6 +200,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>小说</span><span class="dot">·</span>
       <span>1692 字</span><span class="dot">·</span>
-      <span>2026-06-05</span>
+      <span>2026-06-05</span><span class="dot">·</span>
+      <span class="reading-time">约 4 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>你坐在咖啡馆最里面的一张软垫椅子上，桌上，装着黑咖啡的马克杯，半糖少冰。你的眉头在皱着，左手拇指指甲反复刮着右手食指的关节。过了一会，你的眉头舒展了开，你视线里有一个人影。</p><p>她在五米外停下，看了你一会，转头扫视四周，才走过来，坐在你的前方。她刚想张口，但视线看到杯口浮起的冰时，她便沉默了。</p><p>你拿起那杯咖啡抿了一口。放下时你的眉头又皱了起来，你看向她身下椅子旁，背包上吊着的那一张合照。</p><p>“他不敢来，托我把这个交给你。”</p><p>你递给她一封信封，然后你低下头。你左手拇指反复刮着食指的关节，对面的她看着你，先是愕了一下，然后接过那封信。</p><p>你看不到她脸上是什么样的，但你只是看到食指关节变得红肿了。</p><p>过了一会，你听到一声叹息，然后是抽泣。你想起语言讯息里第八秒的叮嘱，也叹了一口气，但对面的抽泣你听得更响亮了。</p><p>你余光看到她站起来，她把那杯咖啡泼向你。</p><p>“渣男！”</p><p>“这么久的深情，原来都是装的，都是装的。”</p><p>咖啡从你的头发滴落，然后顺着颧骨流下。</p><p>当你听到装字时，你手上的动作停了一下，然后你更使力地刮着你的食指关节。</p><p>你闭上了眼，直到你听到她的脚步声渐去。</p><p>你走回家时，过往的人不敢靠近你，你闻到了身上的咖啡味，你不喝咖啡。</p><p>你看着洗手间镜子里的你，把脸洗干净，擦干。你看着自己，你的左手拇指，在不自觉地刮着右手食指的关节，你愣了一下，停下。</p><p>三天前，你替一个老人去相亲。他喝茶前，总要对杯口吹三下。</p><p>两天前，你替一个懦弱的主管向固执的客户道歉。结束后走在街上，你的背仍是佝偻着的，过了两个红绿灯，你才把背挺直。</p><p>昨天，你替一个暴躁的父亲去学校，在老师面前教训惹事的儿子。回到家，你开门时手指仍带着把门把拆下的狠劲与暴戾。</p><p>你每次到家时，都会在把两个鞋子分别放在鞋柜的不同地方，左脚的鞋放在右上角，右脚的鞋放在鞋柜下的地板。你开门后，必须把钥匙精准的投入玄关处的一个干净的垃圾桶中。</p><p>还有，无论渴不渴，你都会在关门后，打开你冰柜，拿出一瓶无糖苏打水，洗掉你口腔里此前所有替别人喝过的咖啡，茶，或是劣质啤酒。</p><p>今天，你疲惫地回到家。你刚替一个流水线工人提交辞职信，还被暴躁的上司骂了一天。你开始执行重复的仪式。</p><p>你调整了鞋子的位置，进门，钥匙掉出桶口两次，第三次才落入。</p><p>你走到冰柜前，拿出一罐无糖苏打水，拉开拉环。</p><p>但你在喝之前，你停下了，下意识地对着冰冷的瓶口，轻轻吹了三下热气。你闻到气泡水的碳酸味。</p><p>你看着手里冒冷气的铝罐，你的背慢慢挺直。过了几秒，又塌下了。</p><p>你在一个床上醒来，你的脚跟悬在空中。你被摇晃的窗帘后的日光照醒，房间里是开着灯的。掉漆的木门外，你听见瓷杯轻轻碰到桌角的声音传来。你坐起身，面对着木门。</p><p>“初一，初一。”</p><p>你起来时下意识看向床头左侧，但在发现那里除了零散的药物包装便什么都没有后你便在那一声陌生的乳名的呼唤下便站起身走向外。</p><p>你在起身时听到那一声乳名时你愣了一刻，但直到第二声乳名的响起你才想起要站起来。</p><p>你看到客厅，头发花白的老人坐在老年摇椅上，拐杖被放在右手侧，前方是黑白电视机和一个作响的落地扇。</p><p>你看着他全身地看着电视里播报着的数个年代前的新闻，他没关心你的脚步声，只是传唤你帮他接一杯水，他渴了。</p><p>你看向身旁的木桌上，一个瓷杯和一个铁罐，又转头看向厨房。</p><p>你把手摸向右侧裤袋，然后是左侧裤袋。你把手机拿出来，打开置顶的聊天。</p><p>【杯子，蓝色那个，只能装温水。】</p><p>你把手机放回右侧裤袋，绕开客厅中央的摇椅，走向厨房。洗手盆里碗筷和食物残渣还未被清理，你在堆叠的餐具里，找到了那一个蓝色的瓷杯，把他洗干净后便装好了水。</p><p>你走向摇椅旁，递给老人。</p><p>老人习惯地吹了吹杯口，你才发现杯口传来热气。</p><p>“初一啊，药该先吃哪个了。”</p><p>你重新拿出手机，翻看置顶的信息。</p><p>【早上，先吃降压药。】</p><p>你走向你房间内，在床头柜上，翻找出那一袋降压药。</p><p>你随手把手机扔在床上，没有弹起，你听到嘎吱的金属声。但你没在意，只是走出去把药盒打开，拿出一颗降压药。</p><p>老人闭上眼，把药含在口中，水从他喉咙流下时，他的眉头紧皱。</p><p>三天后，天刚朦朦亮，你突然睁开眼睛。</p><p>窗外垃圾车轰鸣，垃圾桶的盖子重重地砸下。</p><p>你知道现在是早晨六点十三分，因为两秒后是老人每天的第一声咳嗽，它准时响起。</p><p>你看着旋转的吊扇和天花板。那是早晨六点十三分。</p><p>午餐之后，你正在厨房洗碗。身后客厅传来一声咳嗽。你的视线还在水槽里，手却伸向一旁的蓝色瓷杯，你接了一杯温水。</p><p>走回客厅，老人还未说话，你就把那肠胃消化药与水杯递给他了。</p><p>你回去洗碗的时候不小心撞到了大腿，你的裤袋里没有手机，它应该还在充电。</p><p>夜深了，你在搀扶老人躺卧在床上之后，走向房间的窗户。刚来时的那两天你总把窗帘拉得严丝合缝。现在你的手在拉到最后时，会本能地停着，留下两指宽的缝。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

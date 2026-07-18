@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>杂文</span><span class="dot">·</span>
       <span>380 字</span><span class="dot">·</span>
-      <span>2026-05-14</span>
+      <span>2026-05-14</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>眼球是一颗半圆，它会发光。光是有温度的，两个本不该交错的视线相撞时，空气中，光波暂时被熔断，神经线在三秒后，才痊愈，移开。第一秒是错愕，想着要移开的念头，灼烧着视网膜。第一点五秒是平静下来的安稳，一种破罐子破摔的赌注。第二秒，是在冷溶中坍塌的理智，眼球在微微颤抖，不敢再移动。第三秒，那光波在视网膜往后，大脑中，刻上一道疤痕。</p><p>两道视线，穿越时，互相相遇的那个地方，空气被抽干，真空往颤抖的视线传播，直到眼球下胸腔，窒息地，压迫着。目光重合的瞬间，肺部成为真空，只余下对岸残存的氧气，勉强保持着足够继续睁眼的呼吸。起初，那道视线是尘埃，静电来了，无法抗拒，藏在衣角下的仓促，无处可逃。</p><p>人的掌纹是钟摆上的木纹，只不过挥了两周，时间方过了两次来回，在那道视线，摆动的利落夺走了心率本该有的频率，咬肌在嘴皮下被咬得紧紧。</p><p>镜头焦点或许错位了，那左右摆动的木纹，也许是在对一个模糊的“朋友”的身份的人做一个微小的告别。那道目光误把它认为是对准自己的焦距。眼神于是在那时彻底失焦。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

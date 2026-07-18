@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>杂文</span><span class="dot">·</span>
       <span>320 字</span><span class="dot">·</span>
-      <span>2026-05-11</span>
+      <span>2026-05-11</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>杂乱的分子在空气中摇动时，它们不会互相碰撞。光线下，分子尘埃正在不规则移动。声源震动所发出的波，在空气里，会被杂乱运动的分子消融，抵消。两个不同频率的声波，它们在空气相遇时，会径直地穿过彼此。</p><p>相同路径，相同形式运动的分子，会因运动周期内，距离与角度的相同，相遇。但只要两个分子中，任何一方，它的规律是独特的，它必不会与另一个相同的分子碰撞。</p><p>声波有着更苛刻的需求。它们必须要有共振的频率与幅度，否则，它们会似水波般，穿过彼此震动的频率，然后继续传播。声音会在传播时逐渐变得小声，声量在分子的运动内，被它运动的频率所消融。</p><p>声波内的每一圈波纹，每越过一个分子，能量就会衰减。声波有共鸣需求，它才需要耗尽所有的振幅。最后迎上另一池波纹时，它会因自己过于独特的旋律，被彻底消融。</p><p>声波与分子的本质是运动，碰撞是过程中的一个副产品。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>杂文</span><span class="dot">·</span>
       <span>440 字</span><span class="dot">·</span>
-      <span>2026-05-09</span>
+      <span>2026-05-09</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>椅子被推后，鞋子在地上留下浅浅的印记，桌上的咖啡洒在玻璃圆桌上。咖啡馆彩色的玻璃花窗，光在穿过后，在咖啡墨褐色上似水波般，照耀。</p><p>干涸的咖啡色表面，被喷上消毒液。消毒液与桌上的咖啡印记融合，刺鼻的酒精味参杂着致迷的咖啡味。棉质抹布，擦拭，黄色的布面，咖啡融入细小纤维。推，布朝向桌子的那一面，咖啡就往反方向浸透。直到桌子上，消毒液被抹得不见，布被染成还未拧干的深咖啡色。桌子上的咖啡渍，还在。</p><p>棉布离开那张玻璃桌两分钟，再次归来，颜色恢复如初。棉布还残留着水。没有消毒液，布被按在玻璃桌上。布是光滑的，玻璃桌表面也是。但咖啡却是沉重的，在它们其中，被反复拉扯。布料在桌面摩擦，往前推时，有一丝阻力。但咯吱声响起，布料的速度忽然加快，直到撞上玻璃桌边框。棉布内的水，与桌上咖啡渍结合，棉布成为了浅褐色。桌子上，被光照到，咖啡渍上的彩色光，逐渐压下了起初沉重的褐色。</p><p>棉布被抬起，一分钟后，再次成为黄色。彩色花窗让光成为不同的形和色，在棉布上，为空白的棉布加上了几许添饰。玻璃桌变得干净了，光照在上面，只得直直地穿过，照在地板的脚印上。那桌布上，只有一部分的浅褐色。凑近时，还会有咖啡的香气，和一丝消毒酒精的刺鼻。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

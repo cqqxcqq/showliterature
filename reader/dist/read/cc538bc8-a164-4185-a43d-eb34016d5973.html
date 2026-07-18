@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>565 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 2 日</span>
+      <span>2026 年 2 月 2 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>人的一生，走走停停；鸟的一生，飞飞息息。那喜爱奔波的人啊，又与飞鸟有何种区别呢？</p><p>若非要区出一个差来，也许二者本归不同。未学会飞翔的鸟儿，被长者从枝桠边围绕，背后有着羽柔的翅手顶着，落下去，或翱翔游世，不然化作烂泥。大多时侯，在这么一种不得不飞的困境中，鸟儿才学会飞翔，在航程中细细品鉴，风儿呼啸的滋味。鸟儿，从安逸的足走之态，感受脚下春泥之载；成为，以双翅的奔翔之时，划过足下风的痕迹。</p><p>人怎么能称不别呢？未学会看待这世界的人啊，被长者推至铁疙瘩上，身下超过各姿艳彩的云朵，落不下，就望向窗外，看着云巅月儿。直到尝到了未曾呼吸过的空气，就是一种不得不活在的世界，我们才学会活着，在异乡里慢慢留痕，时间呼啸的痕迹。人啊，带着旧处梦的印记，来到新地与这里的风儿交换；直到，以双脚踏足一切之地，才明白活着的意义。</p><p>旧处所溅起的泥土，那地所落的泥水，在双翅震动之时，便褪去了；旧处所不愿的记忆，那地所留的泪水，在双脚行走之时，都散去了。</p><p>当它驻足，收回还在飞翔的双翅，把自己落在一个陌生的别鸟的巢上，伴着月光入睡，它便会忘却它在旧地的一切身份，一切责任。当你驻足，平息永远劳累的双手，把自己藏在别人为你搭建的床上，伴着月光入梦，你许会忘记之前的一切。</p><p>小步小步地去走，无论是水泥地也好，青石路也罢，还是那被海水淹没的沙里，边去走罢。待千百万年后，当你的名字已被彻底遗忘，至少要遥远世界的某一个交落，依然有你的话语，你的痕迹，你的安梦存在过。</p><p>閑静的某一个清晨，天边划过一只喜鹊，落在你的不显的脚印上。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

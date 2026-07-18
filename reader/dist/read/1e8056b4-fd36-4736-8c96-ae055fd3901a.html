@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>937 字</span><span class="dot">·</span>
-      <span>2026-04-29</span>
+      <span>2026-04-29</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>太阳风从太阳出发，以每秒数百公里的速度在太空穿行，奔着地球而来。地球有一层保护罩，太阳风只能撞击磁场。而太阳风里，有带电粒子流。大部分会被磁场挡开，剩下的，会沿着磁力线，向磁场最薄弱的南北极点汇聚。</p><p>粒子在磁场的作用下，被进一步加速，获得极高的动能。距地面一百至三百公里的高空，高能电子像子弹一样，撞击大气中的氧原子或氮原子，原子的电子受撞击后跳到高能级。</p><p>这些粒子无法一直保留高能状态，所以在极短的时间内，它们必须把多余的能量释放出来。极光，于是形成。</p><p>南极，康科迪亚站。零下五十三度的冰原上，一只企鹅，在看着天上的极光。那极光是抽丝的绸缎，尾部黄色渐变直至紫色。绸缎在摆动，被太阳风吹动。电子与原子只相遇一秒。</p><p>粒子归于沉寂，极光出现了。有碰撞，才会有光，有了光，能量才算真正存在过。如果粒子绕过大气层，便什么都没有。如果大气层不在这里，粒子便永远继续飞行，不会发出绚丽的光芒，消逝在太空深处。</p><p>粒子没有遇到大气层，它继续飞行。太空是冷的，从太阳而来的温度缓慢冻结。它永远保持高能状态，但没有那些原子，它发不了光。虚空中，它的温度降下，它的速度衰减。它会存在得更久，但它永远不会被看见。存在；永恒，平庸地存在。</p><p>那一年，一月。</p><p>两个名字，中间隔了五个人。</p><p>礼台上方的电脑灯，照在台上人的肩上。</p><p>第一个人的名字响起了，她上台，面向观众，鞠躬，接过毕业证书。</p><p>第七个名字响起了，他上台，面向台下的人。在鞠躬之前，他眼神掠过，然后关上，鞠了一躬，转身，接过毕业证书，走下。</p><p>人群散了，礼堂里头，些许人，穿着毕业袍，与不知何时能再见的朋友拍照。</p><p>他手拿着相机。她在七米外。</p><p>他看着她的背影，脚步踏出去，又收了回来。</p><p>七米。</p><p>他最终没有拍下一张完整的相片。</p><p>他低头，看着手中的相机。她转过身，看着低头的他，两秒。用手背将鬓角的碎发挽到耳后。又转回，继续说着话。</p><p>礼堂四周的挂扇，在吹着。风吹过了他的头发，发丝盖过了他的眼角。他用手，把飞舞的头发压下，但风又吹过，他的手背，只有十三度的水滴。</p><p>七米，五个人的距离。六年，只剩下十三度的水滴。</p><p>没有这次的典礼，他们也许还会在某处相遇。但他不会知道，七米，是最近的距离。</p><p>礼堂，电脑灯被关上了，礼台，灰尘还在飞舞着，在剩余的气流里。门被关上了。</p><p>南极，极光下，那只企鹅抬头，看了一眼极光，然后低头，抖落跗关节面上的冰晶，继续走着，它那条缓慢而孤独的直线。离冰层一百公里，那一段极光，消失了，但很快，就被另一段极光取代。光在冰层表面，停留一秒钟。</p><p>粒子不能停在大气层里，人不能停在毕业典礼上。</p><p>一旦停留，就会失去能量，就会不再闪烁。</p><p>她还在七米外。</p><p>光速下，七米是两千三百万分之一秒。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

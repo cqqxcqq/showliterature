@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>244 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 5 日</span>
+      <span>2026 年 2 月 5 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>我那暖柏色的褐枝，与深梦而连的，不知何时被拖至池面。空气中的腐漆，渐渐侵蚀了本为霍色的枝子。层层禄漆，伴着月风不断涂上，隔晨又干涸，附在枯枝之上，何时才可显出原本的曾色。</p><p>一场类雨落了下来，冲刷不了表面那早已凝绠的淡漆，本意寻晨鸣的枝啊，你为何又沉默了，为何弯下你柔奚的身，被池上月光映照时，为何你不再旧时了。</p><p>你那本亮的枝，在那风吹来时，似乎早已刻碑了，凋落在前梦的梦魇旁。于是你开始猜寻，曾经吹过你的每一阵风，是谁啊，是她吗，为你带来第一息腐漆，你怎么终变成烂枝了呢？</p><p>便别再寻了吧，焚化后的烂枝已经在凋秋下葬，暖柏已死，若你再寻，若似为坟上插一只枯栽。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

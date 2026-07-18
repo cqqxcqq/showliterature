@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>623 字</span><span class="dot">·</span>
-      <span>2026-06-26</span>
+      <span>2026-06-26</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>你曾为自己哭过吗？</p><p>哭泣是一种对外的情绪展现。人对外部事件的不如意而哭泣，人会为所逝去之人所哭泣，人会为一切你和他所哭泣。因为哭泣是注定的，我们每一次哭声都会最终回荡，回到那第一声哭泣。哭泣确实是本能的反应，就如开心时会笑，笑得开心也有时会有眼泪。人会哭确确实实是作为人的表现。</p><p>然而，婴儿第一声哭声是为了将肺泡的液体排出，那时哭泣是为了生存的唯一选择，我们并不知道哭泣除了换取空气之外还能获得什么或是排出什么。直至我们长大之后，哭泣已经成了一种要挟大脑换取自我原谅与同情的行为。</p><p>后来我们学会了探索，我们发现这具躯体有着无限的潜能。我们学会了走路，但走着走着，却跌倒了。这时大脑必须给出一个适合的反应，它不能笑，因为在大脑的奖励机制中，笑只是为了迎合周围人的笑脸所配合的，但它也不能害怕，害怕是一种后天培养的反应，因为从潮湿密闭的空间出来时，我们并不惧怕。</p><p>奇怪的是，人在哭泣至最极致的时候反而会笑出来，因为在那种无能为力的情景下就连一滴眼泪都是徒劳无力，它也并不能代表什么悲伤的情绪。人在那时除了想哭便只有想笑的冲动，所以笑与哭是共生的。而哭泣只是一种为一切弱小的惋惜，哭是知道什么都不行后的行为。
@@ -189,6 +199,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>400 字</span><span class="dot">·</span>
-      <span>2026-04-10</span>
+      <span>2026-04-10</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>灰白的镜子立在墙上。表面是湿滑的，一只蚂蚁爬过。蚂蚁爬累之后，低头，望向身下。它发现自己又十四只脚。镜子是表面湿滑的，它也因此缩回了一只脚。</p><p>褐红的蚂蚁，停在镜子中央偏下三厘米。它偏过头，望着自己尾部那一只被缩回的脚。它想看清那只脚，于是转了个圈。镜中，蚂蚁在追逐自己的尾巴。</p><p>灰白的镜，涂上了褐红的泥迹，表面变得干涸了。蚂蚁不再追逐食物；它执着地，要要到自己的尾巴。它绕了一圈，两圈……三百五十圈。</p><p>但它那只有三微米的胃，每绕一百圈，胃就缩了一微米，然后没有了胃。</p><p>白色镜子盖上了褐红的血渣。镜子里的它，它还在寻着自己的尾巴。它在第四百圈时，停了下来，用后脚，把前脚卸了下来。</p><p>镜子上，红色的泥又多了。</p><p>褐红的血迹涂满了镜子中央。当蚂蚁低头时，它再也看不到自己的那十二只脚。</p><p>它又饿了。</p><p>停下来，用前肢蹭自己沾了泥的眼睛。</p><p>眼睛被蹭下来了，粘在前脚上。</p><p>它于是一口一口咀嚼着自己的眼睛。</p><p>白色的镜子被染红了，积满了血，还有挂在镜壁的残肢与血骸。血没有掉下来，只是在那里凝结了。蚂蚁看不到，它继续爬。爬着爬着，撞到自己褐色的血坡，力疲身亡。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

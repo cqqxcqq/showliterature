@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>小说</span><span class="dot">·</span>
       <span>3520 字</span><span class="dot">·</span>
-      <span>2026-03-05</span>
+      <span>2026-03-05</span><span class="dot">·</span>
+      <span class="reading-time">约 9 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>你还在吗。</p><p>记得在他临走之前，正收拾着行李，那时我尚小，不懂得离别的意义，总以为去了就不会再回来。</p><p>我悄悄打开门的一道缝隙，左眼眯着里面的情景，有一个坐在床上的身影，在床上反复辗转。</p><p>他的屏幕上，写着一排我看不懂的字，我猜那是一处地名。我不知道什么意思，只能把他记在脑海，然后轻悄悄地关起门。</p><p>走到沙发，拿出手机查询。</p><p>那是一所离家3个小时，160公里的学府。</p><p>手机屏幕暗淡，世界也漆黑起来。但随后被一个虚构的世界替换。</p><p>好远啊，如果他去了，他还能回来吗？我还能见到他吗？</p><p>我在想，三个小时有多远。</p><p>我想到这儿。年幼的我，于是踏着我沉重的脚步，来到他的门外，没有敲门。就站在门把前，犹豫着。</p><p>我呼出了最后一口气，用尽全身的力打开门。门把撞在白色墙壁时，他背对着我，侧躺在床上。然后身躯忽地坐起来，目光扫到我。他的眼角还有一丝血丝，应该是心脏，只供应了他睁开眼所需的血。</p><p>目光交错时，我能看到他眼里半透明的混沌色。混沌里连结在一起的红色。
@@ -193,6 +203,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

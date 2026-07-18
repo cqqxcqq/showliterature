@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>602 字</span><span class="dot">·</span>
-      <span>2025 年 12 月 10 日</span>
+      <span>2025 年 12 月 10 日</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>他们口中的冬，是眠的四时。我却言，冬是复苏的发轫。此刻那萧条夕景，又怎算不上为另一番面貌的重逢？北风初抵之瞬，它可仍怀揣着春的遗韵。当扫过青条，还令若干雪白的绿叶微微抖晃--那非风的余息，静下心来，地下依稀传来某种，在闭壳，正沉藏，渐隐匿。晚阳消晖地，显出茂草之活躯，干枯地隐藏在寒土，若似荒凉伤土的裂缝，更若刚被撕开的疮口。春面逐渐成为稠密，安置着春泥的腥膻，那是生机与终焉对立的冰相。在某时，西坠的日似乎不在如常。斜暮不再是珣丽的，反而藏着不被察觉的冷意，笔直地打在高墙之上。最晚遗忘莫属绿茵了，从互相拥抱的空气中，渐渐沉入泥土的枝条，神采奕奕地观赏他们的舞台，好似将凋零之生命最终的呼吸，带着解脱，一丝留恋。接着是枫枝，明日未柔若柳条，昨竟开始硬挺，烈阳下享受着被光照锈迹的滋味，露着害羞的腰肢，不虚老男末隐之青意。可见的演变上演与万目同视的天空。直上青天青翠槐树里的嫩芽，叶脉曲线透出树皮，更若双眼突然看见死者，使这个世界重新评价他的眸里的迷茫。树顶部那绿叶微微晃动，鸟类伊始在顶部租起家来，它们窃盗着自然的辛苦，无声而罪恶，像是无数有声的交响，正搬运着历史里宏伟的灵魂承载处。叶子表面，神采奕奕的麻雀开始欢唱，毫无顾虑地歌颂冬日的死气，这些偌大的凋敝比满院尸骨更令人安稳--那生命从未真正地降临，它只是借用了一副没用的尸骨，在暖阳下享受凋散，守候死亡那一刻。冬阳照日，厚重如信。它非同春阳般温暖，只是压着声带，在万尸旁，为他们诵经。噼噼啪啪那雷声抨击着棺材板，似若苍天在催促。花灵不甘饮下，渐成枯木横陈。这太阳显出了春祀，却也带来了明日的气息。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

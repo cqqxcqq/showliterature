@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>420 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 6 日</span>
+      <span>2026 年 2 月 6 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>那时，也许我真的梦见了你。在蜃雾般的梦境，身旁不断示起百万个无面，无冕的身影，是你吗，一定要是你啊，原来都不是你啊。荒芜长满了泪云，下着紫灰色的枯雨。那多么地如同你，却怎么都不是你。</p><p>过虚却依余的衣角，指尖不断穿过，拉扯空气里无体的具身。又湍来过去的雨影，你在吗，我为何却重见少时的你我。明明我的指腹告诉我，我再也无法真正触碰到你；即使落下的泪，说，你再也无法见到我眼角旁为你流的泪。可那灵魂，脱缰却又觉，你一直都在，可为什么偏偏寻不着啊。</p><p>曾盛的草原啊，树林遮走星空，抬头，只瞧见无彩的夜。皎月曃凯，叶子在落泪。你或许是这片地曾经的色彩，没了你，星空也只能剩下残骸。你不在了，我再感受不到你的色彩了。淡蓝色的雨泪又落下来了，他来了，便淹没了无彩的这世界。我依被困在窒息的枝被海泪里，那也许就能见到你了吧。在自由的凉轩中，畅谈没了你的黑暗。</p><p>你或许是洁阳，是我无法触及的地方里，藏着的你。当梦被岚光所照，我知道那也许是你，我不想走，不想离开你的光芒，不想再也感受不到你的存在。</p><p>可梦碎了，我心底的梦，你不可以碎。</p><p>你终于化作了那抹灼人的洁阳，灼伤了我的泪，我余生的梦。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

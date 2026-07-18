@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>246 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 3 日</span>
+      <span>2026 年 2 月 3 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>我若似青松中那夾縫而存的兮枝，穿過彌潮粗糟的間隔，只為在无風的夜裡，靜靜看著你閃耀的背影，你會知道嗎。</p><p>我若試著以半彩无顏之心，在夢裡描繪你潔貴的圓貌，可到終只得彎旋未全的你，你會知道嗎，你會原諒嗎。</p><p>我若是萬呎高峰上，與你萬萬里之遙的一顆沙礫，因無力注視你的眼，轉而蒙蓋自己，你會知道嗎，你會原諒嗎，你會愛我嗎。</p><p>我何妨在你看不見我的地方，享受你覆世的月光，在你不知的夢裡，化作隕石試圖奔向你，化作你的一顆行星，與你同在無垠的軌道裡，環旋。</p><p>你是我初曦的明月，才發現自己多麼渺小，一半是你的身影，另一半是你為我鑄造的懸涯。若月的另一半在那最深處，我罷去採吧。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

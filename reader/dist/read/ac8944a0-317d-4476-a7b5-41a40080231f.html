@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>1570 字</span><span class="dot">·</span>
-      <span>2026-04-11</span>
+      <span>2026-04-11</span><span class="dot">·</span>
+      <span class="reading-time">约 4 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>我今天去看他了。</p><p>房间的格子，又多了。上一次也许我只是简略地算过，这房间有几张相片。得出来的，约只是一百二十四。</p><p>但这次，我数过了。格子的数量足够容纳三百五十二个坛。</p><p>有些格子，末端写了名字。有些是空的，等待有人将它占走。还有一些写着“长生灵位”。</p><p>格子的相片，他还是一样的脸。些许不同的是，他左侧数去几格，本写着“长生灵位”的，又被换上名字了，还粘上相片。</p><p>房间里，佛像正对着冷气和玻璃大门。那玻璃门，需要些许力气才能打开。而至于那冷气，好似只有我们来时才会被打开。冷气的遥控器，被藏在佛像的后面。平日没人的时候，只有那反复念着佛号的播音器，在房间中回荡。</p><p>我坐在他相片前，四个柜子的距离。只要有人，尝试打开玻璃门时，就能看到我侧身而不动的身躯。</p><p>我在盯着他的相片。</p><p>他没有笑，也没有变。</p><p>我就这么看着，看着。</p><p>眼睛随即干涸了，眨了眨眼后，不自觉地移上。</p><p>我这才发现，他顶上的格子，是属于一位比他还要年长的长辈。</p><p>不一样的是，他格子右下，作为装饰的循环金色花状，却不见了。</p><p>上面还有胶水残留的印记。</p><p>如果拉开一些距离，会看到不断循环的图案，在某个地方突然少了一个角。</p><p>我巡视一圈，在地上找不到那个缺失的形状。</p><p>而视线下坠时，又发现格子与格子之间的木制空间，长出了黑褐色的霉菌。</p><p>上一次来时，还没到这么明显的地步。</p><p>然后身体左侧，传来玻璃门滑槽的吱呀声。在两秒后，门被打开了。</p><p>我随即站起来，找了一个面向玻璃门的位置，坐下。</p><p>进来的是一家子，带着食物来。他们坐在佛像的左侧，面对着格子。然后有把塑料盒装的食物，一个一个拿出来，摆在地上。</p><p>我听到他们说：“这个拜过了，这个还没拜过。”</p><p>也许他们说的是食物，不是人。</p><p>塑料盖被打开了，一个房间同时触发了耳鼻和皮肤的开关。</p><p>我又听到钱币被抛掷在地上的声音，转过头看着他们时，才发现他们在对着食物和先人抛硬币。我不知道这是为了什么。先人怎会再次迷恋金钱，和那已经冷却的食物呢？</p><p>房间里的味道有些臭酸了，参杂着不断循环的佛号。我起身，打开门，向外走去。</p><p>关上玻璃门时，佛号的声音逐渐小下来了，但是随即又从右侧传来。我转过身，好奇地走过。他的房间旁，是两个法师的专属灵位。有两个照片，灯是开着的。法师的相片比任何人的还要大几倍。</p><p>再走过一个房间时，我的脚步停了下来。看着没关上门的房间，灯是暗下的，犹豫了一下，然后走了进去。这个房间没有灯，没有冷气；只是有同样的佛尊，和一直循环的佛号。</p><p>我站在房间的最中央，所有格子的相片都在面朝着我。我向左前方移了一步，来到一个相片偏大的格子前。他是一个人的父亲，是一个人的儿子，是一个人的挚爱，是一个人的牧师。</p><p>他是笑着的，看着我。</p><p>佛号还在回响着，我看着他，停了两秒。</p><p>不知怎么，我竟感到胸口一阵沉闷，好似被扭上几个活结。</p><p>这感觉，一直持续到我的影子从黑暗中离开。</p><p>我离开了这一个房间，然后又进入隔壁的另一个房间。</p><p>一样的位置，一样的佛号，和一样的感觉。</p><p>走出那个房间，来到大厅。</p><p>大厅有灯，有三宝尊像，有一幅很美的画。</p><p>和那个暗房间比起来，这里显得更和谐。</p><p>再接着走，就可以看到一排又一排的骨灰柜。</p><p>柜子上的格子，沾满了相片，写满了字。</p><p>我的脚步慢了下来，转头，看着肩膀划过的名字。他们在我脑海里亮起，又随即离开。我没有刻意去抓住，留下他们。</p><p>他们不属于任何人，包括我。</p><p>安静的大厅随后传来脚步声，是他们，他们到了。</p><p>我走到玻璃门前，看着盘腿而坐的他们。</p><p>我们约有一年未聚了，而每一年，只有在这几天会聚到一起。</p><p>我坐在玻璃门后，面向他的相片，手怀抱着腿。</p><p>他们是他生命最后两年的朋友，也是时常来看他的人们。</p><p>我们就这样坐着，围着他的格子前，说了好多话。在他的面前，我们很少提到他的名字。</p><p>黑斑相比一个小时前，好似长得更繁杂了。相片是静止的，它无法推开霉菌。</p><p>我们说完了话，围得更靠近，拍了一张照。</p><p>临走之前，我的脑中突然有一个念头，就是打开隔板，再次看着已经骨烬的他。</p><p>我伸出手，指尖却只是感受到玻璃板的冷。</p><p>我叹了一小口气，小心缓慢地关上那层隔板。</p><p>我们走了。</p><p>但他还在那儿。</p><p>隔板被关上了。走远，玻璃门快被关上时，我忽地意识到一个事情。</p><p>但这个念头在我脑海中闪过一瞬，便又走了。</p><p>直到回程的路上，我才想起。</p><p>这么多相片，几乎所有都是取半腰之上的。</p><p>所有照片都是半身的。</p><p>没有腿，没有手。</p><p>只是肩膀，和不笑的脸。</p><p>他们的下半身去哪里了？</p><p>我们常说，期望逝者可以来我们梦里。</p><p>可没脚的人们，又怎么寻得你的路呢？</p><p>留在世上的，</p><p>只有半个人。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

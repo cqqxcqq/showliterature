@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>短篇</span><span class="dot">·</span>
       <span>1707 字</span><span class="dot">·</span>
-      <span>2026 年 3 月 16 日</span>
+      <span>2026 年 3 月 16 日</span><span class="dot">·</span>
+      <span class="reading-time">约 4 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>冬天快来了。窗外那棵柏树只剩最后一片叶子，枯黄地悬在枝头。</p><p>陈贤嘴角的白须上有一点红。</p><p>小木屋里那把木椅，椅背干裂出一道新的纹路。</p><p>陈贤在书本划线的红笔，只剩下最后一点红墨了。</p><p>他翻开记事簿，指尖划过页面，翻到最后一页。</p><p>他看着被红色字迹挤满的空间，目光落在纸张最角落的地方。</p><p>笔停在离书本五厘米。</p><p>四秒钟。</p><p>写了四个字，然后关了起来。</p><p>有人敲门。</p><p>“陈老，我到了。”</p><p>陈贤站起身来。</p><p>手按在拐杖上，茧子对着磨损的皮套。</p><p>“来了。”</p><p>门把被打开时，陈贤看到的是一束花。</p><p>一朵荼蘼。陈贤只看了一眼，没有接过。</p><p>“陈老，这是我最近手头的一个任务，麻烦您帮我看看。”</p><p>陈贤接过。</p><p>翻了两页，停了一下。</p><p>然后放在桌子上。</p><p>“先坐，还有两个人没到。”</p><p>“陈老，上一次碰面，你只是邀请我来，说我来了就知道为什么了，现在可以解释了吗？”</p><p>林谧说道。</p><p>陈贤看着她，像是在看很一个很遥远的什么东西。</p><p>“我快死了。”</p><p>林谧沉默。</p><p>然后点了点头。</p><p>门又被敲响了。</p><p>陈贤起身，但在看到林谧站起身后，便坐回了。</p><p>陈贤的椅子正对着门。</p><p>门被打开时，陈贤的眼角不自觉地抖了一下。</p><p>来人是林江。</p><p>他看着林谧，目光在她脸上停了一下。</p><p>“你也在啊。”</p><p>“都坐吧。”</p><p>陈贤说道。</p><p>林江坐下来时，眼角扫过这间木屋里的装饰。</p><p>然后目光落在木桌上的记事簿。</p><p>一秒。</p><p>然后看向别处。</p><p>“这么多年没见，”林江说，“你还在写。”</p><p>“嗯。你呢，还是在翻译吗？”</p><p>林江沉默。</p><p>林谧在他们中间，不知道该说些什么。</p><p>她的手无意识地摸了一下自己带来的那份翻译稿的边角。</p><p>门再次被敲响了。</p><p>只是，陈贤起身，站直时，手扶在桌角。</p><p>他没有要谁搀扶他的意思。</p><p>陈贤拄着拐杖，走到门前，身后两人的目光在陈贤身上。</p><p>林谧对林江说了几句话。</p><p>门打开了，来者是一个陌生人。</p><p>林谧没有见过他。林江也没有。</p><p>来人很年轻，穿着一件不太合身的深蓝色外套，站在门外时，手里攥着背包带，像一个第一次来面试的人。</p><p>陈贤看着他的脸，看了很久。</p><p>“你长得像他。”陈贤说。</p><p>年轻人愣了一下，然后低下头。</p><p>三个访客，坐在书房里。</p><p>窗外只剩路灯亮着。</p><p>天黑了，陈贤那失修的灯也不那么亮。</p><p>陈贤打开木桌上的那一盏桌灯。</p><p>很亮。</p><p>他徐徐地来到书架前，伸出手，食指在每一本书的书脊扫过。</p><p>最后停在一本很烂的书前。</p><p>他小心地拿出来。</p><p>放在桌子上。</p><p>三位访客，都看到那本书的书脊处，干得发黄的胶水，和褐色的胶带重叠的痕迹。</p><p>“我想把这本书的最后一章，读给你们听。”</p><p>陈贤翻到最后一页。</p><p>开始读。</p><p>“最初的人没有语言。他在洞穴的墙壁上画了一头鹿，然后拉着另一个人的手，走进黑暗里，指给他看。那一刻，他想说的是：'我见过这个，我想让你也看见。”</p><p>“后来他们有了声音，有了文字，有了能把思念折叠进信封里寄到千里之外的能力。但奇怪的是，工具越精密，抵达就越困难”</p><p>“我想说给你听的，你听到的，你觉得我想说给你听的，和我说给你听的。一句话里，藏着四个不同的时间线。”</p><p>“于是爱变得复杂起来，世界也被这种复杂的爱充满。”</p><p>陈贤读到这里，眼睛从书上抬起。</p><p>他看到林江眼中闪过的惊愕。</p><p>合起书本，说道：</p><p>“翻译是什么？是美化了的背叛。”</p><p>“原作者写下了一个完美的句子。我把它拆开，用另一种语言重新拼。可拼出来的东西，形状像，重量不对。”</p><p>“五十年，我一直在做这件事。把别人的灵魂搬进一个不合身的躯壳里，然后告诉读者：'这就是他。'”</p><p>“可那不是他。从来不是。”</p><p>陈贤停了停。</p><p>“翻译永远差一点。差那么一点；甚至差到你以为已经足够了，但其实没有。”</p><p>“但也许……文字本来就不诚实。连原作者自己，写下的也不过是心里那个东西的赝品。”</p><p>“既然人人都是赝品贩子，我又何必一个人愧疚呢？”</p><p>说到这，陈贤笑了一声，带着轻松与解脱。</p><p>陈贤拿起那本很烂的书，把它放在书架最中央的空位里。</p><p>四周没有书。</p><p>天愈发地暗了，窗外那棵柏树仅存的，那孤零零的叶，被风吹过。</p><p>空气有了二十分钟的沉静。</p><p>林江沉思了许久，抬起头，对着坐在木椅上，眼皮快关上的陈贤说到：</p><p>“我看过你的手稿。那个翻译项目，是，是我抢了。”</p><p>“我用了你的想法，你知道吗？”</p><p>“我都知道。”</p><p>陈贤答道。</p><p>“那你为什么不说？”</p><p>林江的声音颤抖着。</p><p>“因为你需要那个项目。我不需要。”</p><p>林江的声音逐渐变小了，喉咙里的一字一句，却成为了泪水出来之前的哽咽。</p><p>林江瘫倒在椅子上。</p><p>陈贤也坐回去椅子了。</p><p>林谧看着他们。</p><p>她起身，来到书架前。</p><p>在书架中央停下来。</p><p>那本旧书侧卧在那里，四周是空的。</p><p>她伸出手，指尖碰了一下书脊。</p><p>然后转身，向着陈贤。</p><p>鞠了个八十九度的躬。</p><p>年轻人从背包里拿出一个信封，纸已经褐黄。他把它放在桌上，手指在发抖。</p><p>他用不太标准的口音说：“这是我父亲写的。他……没能来。让我带给您。”</p><p>他停了一下。</p><p>“他说您会知道写的是什么。”</p><p>陈贤接过那个信封，没有打开。</p><p>“我不需要看。”</p><p>“我已经知道了。”</p><p>他们走后，门关上了。</p><p>冬天来了。窗外那片枯叶终于落了。</p><p>陈贤坐回椅子。从书架中央取出那本旧书，将信封夹进去，放在膝上。</p><p>桌上的荼蘼还没有枯。</p><p>他看了它很久。</p><p>然后关了桌灯。</p><p>黑暗里，他拿起红笔，在林谧那份翻译稿上，划下第一道线。</p><p>笔迹浅了。又划一道。</p><p>没有颜色了。</p><p>陈贤把笔放下。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

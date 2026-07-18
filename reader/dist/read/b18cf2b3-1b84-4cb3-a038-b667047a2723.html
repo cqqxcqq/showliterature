@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>756 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 8 日</span>
+      <span>2026 年 2 月 8 日</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>知识是整齐的，被装订在行列有序的列印中，并排落在尘灰上无期的书架。快乐，轻松，悲愁，这一切都被归上了一个特定的形状。思维的宫殿，自由的局限，都是被明码标价的。这种一字一句被标价的世界中，我们的言语属于我们吗？</p><p>柏沫白光落下来，照不到的门外。默络纸板上，你坐在秩序之外，手里不断挥舞，解开这世界为你设下的束缚与枷锁，我看着你，多么地仰羡。你似乎才是这个世界的主人，我们只是被陈列的标本。你的双手，即使我代入不了你的情你的心，只得尽我昼编之脑，反复猜测你一切行动的意义。</p><p>似乎只有你的一言一字才是属于你自己，我看着你嘴角的活动，却隔着一面弧玻，听不见你那尊贵的言语。可正我沉静中，你却披起衣角，忽地擦拭眼角，我试图让眼前变得更清晰，你怎么落泪了呢，还是或许那只是你对世间的哀叹和怜惜。</p><p>在目光触碰到你面庞那未消逝的霞光之时，怎被命运的嘲笑灼伤，而收回卑微的窥视。这世界是属于你的，唯有你，会真正珍惜蝴蝶在你手边的呼吸；唯有你，会关心泥土遮盖下，那蝉鸣未准时的悲疾；唯有你，在现在夕阳下，会享受过去的晚霞和将来的帆月。</p><p>我们又怎么能若你一般呢？在蝴蝶到来之时，只会谄嫌它从卑虫而生；在蝉欲破土而出时，又在其上铺满夺驳的白泥地；甚至夕阳之下，只会悲恨地咒骂晚霞未照到的脚尖，月光潮汐牵来的哀艳。</p><p>你的梦会是什么颜色的呢？不知在领到你嘴角那清晰的呓语之后，我的夜梦，会不会再次出现朝曦。我的梦是暗淡无色的，是这个悲催的世界，拿起枯淡的调色盘所彩给我的。可不可以赠予我你的自由，至少在以后面对无月的夜时，我也能欣赏粉天中，你色彩的气息。</p><p>我深知在这九秒的偶邂里，无法为你留下什么。就连我的祷语，我的惋惜，在你的眼中，可能都不如一彻大雨。但就算如此，就劳烦你等待，待我来到灵魂出口之外，去往你切断与现世链接之脐带那地，欣赏你那双皲裂的手，打捞一弯没人看见的月；他指尖轻捻，无人的虚空中，绣上的那一朵不败的繁花。</p><p>我走了，重新变成一尊标本，待跌落永恒之际，寻往永寂悄暗中，那唯一有光的出口。请等一等，我终会来到你的身旁。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

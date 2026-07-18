@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>杂文</span><span class="dot">·</span>
       <span>376 字</span><span class="dot">·</span>
-      <span>2026-04-03</span>
+      <span>2026-04-03</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>山脉不回应行路者的脚步。</p><p>凡是呐喊者，必听见峡谷中的回响。</p><p>凡仰望星空者，星光必将照向他。</p><p>等待的人有福了。</p><p>不要为那还未落山的余晖而伤心。</p><p>为将升的月而欣喜吧。</p><p>岂不是早已刻在石碑上了吗——</p><p>那盖过白天的茫茫黑暗。</p><p>比蚂蚁还要轻。</p><p>那些在无日山脉下，徘徊的人啊——</p><p>你们有福了。</p><p>谁曾体会过不会回话的树木呢？</p><p>你比静默的月亮还更圆满。</p><p>那些在无夜峡谷中，投石的人啊——</p><p>你们有灾了。</p><p>谁曾亲吻过沉默的脚趾呢？</p><p>你比致盲的烈日还更疯狂。</p><p>你们又怎么不知呢——</p><p>在黑暗为星光而藏起光芒时，</p><p>可是牺牲了自己的名。</p><p>你未看到的祭台上，</p><p>可是摆满了黑夜的祈语。</p><p>你们又怎么能不知——</p><p>星光得以在黑暗闪耀，</p><p>必然衬托了夜的伟大；</p><p>必然衬托了夜的光芒。</p><p>你未看到的黑暗里，</p><p>可是点满了星的梦。</p><p>今天你将看见那伟大的律法——</p><p>那使人疯狂的，必将使人沉默。</p><p>这是第一条。</p><p>你所拥有的，被灌满在月弯里。</p><p>所以去用。</p><p>去饮。</p><p>你怎不知道那是为你而存在的呢。</p><p>这些便是第二条。</p><p>律法便在此后停止了。</p><p>然则，呐喊的人啊——</p><p>你必记住——</p><p>当你行走在山脉时——</p><p>不要驻足。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

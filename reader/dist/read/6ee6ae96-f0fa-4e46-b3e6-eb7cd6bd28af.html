@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>421 字</span><span class="dot">·</span>
-      <span>2026-04-04</span>
+      <span>2026-04-04</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>木桌上，摆满了书，灰尘也多了。</p><p>封页的标题，印刷的字，黑色的墨迹被尘上灰了。</p><p>于是一层一层的尘，落下。新的一层像潮汐般，又盖过了旧的那一层。</p><p>然后尘便沉下了。木制的封页，被藏起了橡木般的坚韧和不屈。</p><p>大字的尘多了后，书本里的小字，便多了尘了。</p><p>尘趁书上明亮的字还未察觉时，一拥而上。</p><p>烛芯一开始是褐黑色的，两厘米的短细，使尘找不到落脚的地方。</p><p>一开始，当尘试图侵略烛的地时，盘旋的纹路，却让尘滑了脚。</p><p>烛芯没有变色，只不过起初点燃时，掉在桌上的蜡，被盖上了褐灰色。</p><p>烛芯又亮起了。</p><p>书上那层叠的尘浪，被照散了。</p><p>温热的烛光，照在木桌。</p><p>烛下，由蜡铸成的基座。尘在如此的温度中，升起，融入烛光内。</p><p>接着，书上的尘，桌上的尘，便腾起了，被吸入至烛芯中央的热气流内。</p><p>烛光的形状是不断重复的回圆，木桌中央，烛光是那一滴水滴。</p><p>跌落在影子时，溅起了一层层的光纹。</p><p>尘围绕着那圈圈光纹走，找到木桌上属于自己的纹路后，便停下，坠落了。</p><p>木桌的纹路成了浅灰色。</p><p>中央的烛光却还在闪着，摇拽的烛芯火，拉长了尘灰的影子。</p><p>烛灭了自己。</p><p>不久，尘又落下来了。</p><p>那些跪倒在光波影下的尘，醒过来了。</p><p>它们又升起，回到木桌上，和书本上。</p><p>芯尽了。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

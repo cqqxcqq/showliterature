@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>1866 字</span><span class="dot">·</span>
-      <span>2025 年 12 月 12 日</span>
+      <span>2025 年 12 月 12 日</span><span class="dot">·</span>
+      <span class="reading-time">约 5 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>人这一生总是被困住高台上的银河中，幻想自己是飞蛾，有一日可以登顶星空。可脚下的重量，是滩银水，与那星最近的距离，莫过于身下的鞋子。我是说，人的梦，是会随着脸上的斑纹而起锈。你还记得小时候握在手心里那颗不愿意融化的冰糖吗？增了数不清几圈的年轮后，其里面一颗颗稚嫩的梦消散，落在抬头望不到的某个角落里。而当一日再次仰望星空，开始回味从未在嘴里散发的甜味时。只能默默感悟，人生原来有那么唱不出的腥甜苦辣。</p><p>人的第一滴眼泪，在被纸巾擦拭走的同时，也沉入身下看不见的那滩银水中。第一次被迫离开父母双臂中的怀抱，去往陌生的环境时，灵魂传递的不安信号，转化为液体。那一夜因熟悉的温度暗淡时，第一次感受到生命的重量，它拉着眼眶旁的那双泪珠，沉至身下，直至不见。经过无数这样的沉降，最终汇聚成了我们脚下这片浩瀚亦粘稠的银水。于是当我们在梦化蛾时，振翅欲挣脱这片映不出倒影的虚无，那银河的璀璨却如此眩晕。灵魂在解脱的轻与相对的重之间垂停，偶尔向往那自身腌渍出的，充满复杂滋味与颜色的，银水。梦赋予我们双翅，却被星辰独特的重力捕获，环转，盘旋；那银河的真空，却使每一次向上的振翅，都如此沉重。</p><p>当嘴里第一次感受到溶解后散发的粘滞甜味，那种明确，无味与有味的边界消融，甜味弥漫的瞬间的满足感，是我们为快乐奠定的基础形状。可直到嘴中糖的形状被雕刻至如此真实时，我们开始遗忘糖真正的味道。以至未来的每一次手中带着辛劳，来到世界，想要交换那一天的感受时，只是不断获得各种陌生的陨石。长大后，却试图减缓这份甜消逝的速度，不允许它融化。我们追逐的，不再是舌尖可尝到的一颗具体的滋味，转至银水中倒映的，成片的，扭曲的星光。那被取义为“成就”，“认可”的虚幻光斑。我们舔䑛水面，想要啜饮那星滴，舌尖传来的，只有自身泪水的咸涩。就这样，“甜”从一种消融于舌尖的体验，异化至一趟永无终点的奔赴。被困在了对那片倒影的永恒渴求中，而那滩由苦水汇成的银水，也终将无法被啜饮殆尽。</p><p>我们总将自己梦为一朵有待盛开的花。然而，若你真正俯身，观看一株野花，才发现：它的绽放没有对象，只是时辰到了，便松开紧紧包裹的瓣，那舒展本身，即是一生的完全意义。再看溪流，它不执著于永恒，也不关心任何一滴水，将何时归回大海。它的流动，便是它生涯的意义。在沿途润泽每一朵花朵，苔藓，磨圆卵石，这过程，既是它的归宿。高挺的树，同时进行着最高尚的仪式：最慷慨的赠，将新叶推向阳光；最坦然的舍，在同一瞬，任由枯叶飘落，没有挽留，亦无葬礼。在这神圣的自自然宇宙中，凋零被直接编织进生命的纬度，命没有悲剧，只有永值循环的庄严。当你对斑纹而恐惧，为融化生抗拒，请偶尔在梦里来到，这世界，真正让你平稳，静下心，这么一面清澈，令人敬畏的镜子前。</p><p>凋零，其本质上是不剩的归还；回到它最初，被养育长大的那一片地里。无论是落叶沉入曾供养它的泥土，还是人最终，隔着载体，给予自然静默的情书。万物最终都将返回它所而来的那一片腐殖土，偌大由凋零铸造成的温床中。就连银水中，所有腥甜苦辣的滋味，也在那一刹那被析出，提纯。它们不再是属于谁的银河，转身消散为大地坦然的矿物质。人这一生的行迹，风景，思绪，与梦，最终都褪下姓名与故事，仅以最淳朴的存在，汇入这肥沃的基底。消亡最深邃的本质，就是将自身彻底拆解，归还给未来一切形态的可能。你童年那颗不曾融化的冰糖，也在此时，终于甘心化开，成为滋养下一个梦的，透明的甜。</p><p>所以，我们必须承认，轮回绝非同一个“我”重复上演的空剧。那具曾被捆绑在高台之上的躯体，那张布满斑纹的陌生脸谱，已如落叶般彻底归还。一切，只不过是构成“我”的物质与元素的重新排列组合。我们身体里的那一颗原子，在几亿年前，曾属于星辰的一部分，可在此刻，是你所拥有的。而未来，它将去往风，向往雨，最终落在新芽的脉络里，上演一部宏伟的哑剧。那时对冰糖中甜的全部渴望，那份化作飞蛾扑火的姿态本身，并未真正的湮灭。转为一种纯粹的情感频率，脱离了谁的铭刻故事，汇入存在的和声，在未来某个凝视星空的生命心中，唤起一阵无形的战栗。宇宙不会记得谁，只会记得它存在过的方式，那种挣扎，仰望。这存在的姿态本身被永恒存档，成为未来作画可调用，关于如何存在的模糊底稿。于是，那些落在看不到的交落里的，梦，便获得了它的归宿：它们从你紧握的掌心，蒸发成了会下雨的云。当另一双眼睛仰望，云中便可能落下，属于他的，全新独特的雨滴。那雨滴中，或许有冰糖一丝沉默的甜，有你银水里一缕复杂的咸味，还是那只飞蛾振翅时，扰动时空，永恒的回声。</p><p>在你有一日，灵魂终于似飞蛾般自由时，终于可以飞往银河，亲自观赏悬挂在九天之上的陨石面貌。你会再次降临那场最钟情却易逝的梦中，化作永不生锈的时钟，守望着那颗糖的凋零。而后涌进那令你惧怕的银水中，此时如此清澈，它虽吸收了你所有的腥，甜，苦，辣，可它不再是一面会困住你的镜子（即使你已自由），成为一张泓映你完整身影的深潭。所有感受过的甜与非糖，已沉静下来，成为你内在那无比肥沃的腐殖土。你虽是过往所有轮回在此刻结出的果实，但你也成为种子，把自己交付于那潇洒的风。那只扑星的飞蛾，在振翅的每一瞬，终照亮自己永恒的归途。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>904 字</span><span class="dot">·</span>
-      <span>2026 年 3 月  8 日</span>
+      <span>2026 年 3 月  8 日</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>海面上最后一点光散了。岸上的路灯还没亮。</p><p>潮汐退下去，沙滩上留下了一条湿漉漉的边界。</p><p>我走在被水泥路与铁栅栏围起的沙滩旁，不时仰头。</p><p>天空还是紫白色的。</p><p>走过铁栅栏时，瞧见底下卡着一截枯枝，咬着水泥地的缝。海岸线没有树，只有高高立起的建筑和不断重复的警示牌。</p><p>左手小臂挂着一件浅灰色外套，里子的绒磨得快没了。袖口有一颗扣子是后来补上去的，线是深蓝色的。右边口袋里还有张折过的收据，洗过一次，字已经化开了。很轻，轻到小臂上几乎没有感觉。小臂就那么一直悬着。</p><p>天色暗了，我找了一处阶梯，坐下。</p><p>眼前那座岛。月亮今晚会从它后面升起来。</p><p>我盯着岛上山林的后面。视线一遍遍掠过树冠。颜色已经褪尽了。月亮还在后面。</p><p>海风带着沙子刮过来，我揉了一下眼。</p><p>随即感受到小腿处有什么在爬。我不敢低头，怕一瞬间月亮就从岛后翻上来，红一下，又白回去。可那点痒却一直往上爬，我只好在心里数，有几只蚂蚁从我那道疤上爬过。</p><p>亮了一下。</p><p>就在岛的轮廓线上。我往前倾了倾，膝盖的影子一下子压住了蚂蚁。那光没有再亮，也许是对岸的灯塔转了一圈，光扫过来，又走了。</p><p>蚂蚁从小腿内侧爬过那道旧疤时，有一个微小的延迟，那里的皮肤比别处高出一点。</p><p>蚂蚁翻过去了。我动了一下酸痛的手指，才发觉小臂上那件外套不知什么时候滑到了手腕，一截空袖子垂在膝盖旁边，那颗深蓝色的扣子轻轻碰着我的腿。</p><p>天上飞过几只鸟。我数了两遍，两遍都不一样。岛上树林后面那抹微光没有变红，也没有变得更亮。</p><p>我不再等了。指尖撑住水泥阶梯，用力把自己推起来时，才发现双腿已经麻木。</p><p>站起来时血液涌回双腿。脖子响了一声，腰响了一声，最后是膝盖。</p><p>路灯下，脚边有几只蚂蚁。我往旁边迈了半步。</p><p>脚步沿着铁栅栏前行，目光几次抬起来，还是落回海面上。路灯的微光刚好够照到那座岛的轮廓，比白天小了一圈，被黑暗压扁了。</p><p>那座岛和别的岛没什么不同。只不过今晚，我一直在看它的后面。</p><p>我沿着海岸线继续往前走。海边的风一直温的。迎面一阵几乎要把我推回去。我抬起左手挡在眼前。</p><p>手落下来。</p><p>外套呢？</p><p>脚步一下快了。走几步又停，弯腰去看栅栏底下，又回头看那段阶梯。漆黑里到处都像垂着什么，走近了却什么都没有。栅栏底下有个影子，蹲下去摸了一下，是那截枯枝。</p><p>我停下来，两只手都空着。左手还维持着原来的弧度，过了一会儿，才慢慢落下来。</p><p>海风吹过，我没再去找。衣领被掀开一角，风吹过耳廓时，听见自己的心跳一点一点缓下来。</p><p>今晚没有血月。外套也不知道丢在哪一段路上了。</p><p>手臂上还有一块地方是温的。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

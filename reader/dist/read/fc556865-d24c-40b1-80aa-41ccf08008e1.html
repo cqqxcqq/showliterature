@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>1324 字</span><span class="dot">·</span>
-      <span>2026-05-08</span>
+      <span>2026-05-08</span><span class="dot">·</span>
+      <span class="reading-time">约 3 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>后来我终于找到了他葬在哪里，我只买了一颗糖和一束菊花，便来到了他的坟前。风吹过，梧桐树上几片干硬的叶子飘落下来，落在他坟前雕刻的一辆小火车，我把菊花和糖放在他的坟前，挥手扫散落叶后，便走了。</p><p>“下一班前往乌达的列车，将在四分钟后抵达。”火车站的广播响了起来，行李轮子划过地板的声音，又嘈杂起来。我坐在一旁的候车处，手里捧着一杯卡布奇诺。我的行李在左边，偶尔有匆匆忙忙行过过客的道歉声，可转过头时，却一个人都看不见。</p><p>“这位帅哥，不好意思，可否请您让我俩坐着休息一会儿？”这突然的声音却又如此地清晰，我抬起头，睁开快闭上的眼时，才看见声音的主人。</p><p>那是一位穿着褪色后布衣的妇女，左手牵着一位看起来只有五岁的幼童。</p><p>我站了起来，余光扫描后方，确保不会撞到途行的行人。</p><p>“哇，大叔，你好好啊，谢谢你。”</p><p>我笑了一下，头点了点，回应他的赞叹。</p><p>那妇女把孩子抱起，放在大腿上。</p><p>孩子把头转过，对着母亲笑了一下。</p><p>母亲没回应，只是轻轻拂过幼童的头，闭眼休息。</p><p>我低头看了一眼表，又看着播报行程与时间的电子荧幕，喝了一口咖啡。</p><p>下一班是在三十分钟后。</p><p>远处，站台边挤满了人，空气里飘来黑色的烟。</p><p>那看起来快要散架的老式蒸汽火车，反而不像看起来一般地缓慢，黑烟变得少些了，铁与轨道的碰撞声有些嘈杂，可站台边的人没做什么。只是等到黑烟消失后，他们才一股脑地挤进六十厘米宽的车门。</p><p>最前端的火车门前，留下了一双开缝的布鞋。</p><p>“帅哥，你也是去乌达的吗？是不是也在下一班？”</p><p>我对着那名妇女摇了摇头，那名妇女看着我，嘴角尬地僵在那。我看出她的好奇，随口说到：“这里就是我的目的地，只不过这里人太多了，下火车时偶然看到一个被遗留在这里的行李箱，我不急，就干脆在这里守着。”我指了指在肘部关节下压着的行李箱。</p><p>“哦，是这样啊，那你人真好。”</p><p>就在这时，远处走来一位卖糖的人。</p><p>我看向他时，他正穿着一身破旧的布衣，补丁也已落了下来，只剩他与布衣同样褐黑的身躯，在欺骗着看它的人，包括我。</p><p>他每去到一个人面前，就会用他那依着右胸的左手，用肘部关节在挂在身前的简易纸盒上，描出一个圆圈，然后面便会突然紧皱眉头，向右抽动一下。路上见到他的人都躲得远远的。</p><p>我与他距离约十米，我就这样看着他售卖已经包浆的糖果。即使已经走完了十米，被二十个人摆手拒绝，他还是转过身，重复他的十米。</p><p>就这样走了二十五分钟，广播再次响起。行人都往站台边去了。</p><p>他环顾四周，看向我们这里，走过来。</p><p>“呃呃呃，你，你要，糖，糖果吗？”</p><p>我看向熟睡的两口子，转过头，左手比出“二”的动作。他看到，眼中亮起了光，我的裤袋有一张百元钞票，和几枚一毛硬币。</p><p>当我伸手摸索时，我只把那张百元大钞拿出来，递给他。又在他身前拿走了三颗糖说到：“没零钱了，你收着吧。”</p><p>他向我鞠了三躬，我只注意到，荧幕的时间只剩三分钟。</p><p>我摆手，他看向我两秒，便走回大厅中央了，继续售卖着糖果。</p><p>我转回母子两的方向，轻轻地抚摸幼童的头。</p><p>幼童醒了，连带着唤醒母亲。</p><p>“列车快要进站了。”我说到。</p><p>我看见他手忙脚乱地站起身，提起行李便走了。</p><p>“谢谢。”</p><p>空气中好像有过这一句话。</p><p>我看到她抱着孩子，走到站台最前端，挤入人群内部。</p><p>就在这时，人群传来一阵骚乱声，站台前空出了一片无人区。</p><p>那名妇女跪在站台前，大声地呼喊，哭泣着。</p><p>“谁来救救我的儿啊！”</p><p>站台边，只有她的哭声，和愈驶愈近的火车。</p><p>眼看火车的鸣笛声，快要迎上哭喊的孩童。</p><p>这时，一阵沉重却急促的脚步声踏过。</p><p>还未看清楚是谁，就只见那道身影纵身一跃。</p><p>把一只布鞋和她的孩童放在站台边上。</p><p>空气中飘着一张染红的百元大钞。</p><p>一天后，火车站多出了一个箱子，和装满糖果的盒子。</p><p>箱子塞满了钞票，糖果一个也没被取走。</p><p>他是所有人心目中的英雄。</p><p>包括候车的路人。</p><p>包括那对母子。</p><p>包括我。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

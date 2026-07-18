@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>445 字</span><span class="dot">·</span>
-      <span>2026-04-15</span>
+      <span>2026-04-15</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>河畔旁，杂草摇摆着。夜空下，河畔上掠过一群萤火虫。在河畔周，不断绕圈。零碎洒落的光线，为错乱的杂草点上一抹黄。有一株草一直在盯着萤火虫。它厌倦了泥土中的静默，弯曲脊背，尝试捕捉一种不属于它的光彩。</p><p>萤火绕了远路，才照在草群中央的那一株草。那株被稍瞬点亮的草，身体的某一处，温度比草根还要温热。它摇晃了几下，然后萤火便没了。</p><p>杂草于是停止摇摆，草端垂了下来。河面上的倒影熄灭了，水流重新陷进粘稠的阴影里。萤火虫又绕了一个远路，寻着回来的路程。</p><p>绕了远路的萤火虫又回来了，光落在同一株草上，同一处地方。那株草没有摇摆，只是当那一丝余温彻底散发后，它才像是突然惊醒般，剧烈地摇动起来。</p><p>在河面摇晃着的月，被一群萤火虫的光盖过后，又回到了银辉。萤火虫又飞走了，只留下还在颤抖的那株草。</p><p>杂草在这河夜里，寻求那一抹碎光。夜很长，杂草在微风里摇动了许久。它需要被点亮。只是它无法吸引那抹光，萤火虫不是为它而来的，只能在无光时，摇晃着自己的身躯，模仿那时有光的幅度。</p><p>萤火虫来了，光又落在它身上。它不动了，就这么僵硬地杵着。即使那光已经走了，它还是不敢摇动。</p><p>天亮了，它的身躯被倒在杂草堆里，只剩一半的草杵在空气中。</p><p>另一半还在摇晃。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

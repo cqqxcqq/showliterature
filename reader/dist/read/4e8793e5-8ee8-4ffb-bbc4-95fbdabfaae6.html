@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>624 字</span><span class="dot">·</span>
-      <span>2026-04-08</span>
+      <span>2026-04-08</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>今天是他的忌日，四年了。</p><p>我常在想，他在那里孤独吗。周围没有熟识的人，他是否会因此而慌乱，因此想念我们。</p><p>自从他离开我之后，我便鲜少能见到他。大概不足十余数吧。</p><p>但每一次，我们都隔着一层隔板，相望。</p><p>隔板前，是我落在他相片的目光。</p><p>他没有笑，那也许是一张证件照吧。</p><p>隔板后，是一堆骨烬。我想伸手触摸，却只是被陶瓷罐隔开。</p><p>陶瓷罐前，又有一层玻璃隔板。</p><p>陶瓷大抵是在隔板后凝结而成的，因为玻璃被钉上了死口。</p><p>九月未见了，不知隔板前的地板，灰尘是否又落下了。</p><p>而他被困在一格格的隔板里，逃不出。这房间里有一百二十四个灵魂。</p><p>有的相望，有的相背。</p><p>他也许不知道，今天是他在那里的四岁生日吧。</p><p>在这里的我，为他而感到欣喜；他在他的第二个生日，又大了一岁。</p><p>但我笑不出，我看着他凝结在那张照片的脸，他是被色彩仿绘的他。</p><p>我多么想告诉他，念叨他。可话一旦到了喉咙，就出不来了。于是在声带里徘徊，不出去。然后化成一颗水珠，从眼眶里出来。</p><p>他会知道我来过吗。</p><p>或许只有时常通行的蚂蚁会察觉到，这粗糙的道路，竟被打磨，路上的碎石，也被带走了。</p><p>我想把一部分的他带走，陪伴我。</p><p>但陶瓷被玻璃隔着了，撼动不了那牢固的钉痕。</p><p>我进入不了他被困住的地。</p><p>这房间里有一百二十四个灵魂，五十七张相片。</p><p>我不认识他周遭的邻居。</p><p>但我还是会在临走前，退后几步，把我的鞠躬献给他们。</p><p>四年了。</p><p>我快比他高了，但记忆里，我还是比他矮些，有八毫米吧。</p><p>但自从他的脸被转入相片后，我发现：好像谁都比他高了。</p><p>我只能俯下身来，对着那一层隔板，说。</p><p>他有可能听到，并回我了几句，但那木制的隔板，却把他的话收起来了。</p><p>所以，他不会知道我怎么样了。</p><p>今天快过了，我也许会在梦里见到他，会看见他正开心地笑着。</p><p>然后梦就会碎。</p><p>等待下一个忌日。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

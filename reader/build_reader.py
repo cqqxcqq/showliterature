@@ -147,6 +147,13 @@ READER_CSS = SHARED_CSS + """
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -199,6 +206,8 @@ READER_HTML = """<!DOCTYPE html>
 <style>{css}</style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -206,7 +215,8 @@ READER_HTML = """<!DOCTYPE html>
     <div class="meta">
       <span>{type}</span><span class="dot">·</span>
       <span>{char_count} 字</span><span class="dot">·</span>
-      <span>{writing_date}</span>
+      <span>{writing_date}</span><span class="dot">·</span>
+      <span class="reading-time">约 {reading_time} 分钟</span>
     </div>
   </header>
   <div class="reader-body">{paragraphs}</div>
@@ -320,6 +330,10 @@ READER_JS = """(function(){
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;
@@ -357,12 +371,15 @@ def build_library():
 
 def build_reader(work):
     paragraphs = ''.join(f'<p>{p}</p>' for p in split_paragraphs(work['content']))
+    char_count = work.get('char_count', 0) or len(work.get('content', '').replace(' ', '').replace('\r', '').replace('\n', ''))
+    reading_time = max(1, round(char_count / 400))
     html = READER_HTML.format(
         theme='dark', font='serif', size='md',
         title=work['title'],
         type=work.get('type', ''),
-        char_count=work.get('char_count', 0),
+        char_count=char_count,
         writing_date=work.get('writing_date', ''),
+        reading_time=reading_time,
         paragraphs=paragraphs,
         css=READER_CSS,
         fonts_url=GOOGLE_FONTS,

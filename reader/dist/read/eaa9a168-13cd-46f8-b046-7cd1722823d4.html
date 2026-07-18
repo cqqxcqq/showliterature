@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>短篇</span><span class="dot">·</span>
       <span>1562 字</span><span class="dot">·</span>
-      <span>2026-04-18</span>
+      <span>2026-04-18</span><span class="dot">·</span>
+      <span class="reading-time">约 4 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>我一直看着手中的袋子。</p><p>到十楼了。</p><p>走廊的感应灯亮起了，我听到走廊尽头，他的家，传来沉闷的一声，好像是什么东西被丢在地面上。</p><p>从电梯走过去，直到末端，是六个门。</p><p>我看到他门前集灰的鞋垫上，有一个较小的鞋印。</p><p>看了一眼左手的袋子。</p><p>右手举了起来，但又停了一下。</p><p>我抚平西装的皱痕，确保平整后，才按下门铃。</p><p>他的家大门后，有水龙头开着的声音。</p><p>门铃响了。</p><p>我听到他的脚步声，门随即开了。</p><p>“来了。”</p><p>“嗯。”</p><p>我把鞋脱下，放在屋子里门旁。</p><p>客厅的沙发上，堆满了杂物。</p><p>“等我一下。”</p><p>他把茶几散落的文件一张一张整理，然后仔细地算过，进了他的房间。</p><p>“坐吧。”</p><p>他从厨房走来，手提着一个纸杯，放在我面前的茶几上。</p><p>“这么久没见，你还好吗？”</p><p>我尴尬的笑了一声，只是点了点头。</p><p>“还是一样。”</p><p>“我们好久没见了，都不知道你怎么样了。”</p><p>“就那样，没有什么大变化”</p><p>“嗯。”</p><p>我拿起茶几上的水，纸杯杯底长出灰色的霉菌。</p><p>我抬头，闭上眼，一口喝完了里面的水。</p><p>然后又放在茶几上，纸杯里什么都没有了。</p><p>蔡泽看着我，眼里有些诧异。</p><p>我的手放在膝盖，手心出了汗，然后擦在膝盖处。</p><p>“喝点酒不？”</p><p>我看着蔡泽，稍前反复张开又无奈闭上的口，说出一句话。</p><p>“两千七。上次那件事还没还完。”</p><p>蔡泽一只手撑着膝盖，站起来。四步，在阳台门前停下。</p><p>他转过身，眼睛扫过茶几，沙发。我从口袋里摸出一盒上好的烟，挑出，递给他。</p><p>蔡泽没接过，只是在茶几旁的柜子，拿出了一根发霉的烟，用指尖擦干净灰尘后，点火。</p><p>点了三次，才被点着。</p><p>烟从他的鼻孔里出来。他看着我</p><p>看着我两秒，转过身去，看向阳台外。</p><p>烟在他手指间烧。灰掉在地砖上。</p><p>烧完的烟，被丢在地面，蔡泽踩上去，没有拧。</p><p>他走回沙发，坐下。没看我。</p><p>“你瘦很多了。”</p><p>“其实我这个月......算了，这件事没有关系。”</p><p>他走回沙发，坐下，把脚抬起，落在茶几上。</p><p>蔡泽的脚后跟，还有烟头黑灰的痕迹。</p><p>我背靠沙发的身体，往前倾斜。距他脚后跟只有10厘米的距离。</p><p>蔡泽没说话。</p><p>“你今天来得巧。”</p><p>“她刚走。”</p><p>我没问下去是谁走了。沙发靠背上搭着一件红色女士外套，袖子翻过来的。</p><p>“嫂子回娘家了？”</p><p>“嗯。”</p><p>他没再说。烟灰从他黑色的脚跟落下，在茶几上积了一小撮。</p><p>“你还记得张小吗？”</p><p>“中学那个？”</p><p>“嗯。”</p><p>他沉默一下。</p><p>“张小怎么了？”</p><p>“算了，没什么。”</p><p>他的脚从茶几上抬起，颤抖着放了下来。然后又抬起，放在茶几上，换了一个姿势。</p><p>天花板发黄的风扇，一秒内只转了两圈，可吹出来的风，却掀起沙发上，那件红色外套的袖子。</p><p>“上个月的事了。”</p><p>我看了一眼茶几角，木头层裸露在外。</p><p>“那......”</p><p>蔡泽放下脚，看着我，两秒。</p><p>“你手机拿出来。”</p><p>他的手机是老式的苹果6s，手机壳还夹着他与嫂子的合照，照片已经发黄掉色了。</p><p>我手机的镜头对着茶几，屏幕还停在去年十一月，和蔡泽的对话。我们说的最后一句话是“不客气”。</p><p>蔡泽的手在屏幕上停了三秒，我抬头，看到他瞳孔里，剩下的余额，一千八百七十二元七毛。</p><p>然后，我收到了他的转账。</p><p>一千七百元。</p><p>“你先收着吧，我暂时只有这些。”</p><p>“收到了，谢了。”</p><p>蔡泽身子往前，把手机翻过来，扣在茶几上。身子靠在沙发上，脚又抬起，放在茶几，闭上眼。</p><p>我把我的手机熄灭，收在裤袋，裤袋里面的空间，好像被折叠了。我小心地站起，把手机推入裤袋里，确保手机没露出后，才缓慢地坐了下来。</p><p>蔡泽的眼皱了一下，把脚放了下来。</p><p>“你家楼下那家超市又涨价了。”</p><p>蔡泽‘嗯’了一声，鼻子呼出一小撮白色的气。</p><p>“你最近那里还堵吗？”</p><p>“还是那样。”</p><p>“昨天下了雨。”</p><p>“嗯，我没出门。”</p><p>风扇还转动着，没人在说话。</p><p>蔡泽睁开眼，拿起手机，屏幕在瞳孔中亮了一下，然后又被扣回茶几上。我看见他看了，他大概也知道，便没再拿起手机。</p><p>我把腿从茶几下挪出，却不小心撞到茶几脚，茶几上的那撮灰，散落，有些掉在蔡泽的膝盖上。</p><p>蔡泽没有扫开。</p><p>双腿离开茶几后，我手撑着沙发，身体往前倾。</p><p>站了起来，腰骨响了一声。</p><p>顺手拎起袋子，走到大门。</p><p>“走了。”</p><p>屋里只有回声。</p><p>我弯下腰，系上被解开的鞋带，穿上鞋子。</p><p>手把门把压下，门开了。</p><p>走出去后，关上大门。</p><p>走廊的大门，在门开时，亮起。</p><p>门被关上后，感应灯便暗下了。</p><p>我停在离大门一步的距离，蔡泽家没有声音。</p><p>蔡泽的大门，起初是庄重的褐黑色的，可这时看去，大门的颜色变得浅淡许多。</p><p>我转过身，右手似乎被拉向地面。我低头，看着那个袋子，它还在我的手里。</p><p>右手手掌被勒出一条印，我把袋子换到左手。</p><p>我看了一圈。</p><p>走到楼层的配电箱前，放下它。</p><p>我停了下来，在黑暗中看了一眼它。塑料袋在黑暗里还没有完全隐没。蔡泽出来时会看见它。</p><p>我在走廊走着，回到楼梯口。感应灯亮起了。</p><p>我停下，回头望向蔡泽的方向。</p><p>感应灯又灭了。</p><p>楼下有人在按单元门的密码，按错了一次，又按了一次。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

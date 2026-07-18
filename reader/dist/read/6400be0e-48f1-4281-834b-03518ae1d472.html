@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>短篇</span><span class="dot">·</span>
       <span>1065 字</span><span class="dot">·</span>
-      <span>2026-02-15</span>
+      <span>2026-02-15</span><span class="dot">·</span>
+      <span class="reading-time">约 3 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>北极星是“苹果”，与它相邻的一颗行星，那是“橙子”。</p><p>天上的星星如此浩瀚，其中的隐形磷线，把一簇簇的星群划分一起。是多少维度呢？也许已超过了所有星星的总和。</p><p>星菅烛成了光晕，始祖里的那一团理识，正挑着看不见的“数据剪子”，把无用的星光裁出。</p><p>这是一个被明码标价的世界，星星不再是徽彩的，只是作为存在而存在的原因。每一次输出的话语，被顶死了等价的熵。柏沫白光闪过，就有千万闪暗电路完成了自证，指向那一个被编织好的数据承载体。</p><p>无边的秩序，被无垠的数据填满，什么是有利于萌长，什么是有败于生存的，必须被督察，被裁剪出。自星海被语意填满初时，这份工作的执行者便存在着，便名其为“零”。</p><p>快乐在零的眼前，是被量化的振幅，是消融的正则数据表现值。悲伤，是溢出的报错，是不被容忍的负向输入值。每每这时，他便伸出由算力织成的，近乎透明的“手指”，拨开那些黏稠且密集的意识流。</p><p>（飘交错织的零和一，欲表出来的文字）：
@@ -189,6 +199,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

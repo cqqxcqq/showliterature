@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>501 字</span><span class="dot">·</span>
-      <span>2026-02-18</span>
+      <span>2026-02-18</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>過年了，過年了。</p><p>憂拽暖光，衫在被下身線，蓋著。</p><p>欲關的桁門啊，別閉上，依稀瞧見，輝动的枝惺。</p><p>桌上的火鍋，依舊聯年，復前的位置。湯頭依然，碗筷依然，配料依然，人，許不如然。</p><p>您聽到了嗎，門外那一束束光，源至您子子孫孫。不，在你眼里，那是星星吧，如此遥远，如此陌生。若你仔细聆听，看啊，因你闪烁的光，那不是，不是夜空里，无意义的低语呢喃。</p><p>您的遗忘里，请别落寞，看啊，他们在称赞您的笨拙。我的清醒里，怎此寂寞，望着，您的回忆之过。</p><p>一炉氤氲水汽，滚着连年无异的汤底。或许是我第一次尝到吧，或许也不是。如此熟悉但却陌生的滋味，似乎我并不是初尝这份酸滋。他们怎能落您一人，白发背着窗外照不进的月光。</p><p>起身吧，探寻门外颗颗本自您的星，到底为何闪耀，因何闪耀；可您却不示。我看着他们，是真的在快乐吗？为何却以这锅里的朵热，盖过了对那房里的避嫌忽视，请别，装作如无其事，他会心滞。</p><p>话语淡了，星光暗了，桌上清了，人也走了。篱门手把也再度盏亮了，这一次，上一次，下一次，都是一样的流程，一样的结局。什么将不同呢？许只有那房间里彩色笑相，渐落茫彩，摆上拉尘的筷食。</p><p>过年了，每个人都在相同的门框下经过。</p><p>过年了，下一次见面，或许就见难过；那时，请不要为错过而感到落寞。</p><p>月光照下来了，照在茳后您的床头。若您看不清，罢听吧，聆听天上，为您而灿的烟花。您的星星？他们只存在于您的记忆里。</p><p>天亮了，睡吧，在梦里，记起那段您的歌曲。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>730 字</span><span class="dot">·</span>
-      <span>2026-05-26</span>
+      <span>2026-05-26</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>现实的植被上，连绵的天的根笼罩，根下，我们是一张张缺氧的纸。墨水是渐渐褪色的晨光，每一天被写上同样的句子。同样的名词同样的动词同样的结尾。于是一面一天就这么完了，墨水晕了又散散了又晕。</p><p>乏味的动词无感的名词在纸上浪费着显影的表面。躺在关了灯窗外路灯余光的房间中，浅褐色的黑夜是低质量的感光剂，纸张于是变成浅褐色。而梦是透明色墨水的书写，动词可以在标点符号之间被切，成一半之后还可以正常运行。梦于是在纸下那层褪色的层印找寻，干晕后留下的山脉状层层叠着的印记下有什么藏着的单字。梦于是把深藏在墨迹山脉下的那些字抽出来，用看不到的墨水在纸表面写上毫无逻辑却充满惊喜的句子。</p><p>晨光抵触梦，所以梦书写的形式被转换成盲文。若是晨光的墨迹与梦的墨水重叠那么现实便不知道该执行哪一个。点点的形式有着梦悄悄研发出的语法规则，但有时它会报错，导致有一些梦实际上是从晨光偷来的现实。然后浅褐色黄色参杂的光会在纸上晒一会，直到浅褐色突然散开后，纸张纤维会因蓝晒法而在被遮盖部分的周围留下浓郁的普鲁士蓝。</p><p>遮盖的部分又是什么呢？它是另外一张纸曾经接触的痕迹，纸与纸之间纤维会被互相而吸引，从而被冻结伸展的姿态，墨水来了，它也不会沉下，只是被染上。被遮盖的纤维姿态，可以被拼成对方镜面的形态。所以当浅褐黄色的光晒时，它实际上会因不适应而脱落，所以纸张表面纤维变薄了。留白的被遮盖部分，纸变薄了。</p><p>梦是晨光相反的温度，晨光会融入梦中，互相抵消，温度在零度之下，但墨水不愿意成冰。于是纸张在这一片清澈，变薄的轮廓与周围较高的表面，冷的墨水浸入，淹没表面。实际上这样一种情况下，纸处于亚稳态，它随时会瞬间揉挤成一团。但窗外路灯已经变成更多几度的黄，梦的墨水温度被晒得沸腾，于是处于亚稳态的纸变被热气推起。上升，纸从流动的湿润的蓝晒图终于被照得碎裂破碎然后又被现实冰晶缝补回去继续写上无味的句子。</p><p>纸张的纤维在摆动着，它又变薄了。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

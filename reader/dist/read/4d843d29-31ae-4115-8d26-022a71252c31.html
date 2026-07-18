@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>750 字</span><span class="dot">·</span>
-      <span>2026-03-02</span>
+      <span>2026-03-02</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>意识是一只被钉在虚无的蝴蝶，不断挥动着翅膀，然后逃脱不了。我清晰看见眼睑内侧的那一片漆黑，那是现实的锚点，但我却无法拉开自己的眼皮。大脑皮层疯狂地向指尖神经传送抬起的信息，穿过了弯弯曲曲的神经地图，然后在抵达末端之前，瘫在一堵致幻的墙前，溅起，洒在虚无之中。</p><p>于是我坐起来了，视网膜上残留病态的色彩正在复苏，看着手上的六根手指，抬起橡胶做的，走几步路就被折叠的双脚，来到了镜子前。</p><p>镜片世界的背面，时钟挂在正转动着的风扇旁，时针随着风的速度转动。风卷入我的髌骨内，血液凝滞在距膝盖十三毫米的位置，在小腿处冻结出一道冻脆的玻璃。崩开一声瓷裂，小腿内侧浮现出左脚无名指，皮肤下突兀地隆起未剪平的指甲指垢。</p><p>我伸出生长在食指与中指的那一根手指，抵上镜子里的“我”。我的目光，带上千斤的秤砣，落在“我”之上。“我”正修剪着五根手指的指甲缝，划过横纹时，挂出碎屑，余出的污垢穿过那面透明的分割，落在我的脸上，沉没，成为一颗痣。</p><p>当我意识到我的脸上越来越多的黑点时，那些痣已经爬过了我的眼眶，崩坏的像素，一格一格，占据了我的视线，镜子，已经成为黑色的荒芜。我的鼻尖，传来窒息的气味，嗅觉被抹除了，留下似干涸水泥的褐色荒芜。我的嘴唇，尝到痂一样的干硬，却在接触口水后，似烂泥般湿冷，往食道蠕动。我的面被压住了，肩后的脊椎正在瓦解，在血肉内崩解成刺伤的骨尘。</p><p>最后一根神经被压碎成灰色的空气，身前的镜子不再下着黑点，一切又成为了起初的模样。镜子里的我，似镜子般洁白，没有那些丑陋的痣点了。声带里，湿滑的食道，成为了干涸的沙漠，所说的话，成为了枯萎的凌翅。</p><p>镜子里，我们对视着。眼皮有些干了，抬起我的左手，用着橈骨擦拭左眼眼角下细细的沙子，我感受到眼皮正跳动着。然后镜子里的我，右眼眼皮下也长出了枯芽，浅灰色的，他抬起右手，短暂地在眼前挥了一挥。</p><p>他抬起的手，贴在镜子与我的那一层薄膜上，手掌贴住了镜面，手心分泌的血印在了镜子里。我又看着他的手掌上，那一根本不存在的手指，以骨头和血肉交叉重组，在中指旁突立，穿过那层镜子。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

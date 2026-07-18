@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>杂文</span><span class="dot">·</span>
       <span>470 字</span><span class="dot">·</span>
-      <span>2026-04-05</span>
+      <span>2026-04-05</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>我在前天的梦里见到他了。</p><p>在妈妈的车子里，我坐在后座，他坐在副驾驶。</p><p>车应该是开着的，我没有注意，我的眼里只有他。</p><p>我身体前倾，前颈靠在椅背和头枕下那余出的空间。</p><p>我能碰到他，可我却没有主动去触摸他。</p><p>我记不起他穿什么了，但他是存在过的。</p><p>头发还是和去世时一样。</p><p>他一开始看着前方，和我说话。</p><p>梦一开始，我就隐隐约约觉得他不应该在这里。</p><p>我差点要说出：“你不是死了吗”</p><p>但我又想起，是我希望他来的。</p><p>我怕我此后会再也见不到他，怕他消失，怕梦碎，怕我会后悔。</p><p>所以我没说。</p><p>我说话时，大抵是带着些许惊讶和激动的。</p><p>他有回答，声音什么样的，我却记不清了。</p><p>我告诉他，我长大了，和他就读同一所中学。</p><p>他怀里突然多了一份时间表。</p><p>梦里的他也许是老师吧。</p><p>梦的后半段，他转头，看着我。</p><p>就是在这时候，我哭了。</p><p>上一次如此近距离地与他对视，还是被一层玻璃隔着，那时他是闭眼的。</p><p>可现在，他的眼是开着的。</p><p>我开始说，说着说着，就哭了。</p><p>是那种流了很多泪，是那种应该要有声音的哭。</p><p>或许只有我自己知道我在哭。</p><p>大抵是在我们说了拜拜，</p><p>梦就碎了。</p><p>醒来时，我一开始是忘记了这一个梦。</p><p>只是脑袋里有什么东西盘旋着，绕了一下，然后又走了。</p><p>直到两天后的现在，我才想起。</p><p>那或许是一个遗憾的感觉吧。</p><p>我睁开眼，看着天花板。</p><p>转头，看见他留下的兔子玩偶。</p><p>我的心在哽咽。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

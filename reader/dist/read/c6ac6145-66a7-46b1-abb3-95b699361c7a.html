@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>411 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 10 日</span>
+      <span>2026 年 2 月 10 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>瑰颈垂下缕缕纤丝，醉卿碎里千千曦枝。</p><p>“我必须是你近旁的一株木棉，作为树的形象和你一起”。那我若你身旁，颂这伟大的并肩，却怎么，余光却在贪念，跌卧在你许曾转头的瞬间。那自我口中所出，何比坚韧的木棉，不知在你耳边，是否揭开，纤语下，对灵魂最难坚的遮蒙；你是否会听到，我对你的告白。</p><p>可笑的是，我竟借着歌颂平等的名义，实则行那最不平等的守望。我怎么了，你知道吗。</p><p>谧谧悄息融浊棹间，翼翼苗碧重落牢殿。</p><p>“每一阵风过，我们都互相致意；但没有人，听懂我们的言语”。我就似那不断伸枝的微芽，然在暗渊中，却不断羞示，仍无易。当那词的息，自风中，你曦枝而拂，你会轻摇吗。就像那里，我搁泊，立足而观，遥遥万千里外的那座岛啊，你的桉树，能否因我的呐喊，颤动你的边叶。</p><p>“但没有人，听懂我的言语”。就罢烂在土里，烂在刹忆里，烂在我的舌尖里。我的言语啊，终究只有我知道。</p><p>呐喊梦离嵘归己，花瓣崩昔去风晖忆。</p><p>“仿佛永远分离，却又终生相依”。我中有你的梦里，并没有木棉，也没有同巅，你息在那地，我却又无尽登寻。偶尔自高山落下几翠弭迹，伸手去取，罢了，山脚有我碎落的躯体。</p><p>盛秋若梦败散万春，峥夏错耕灾难千冬。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>1810 字</span><span class="dot">·</span>
-      <span>2025 年 6 月 15 日</span>
+      <span>2025 年 6 月 15 日</span><span class="dot">·</span>
+      <span class="reading-time">约 5 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>夕阳的黄昏斜在天边，不久前的满日烈映似在眼前。几只艳丽的鸟儿划过天际，奔向自由与未知，身上洒落闪烁着的羽毛。这羽毛许是天空谢幕前盛大的回光返照，又或许鸟儿本就这么美丽，只是在这瞬间，恰好成为了最动人的陪衬。</p><p>在这份祥和中，绿意悄然滋长。阳光洒落，化作养分，静静哺育着万物的成长，仿佛一切都在平稳地复苏。正如自然在春光中生长，时间里一切细节仿佛是成长的暗喻。</p><p>人生是一台偶尔会倒着走的时钟，即使不停向前，却也常常回望那几个刻度前的自己。人生如撒在磨石上的豆子，在巨大磨石上轮着走，日复一日，年复一年。直到豆子不再是豆子，直到时针分针上出现本就不属它的锈迹。成长，悄无声息，却从未停止。</p><p>成长是一场盛大的演出，你我都只是配角。我们虽非主角，却难辞其责。时间，是那位从不露面的导演，早已写好每一个转场与高潮。我们无法忤逆这场已注定的结局到来，也无法中止这场精彩的演出。如果这场戏剧有观众，那我们就安然的扮演这次的角色。</p><p>成长，是一出值得回味的好戏。当导演失去耐心，进度条就开始被拉动；当声声啼哭响起，当假想的观众开始陆续离席，剧本便悄然加速，时间便学着那矜贵的月亮般，缓缓弯下双眼带来光明；它如月，悄悄抹去无数美满的记忆。</p><p>一切正回本轨，观众也返席。到了这时，我们也逐渐学会用语言替代啼哭，这场戏也终于不再是个人的独角戏。</p><p>成长是残忍的，它从不允许我们将稚嫩偷偷藏进回忆的口袋。正如雨后的小街不再会有冷冽的水滴落下，只有细细彩虹似绿芽萌生。也似朝霞午分落日之时，不会定格那晚夏，只留下当日的遗憾，独自闯入成长的旅程。</p><p>我们不知道成长所谓什么，只能在漫长人生里，努力寻找剧本里隐藏的答案。</p><p>不知暂停声响起了几次，枫叶一片一片落下，阳光透过枫叶被蝉啃食过的洞，在这幕布上描出记忆的形状。望向窗外，光线如剪影般洒进课室。沙鸥与风筝一只接一只，掠过天际，闯入这安详的戏台。那透进教室的阳光，如道道灯光，照在成长的幕布，指引我们走向光明的未来。</p><p>成长是讲台上的飞舞，是从空白逐渐到富有色彩的画布。成长是阳光背地里的辛苦，是为了梦想而不断拼搏的奏舞。如果成长是一部戏，那约在这场戏的五分之二处，便是最具感情与意义的一段。</p><p>当夏天蝉鸣响起，模糊里的身影手拉着手，互相陪伴在彼此的记忆里，是成长这部戏，最深刻的友谊。而这所谓之青春。
@@ -194,6 +204,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

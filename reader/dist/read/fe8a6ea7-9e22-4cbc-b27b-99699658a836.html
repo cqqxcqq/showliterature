@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>短篇</span><span class="dot">·</span>
       <span>1842 字</span><span class="dot">·</span>
-      <span>2026-05-28</span>
+      <span>2026-05-28</span><span class="dot">·</span>
+      <span class="reading-time">约 5 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>多年以后，当你头颅迎上冰冷的子弹时，你会回想起遥远的那个晚上，十秒内你手心冷汗的温度，并且你还会带着一丝怀念，然后一声枪响，你的血液便完成了两千两百零一个肉身组成的美妙拼图。</p><p>你该庆幸的是列车内窗口朝向两侧，不然包厢内，那个正剥桔子的二十出头的女孩，那个因空调太冷而抱怨的六十多岁老翁，会瞧见驾驶舱内仪表盘上刺眼的红色警告。你慌乱的手调试着头上身前的控制元件，可笑的是它们一个个脱落下来，砸在那亮眼的“500km/h”失控超速警告。车内的两百条生命还在窃喜用双位数的价钱买到了比高铁还快的车票，它们于是欢呼着。而你此时正恐惧地颤抖着身子。</p><p>空调的轰鸣声也盖不过你内心的因惧怕而发出的呐喊声，眼前的列车轨道，一千四百米外，铁轨之间的纵向铁片，此刻被绳索及晃动的，人，替代。你不可置信地扇了自己一巴掌，但远方的天际你已经瞧见了会被染红的未来。十二秒，你在心底与死亡如此打赌。</p><p>你想起了有一个毫无逻辑的哲学情景，你还曾耻笑地在心底贬低了它，说，好好的谁会想把那么多人绑在轨道上啊，那根本就是不可能会发生的事。但你此时除了被哲学家的精准预言震撼，你还想起问题里不止有一条时间线。于是你看向右侧，果然，那本该穿越大山的隧道，漆黑的，不知几时被拆除了，只留下视线尽头的一片漆黑，黄昏的一部分突然跌入悬崖。十一秒，你这时快报废的脑超负荷地运转着。</p><p>列车的警报声你已经适应了频率，大概是三秒一声。十秒，它又响起了。你来不及打开广播向列车的乘客道歉，于是你的手从摇杆上滑落，你把责任交给了惯性，火车愈来愈快了。你作为资深的驾驶员，自然习惯了偶尔火车会碾过一些小石子或是小鸟，习惯了微弱的啾啾声和铁击打的声音。但这时火车下的节奏性颠簸与列车内嘶喊也盖过了火车下骨骼卷入车轮的卡卡噗噗声。</p><p>而你眼前除了一幅真实的超现实主义绘画，便什么都看不见了。你想着，若是你能活下来，把这一幕画下，那得能卖出多少个毕加索的价钱。但雨刮器把两千个人的血肉抹得互相参在一起，残渣多了之后，雨刮器也越来越慢了，你这时又忽然想起一句话——当我们粉身碎骨之后便分不出你我。两千，除了惯性，又是谁杀死的呢？总不可能是你吧。</p><p>你这时闭上眼睛，警报声再次响起。七秒，你发现天边还未被染红却又愈来愈近。这时你回忆起上一次警报声后所发生的事情，于是你什么都顾不得就连忙拉拽驾驶杆把列车并入右侧轨道。列车暴力地向右扭转，你看着眼前的悬崖心中大石也快要落了下来，空荡荡的。巨大的列车在地心引力的背面跳舞，地心引力没有拉起列车的手共舞，于是列车就在空荡荡的悬崖里转了一圈又一圈，你这时想起，列车内的人可真幸运，他们只花了双位数的价钱就可以体验游乐场那没有差评的设施。但这可恶的黑色幽默却彻彻底底地坠入了永恒的黑色里。随着列车与终点的一声相遇，尖叫声归零，如果这时你能够在钢铁与血肉的混合态中站起来比大拇指的话，那你应该还活着。可惜该死的命运在这场赌注中赢了，你输了一辆列车和两百零一条赐予死亡的筹码作为代价，其中包括你自己。</p><p>警报声响起了。四秒。似乎拉动摇杆或否你都无法活着向死亡比出一个灿烂的中指。你这时想起，身子右侧有逃生门。三秒，你的身子从皮革的驾驶位弹起，颤抖地爬向逃生门。两秒，你发抖的手指拧开金属门，狂风灌了进来，你疯狂的身体扑了出去。一秒，警报声再次响起了，只不过它响得更大声了。你想起，培训时导师曾说过，一辆失去了司机的列车会侦测到这个情况，并且它会进入自救模式，但是没有人知道它被如何编程自救。这时你拍拍胸口，你有幸地见证。列车在分轨处半脱轨，前半截车厢因惯性的作用脱离了后车厢，被甩出去，横扫那两千人。后半截的车厢因脱轨的离心力，被甩出了轨道，你看着这完美的抛物线，想起了你中学依稀学过的三角函数，但学识浅薄导致你这份工作的你，忘了如何形容这道曲线。</p><p>你最后在二十二万观众的见证下，在法庭一字一句地阐述了你大脑内无比精彩的演绎，你内心比戏剧还戏剧化的独白，以及你干干净净幸存的小确幸。你的死刑在一个仿照古罗马斗兽场的体育场上隆重举行。你在被押往舞台中央时恍然大悟，那道抛物线问题根本没有答案，因为质量会影响空气阻力所以它的最终答案复杂到你的大脑过载，因此根本没有答案，你在这时笑了出来。而围满舞台的观众认为你的大脑里是在死不悔改，因此他们齐刷刷地向你吐了一口口水，但是坐在最末端的观众倒了大霉也真的好运，至少他们不必洗头了。</p><p>两百位英勇幸运的战士在行刑前为你们表演了正式的步操，你听着四面八方传来的声音猛然回想起那十秒里的场景，如此熟悉。然后你终于要迎接专属你的死亡，他们解开了束缚你的绳子，在你的身后排成一个整齐的铁半圆，让你可以移动地粉身碎骨。你如此开心，在草地上蜷缩爬动，有人开了第一枪，但那不是从那半圆里来的，半圆内他们还在上膛。整齐的声音让你放下了警惕。</p><p>枪声响起，你最后因想死俏皮点而伸出的舌头尝到了你血液与脑浆混合的味道。苦的，你最后大概是想着，遗憾没在死去前吃点甜的。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

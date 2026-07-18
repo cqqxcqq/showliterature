@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>其他</span><span class="dot">·</span>
       <span>626 字</span><span class="dot">·</span>
-      <span>2026-05-29</span>
+      <span>2026-05-29</span><span class="dot">·</span>
+      <span class="reading-time">约 2 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>你的最后一餐是韭菜饺子。行刑场的土是湿润的，上一个人的血液还没干。你被压下身子，膝盖抵着土地。他们用一块布蒙上了你的眼睛，你看到的除了一分钟后的死亡便是黑色。你透过黑色的布看到了光，你想抬手挡住，越动越紧的绳索却不让你这么做。你的膝盖本来是贴在一起，但你费力地分开了它们，你收紧的手指才松开了来。</p><p>你听见脑后的脚步声，清脆地快要穿透你的头颅。但你的牙龈在这时发痒，你无论如何摆动都无法移动你的手。于是你操控你干涸的舌头，试图止痒，但你发现刚才吃的饺子，在你的牙缝中留下了一条韭菜。你不断调整着，却只是在为你昨日未刷牙的牙齿，用舌苔刷牙。你认命地接受了，带着韭菜与遗憾的死亡。</p><p>你一边摆弄着舌头，一边听着耳边徘徊的脚步声与枪声。当你认命时，脚步声也来到了你的身旁。你两侧胳肢窝被两双手环抱着，被拖拽，你也懒得配合移动了，只发掘膝盖下的土壤越来越湿了。你快死了，脚步声走远，另一对脚步走近，还有上膛声。一声咳嗽让你以为子弹打偏了，但随之而来是一声“执刑”。</p><p>你突然看见眼前的布，一只蚂蚁在阻挡着光源，你不耐烦地甩了一下头，刚好与子弹擦身而过。身后枪被上了一次膛，你要经历第二次的死亡。你突然发现口中那条韭菜动了起来，它爬过你的舌头，然后是牙齿，然后它啃噬着你口中的韭菜，你这时才发现韭菜不会动，那是你的幻觉。啃食的声音在你的喉咙传播，声带误以为这是你的声音，于是把它传给了大脑，这就导致你误以为你在啃噬着铁制的子弹。</p><p>你眼前的灯闪了一下，身体往前坠。地又湿了。你死的时候嘴巴是张开的，那只蚂蚁带着韭菜，从你的牙缝中爬出去。但随后你的身体被拉向别处，顺带压扁了韭菜。你终于是和你最爱的韭菜一同死亡了。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

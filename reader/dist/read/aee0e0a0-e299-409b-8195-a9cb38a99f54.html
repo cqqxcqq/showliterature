@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>小说</span><span class="dot">·</span>
       <span>5263 字</span><span class="dot">·</span>
-      <span>2026年 7月18日</span>
+      <span>2026年 7月18日</span><span class="dot">·</span>
+      <span class="reading-time">约 13 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>我一个人住。</p><p>老了之后，记性差了不少。</p><p>但有些东西还是老样子，就比如那双布鞋，比如窗外那棵松树，比如家门总会多出来的一双拖鞋。</p><p>拖鞋不是我的，我一个人住。</p><p>太阳再次越过了山脉，暖洋洋的日光是每日早晨准时的闹钟。</p><p>我每次从床上起来时，被子总在我身上盖得严严实实的，掖过了我的肩膀。</p><p>也许是我睡觉规矩惯了。</p><p>费力坐了起来，被子被艰难地掀盖在一旁。</p><p>脚一探，精准地踩进放在床边的那双旧布鞋里。我好像记得，昨晚我的布鞋是对着我的，今天我竟容易地就穿上了。</p><p>那双布鞋我穿了或许有几十年了，底都磨平了，但就是舒服，每一次穿上，就宛如我的脚长出了新一层的皮肤。</p><p>我不记得是谁买的了，应该是我自己吧。但我每天都穿，因为它穿着就是舒服。</p><p>我穿着这双布鞋走到了窗边。窗外那一棵松树，自从我搬来这里后，我便一直喜欢看着。现在没准是冬天，好冷啊。天太冷了，貌似那棵松树的叶子都掉光了，光秃秃的。</p><p>雪就这样一片一片地落了下来，松树啊，恐怕已经忘了秋天了吧。</p><p>大概是同情吧，我这样想着。</p><p>我再次闻到了那一股熟悉的香气。我兴奋地走到餐桌前。</p><p>桌上有一碗熬得很烂的白粥，还冒着热气呢！</p><p>我确信这是我早晨起来亲自熬煮的，否则白粥上怎么还会有着我最爱的酱油呢？</p><p>更何况，我可是一个人住。</p><p>当我把那一勺白粥送入嘴时，它并不是滚烫的。我也已经习惯了，或许是我把它忘在了桌子，想起要吃时才恰恰好。</p><p>恰恰好是最好吃的那个温度。</p><p>一滴米汤挂在了我的嘴角，我想要伸舌头舔舐时，却感觉有什么东西轻轻擦过了我的脸。</p><p>奇怪，明明我是一个人住的。</p><p>应该是风吧。</p><p>吃完后，我习惯了把碗筷留在桌上，今天也一样。</p><p>我走到门口，正想要去找那一棵松树聊聊天。</p><p>可是，我看见脚下有一双蓝色的旧拖鞋，就放在门槛前。</p><p>奇怪了，我明明一个人住，蓝色也不是我会喜欢的颜色。门口怎么会有别人的鞋呢？</p><p>我如此地不解。</p><p>我费劲地，把那双蓝色拖鞋，一寸一寸地，踢到离地垫三米远的地方。</p><p>那双拖鞋把我想要出门散步的心情弄没了，我关上门。</p><p>回到房内，门后不知从何时起，就挂着一个相框。</p><p>那个相框好老了，快被白蚁啃食干净了，却偏偏还留着这一副木骨架。</p><p>也许是留给我做个念想的吧。</p><p>相框里是我年轻时的照片。相框其实不小，但我只占据了一半。</p><p>两分钟，我对着我旁边的另一半看着。</p><p>那边的玻璃总是反光，什么都看不清啊。</p><p>我也没兴趣继续看下去了，那里兴许本就没有站人。</p><p>我一个人住，腿脚虽然是慢了点，但日子过得还算妥帖。</p><p>我坐在窗前的摇摇椅上，悠哉，悠哉。</p><p>松树长出了新枝，不，那是雪。</p><p>我大概是老了，连雪都忘了是什么。</p><p>想到这，我低下头来，打量着我唯一可以描述的这一双布鞋。</p><p>我突然笑了一声。</p><p>我还记得的那一场冬天，那时的我还不怕冷。</p><p>那时正是我在大学最飞扬的时候，当她寄信来，说她想我时，我的心好像被点燃火线的炸药一般，非要在一个地方把热情释放出来。</p><p>那根火线烧得正旺，我于是旷了期末最重要的三门考试，现在想起，还是觉得我做了一个对的选择。</p><p>那时的我没拿什么包袱，只是把那封信和钱包放在裤兜里，不顾一切地便跑去了火车站。</p><p>火车站还算简陋，检票口还是人工的。趁检票人忙于核票时，我低着头，侧过身越过他，然后加快脚步。</p><p>他察觉了，吆喝着保安要把我拦下。</p><p>我四处张望，来往的行人都登上了火车，我不知道他们去哪里，但身后的喊打声越来越大了。最后我别无选择，看准一辆已经起了黑烟的火车，抓准时机爬上。</p><p>我的身子越过铁制的车帮，掉在坚硬的凹凸表面上。煤块表面凸起的部分，刺在我的背后，我挪动，想要摆脱开。最后，我终于坐起了身，但后背的衣服，凉飕飕的。</p><p>开了几个洞。</p><p>冬天的风是冷的，火车从烈日一直行往落日。</p><p>我在煤块上翻来覆去，太阳落了两轮了。冬天时风是冷的，呼啸而过的风凌厉地刮在我脸上。我勉强张开嘴巴，向这狂烈的风呐喊。但风把煤灰卷入我的嘴里，当我闭上嘴巴，牙齿一合，嘴里全是涩的。我没有感觉到冷意，那根引线还火着呢。</p><p>行了多少路我也不知道，只能凭着一直响的车，在心底反复提醒我自己。</p><p>“快到了，就快能见到她了。”</p><p>火车引擎的轰鸣声渐消了，我在不安与兴奋中探出头来。在煤灰与风中，我已俨然成了一个人形煤炭。以至于当我爬过车帮，落在月台上时，等候火车的行人们，看到我之后议论纷纷。</p><p>“他这是怎么了。”</p><p>“怕不是逃票来的吧。”</p><p>但我并不在意这些，我沉浸在喜悦之中。我乘上了不知通往哪里的火车，误打误撞地来到了她的城市。我检查了裤兜，那封信还在。</p><p>我其实并不知道去往她宿舍的路怎么走，只是凭着她曾寄给我照片，在脑海中东拼西凑，就走到了她宿舍楼下。那时的我走得很急。</p><p>“我怕我再晚一点，她就不在了。”</p><p>那时是下午，人流都在操场牵着手散步，所以宿舍的人不多。偶尔也有几个人走过。</p><p>我站在楼下大喊，虽然声音已经嘶哑了。</p><p>那时我还记得有一个人跑了下来，她一边用不可置信的语气骂着我疯了，我傻笑着把那封信掏出来。</p><p>“看，我来了。”</p><p>她听见我嘶哑的声音后，显得有一些慌乱。眼角几滴慌乱的泪水落下。她忽然转身上去，把我留在楼下。那时的我有些错愕，还以为做错了什么事情。但两分钟后她急匆匆地跑了下来，手里拿着一瓶水。</p><p>“你真的疯了，先喝水。”</p><p>我接过那瓶水，水还是温的。</p><p>喉咙再次湿润。她不知从哪里掏出一块毛巾，在我喝水时，擦拭着我的面庞。</p><p>她的毛巾变黑了，她的眼也湿润了。</p><p>“你真像个煤球啊。”</p><p>那炸药，悄声地引爆。</p><p>“别擦了，擦不干净的。”
@@ -190,6 +200,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

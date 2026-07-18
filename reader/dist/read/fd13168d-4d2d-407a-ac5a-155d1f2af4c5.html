@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>其他</span><span class="dot">·</span>
       <span>565 字</span><span class="dot">·</span>
-      <span>2026-04-30</span>
+      <span>2026-04-30</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>阶梯教室里最后一排的翻盖木椅有些年头了，扶手会落下木尘。只要风稍微吹过，那层裙摆便会扫到我的牛仔裤上。我的左侧是墙壁，身体紧紧贴着，把重心压在左侧。我的右臂贴住右胸口的肋骨，肋骨把右臂勒出几层层次。手心出了汗，浸进左侧胸口的衣袋上。</p><p>她正在转笔，金属笔杆每两秒，便会撞上她木扶手上，摆放的铁水壶，发出脆响。只要那声音一停，我就会以为，她将转过头来看我，于是我也停下手中正书写着的笔，屏住呼吸，仔细观察余光中的她。</p><p>她停止转笔，在她的帆布包里翻找。教室里没安装空调，讲台前的风扇也吹不到尾端的角落。她的左耳边，有汗滴落。我打开左胸口袋里的一包纸巾，拿出一张，我的手心出了汗，也被吸入纸巾了。纸巾从口袋出来，我已经感受到了纸巾表面粗糙的触感。她在包里，拿出一张缝制精美的纯棉手帕，在耳角轻轻擦拭，然后折成一小叠，放回她的包里。我趁她未转过头来时，把那张纸揉得皱巴巴，指缝的泥垢被掐在凸起的表面，留在纸巾上，被塞回去口袋。</p><p>下课铃响起了。她起身，重叠的裙摆从牛仔裤上滑走。她走得很快，我的右脚膝盖上还有被压着的感觉。她离开时，翻盖木椅的扶手，啪的一声。我的右侧座位空了，试着把右手伸直。我看着右手，肘部有一丝的紫色。我只能抬起我的肘部，但它很快会落在木扶手上，然后啪的一声。我试着站起身来，可左侧的身子也麻木了。十分钟，当右手肘部那一丝紫色褪去时，我站起身。细密的针扎感，从脚开始，传导至脊髓。然后我便跌坐在木椅上。我最后找回身体了。我看着教室最尾端的角落，那里有一个飘在空中的纸巾。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

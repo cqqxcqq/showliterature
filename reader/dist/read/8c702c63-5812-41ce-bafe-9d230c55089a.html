@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>393 字</span><span class="dot">·</span>
-      <span>2026 年 2 月 4 日</span>
+      <span>2026 年 2 月 4 日</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>星星会在深夜忏悔吗？在被极夜环绕中，它是否会低头思考自己存在的意义？可我并非天上那遥饰的星坠，似尘埃中井底那妄想成为微光的暗靡。</p><p>星空因繁星而不再空虚，跌落无彩的帆布中，无人欣赏，无人在意。那与近地平山隔了千万河梦的星啊，又怎至于一个过错呢？高挂上天，却看着夜色被血月染遍，仍想着散发有了徐年的光。</p><p>池底的荷花干涸了，牵着就枯的触须，意伸往壑红的弭月，窃取几丝熀暗的绳。</p><p>那昔似圣梦的荷花啊，你怎么了，又为何如此渴望，你怎么又把触须染成那将垂枯落的色啊，为何执迷那池外渊里执念。</p><p>那至终，夜色凋落了枯零的血梦，你的荆须铺满红月之光，才明惚欲寻晨星，无力啊，终成躺楚细枝的那斤千秤，把枯梦变成两半的殇意。</p><p>骗你的，星星怎么会忏悔呢？遥地的虻血，它又怎么能听到呼唤呢？它的迟光，不过多少光年外，时间面纱所遮盖的它。</p><p>骗我的，微光怎足照耀你呢？满天的祜绪，你又怎么能放下执念呢？我的迟光，不过多少光年外，微语劳徒所期望的你。</p><p>偌大的骗局中，星星和你都被蒙在编好的悲梦里，不同的是，星星不知道，你也不知道。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

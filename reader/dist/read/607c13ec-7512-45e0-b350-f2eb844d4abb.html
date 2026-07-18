@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>短文</span><span class="dot">·</span>
       <span>428 字</span><span class="dot">·</span>
-      <span>2026-02-22</span>
+      <span>2026-02-22</span><span class="dot">·</span>
+      <span class="reading-time">约 1 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>蓝调天空下，浅青参杂紫色的细长液体，落在红色的那颗露着惨白茬口的枯木上，树枝被染成了紫淀色，晕染稍前夕阳的丝黄。</p><p>茬口被渗透了，流出白血色的抌液。那在明夜未临又被打翻的浅蓝墨水，洒在靠在廉价圆珠笔旁的，那一摞，未赶得及的作业旁。</p><p>丝向被渗透了，透着泊蓝色的涂层。那在明日未临又被破碎的浅灰希望，瘫在靠在蓬松床上的，那一颗，未彻底干透的枕头上。</p><p>红凋天空下，深绯参杂金色的细长液体，点在碧色的那颗透着洁白无暇的荣木上，树叶被滴成了金晖色，收割之后冬月的绒蓝。</p><p>月亮碎了，那万花筒中繁镜相照，织出来的那一粒冷白，终究被耳边吹进来的风瓦崩，月尸散落一块块，跌落在那血液与晖液燃烧的地面。</p><p>那是怎样的一种颜色呢？大抵是黑夜被蝉虫缠上，咬着夜风，掉落的黑红血液，却融入初阳的晖绿下，那未被擦干净的下水道，还在挣扎逃脱的光。</p><p>那股风，吹过耳边，打开那听觉，嗡嗡嗡；耳膜内，声波不断震动，可梦里身旁那不断落下的残晖，阻挡向醒的路。直到被一颗月陨砸中。</p><p>终于击穿了耳膜，嗡鸣声碎裂成清晨第一颗闹钟的惨乐。梦境里那些沸腾的黑红的血液不再温度，在眼睑撑开的缝隙里，逃至天花板上的一抹霉灰。</p></div>
@@ -188,6 +198,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;

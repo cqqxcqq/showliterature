@@ -94,6 +94,13 @@ body{
 }
 .toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
 
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:200;pointer-events:none;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .15s linear;border-radius:0 1px 1px 0;}
+.reading-time{font-size:.8rem;color:var(--text2);margin-top:.5rem;}
+.reading-progress{position:fixed;top:0;left:0;right:0;z-index:200;height:2px;background:transparent;pointer-events:none;}
+.reading-progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .12s linear;}
+.progress-text{position:fixed;top:6px;right:1rem;z-index:201;font-size:.65rem;color:var(--text2);opacity:.6;pointer-events:none;transition:opacity .2s;}
+
 @media (max-width:640px){
   .reader{padding:4rem 1.25rem 6.5rem;}
   .back-link{padding:1rem 1.25rem;}
@@ -107,6 +114,8 @@ body{
 </style>
 </head>
 <body>
+<div class="reading-progress" id="reading-progress"><div class="bar" id="progress-bar"></div></div>
+<div class="progress-text" id="progress-text">0%</div>
 <a href="../index.html" class="back-link">← 返回</a>
 <main class="reader">
   <header class="reader-header">
@@ -114,7 +123,8 @@ body{
     <div class="meta">
       <span>散文</span><span class="dot">·</span>
       <span>1074 字</span><span class="dot">·</span>
-      <span>2025 年 9 月 19 日</span>
+      <span>2025 年 9 月 19 日</span><span class="dot">·</span>
+      <span class="reading-time">约 3 分钟</span>
     </div>
   </header>
   <div class="reader-body"><p>月亮已经僵成弓形，远离世间爱恨情仇的惊涛骇浪。它又开始写诗，一个又一个日月，将自己与思念忧愁的辗转寒意押上韵脚的诗行。从记事起，那时的它就已出落成无人见过的美貌，高贵又端庄。</p><p>一个再平静不过的春天，彩雪自冬土芽根，它在一夜黎明寒春破土，拂面的春意吹融方凝的雪枝。也许霏微的春雪不足冻冷彻夜的春天，枝头传来的温度抑压着想全然长成的雪枝。</p><p>一个再平凡不过的夏天，繁雪从秋土萌芽。它在一晨晚春的黎晓长出，过身的夏浪吹过温适的雪植。也许自其落下的飘雪憧往九天的月亮，枝头芬出的冷香不住地想漂飞艳冷的月天。</p><p>一个再平常不过的秋天，炫雪在夏土饱萌。它在一旦黄昏的末晨生花，凝缤的雪花缠绵明日的维间。也许仍未干涸的雪花停留结霜的时光，清新如故的花芽仍未干涸试图把自己溶解。</p><p>一个不平稀的冬天，那株雪花鼓起勇气。某个平疏的日子，太阳的晴影落在枝头。 它轻轻踮起脚尖，含羞地起舞，仿佛要飞起，去触及世界上的温暖。光洒下时，它的轮廓一点点透明，在影子凝望中缓慢消散。</p><p>它终于溶入土壤，回到最初的春。风没有记得它，光也没有怀念它，唯有冷月静静俯视，替它留下一丝温度。 四季一息，冬来雪去。昨日的轮廓，消逝在它明日的梦里。</p><p>我看见这无形的命运，才明白，心里的某些情感，也只能如此。</p><p>黄昏，风似乎共情我的惆怅，在名为爱的被撰写乐谱里，加上几个它的独调。</p><p>愁坐在傍晚的斜晖里，低声思念着昨天的梦，看不见的影子吹过落在长椅上的柳叶。夕阳将落，蜷在山云之后，斜目凝望风的哀姿。风的哀念把藏于土下的雪花拂掠，带到了眼下的余息。似乎是过于温霁，那片雪花在融逝前的舞步，把温度滴作露珠，碎光满地。</p><p>风把课室的荧光灯剪碎，如漫漫星河里无数个亮点，仿佛带有磁性，缭绕在妳的身旁。光线被吹得一闪一闪，我的灵魂也仿佛在妳身边打转。目光落在太阳，传来的光明让人望而止步。</p><p>我常常迷失在被月光剪碎的星空里，它们散落在我的眼前。我也常常迷失在月光拼凑的夜路里，看着梦里妳未尝停留的脚步。分不清，是星河坠落，还是我的心被潮汐淹没，再也看不到冬天里妳的身影。</p><p>当我伸出手，把梦编织成有妳的幻境，想要触摸那片四季随风而去的雪影，手心的，只有那真实存在，曾经落在我肩上的目光，似是风，在嘲笑我。也许那缕风并不是刻意拂过我，当如海面的潮汐不是月亮的玩弄，许是当我在找着那个她时，她也在找寻着那个他。</p><p>黄昏与暗夜掺半的沙滩上，沙子在我眼前一闪一闪，也许那是星星，但那也无所谓。就若是那夏夜飘下的雪，又怎么能比妳，更寒我的心呢？那时我的泪水不知如何，悄悄地躲进我的梦里，好奇它出现的原因。我看着眼前海浪凝露，妳的身影似乎也在重组。也许那就是妳，就算不是，那也足够了。</p><p>风把汰沙吹起，在空中舞佾，过了几瞬，又落下。</p><p>那片雪花落下时，我未能见证它斡葬的葬虞。或许我寄托于月亮的思望想念，连同雪花，消逝不见。
@@ -189,6 +199,10 @@ body{
 
   function onScroll(){
     var y=window.scrollY;
+    var docH=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=docH>0?Math.min(100,Math.round(y/docH*100)):0;
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-text').textContent=pct+'%';
     if(y>lastY&&y>100){toolbar.classList.add('hidden');}
     else{toolbar.classList.remove('hidden');}
     lastY=y;
