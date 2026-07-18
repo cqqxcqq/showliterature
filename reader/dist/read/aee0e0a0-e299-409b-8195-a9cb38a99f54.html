@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark" data-font="serif" data-size="md">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>《一寸一寸》</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+
+:root,[data-theme="light"]{
+  --bg:#f5f0e8;--text:#2b2520;--text-soft:#6b5e52;
+  --meta:#a09283;--accent:#9a6d4a;--accent-hover:#7a5235;
+  --toolbar-bg:rgba(245,240,232,.92);--toolbar-border:rgba(0,0,0,.06);
+  --btn-active-bg:#9a6d4a;--btn-active-text:#fff;
+}
+[data-theme="sepia"]{
+  --bg:#e4d5b8;--text:#3a2c18;--text-soft:#6b5a42;
+  --meta:#8a7558;--accent:#8a3a1a;--accent-hover:#6a2a10;
+  --toolbar-bg:rgba(228,213,184,.92);--toolbar-border:rgba(0,0,0,.08);
+  --btn-active-bg:#8a3a1a;--btn-active-text:#fff;
+}
+[data-theme="dark"]{
+  --bg:#14110d;--text:#d8ceb8;--text-soft:#9a8e7a;
+  --meta:#6b6050;--accent:#c9a06c;--accent-hover:#ddb87e;
+  --toolbar-bg:rgba(20,17,13,.92);--toolbar-border:rgba(255,255,255,.06);
+  --btn-active-bg:#c9a06c;--btn-active-text:#14110d;
+}
+
+[data-font="serif"] body{font-family:'Noto Serif SC','Songti SC','STSong','SimSun',serif;}
+[data-font="kai"] body{font-family:'Kaiti SC','STKaiti','KaiTi','SimKai',serif;}
+[data-font="fangsong"] body{font-family:'FangSong','STFangsong','FangSong_GB2312',serif;}
+[data-font="sans"] body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;}
+
+[data-size="sm"] body{font-size:1rem;line-height:2;letter-spacing:.02em;}
+[data-size="md"] body{font-size:1.125rem;line-height:2.15;letter-spacing:.02em;}
+[data-size="lg"] body{font-size:1.3rem;line-height:2.3;letter-spacing:.02em;}
+
+body{
+  background:var(--bg);color:var(--text);
+  transition:background .35s ease,color .35s ease;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+}
+
+.back-link{
+  position:fixed;top:0;left:0;z-index:10;
+  padding:1.25rem 1.5rem;
+  font-size:.9rem;color:var(--meta);text-decoration:none;
+  transition:color .2s ease;
+}
+.back-link:hover{color:var(--accent);}
+.reader{padding:5rem 1.5rem 7rem;max-width:820px;margin:0 auto;}
+.reader-header{text-align:center;margin-bottom:3rem;}
+.reader-header h1{font-size:1.75rem;font-weight:600;color:var(--text);margin-bottom:.6rem;line-height:1.5;letter-spacing:.04em;}
+.reader-header .meta{font-size:.85rem;color:var(--meta);display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;}
+.reader-header .meta span{display:inline-flex;align-items:center;}
+.reader-header .meta .dot{margin:0 .15rem;opacity:.4;}
+.reader-body p{
+  margin-bottom:2em;text-indent:2em;line-height:inherit;color:var(--text);
+}
+.reader-body p:last-child{margin-bottom:0;}
+
+.toolbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  gap:0;padding:.65rem 1rem;
+  background:var(--toolbar-bg);
+  border-top:1px solid var(--toolbar-border);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:background .35s ease,border-color .35s ease,transform .3s ease,opacity .3s ease;
+}
+.toolbar.hidden{transform:translateY(100%);opacity:0;pointer-events:none;}
+.toolbar-group{display:flex;align-items:center;gap:0;}
+.toolbar-divider{width:1px;height:18px;background:var(--toolbar-border);margin:0 .6rem;flex-shrink:0;}
+.toolbar-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:36px;height:36px;padding:0 .5rem;
+  border:none;border-radius:6px;background:transparent;
+  color:var(--text-soft);font-size:.85rem;font-weight:400;cursor:pointer;
+  font-family:inherit;white-space:nowrap;
+  transition:background .15s ease,color .15s ease;
+}
+.toolbar-btn:hover{background:rgba(0,0,0,.05);}
+[data-theme="dark"] .toolbar-btn:hover{background:rgba(255,255,255,.08);}
+.toolbar-btn:active{transform:scale(.95);}
+.toolbar-btn.active{
+  background:var(--btn-active-bg);color:var(--btn-active-text);font-weight:500;
+}
+.toolbar-btn.size-btn{font-size:.8rem;font-weight:500;padding:0 .45rem;min-width:32px;}
+
+@media (max-width:640px){
+  .reader{padding:4rem 1.25rem 6.5rem;}
+  .back-link{padding:1rem 1.25rem;}
+  .toolbar{padding:.55rem .75rem;}
+  .toolbar-btn{min-width:32px;height:32px;font-size:.8rem;padding:0 .4rem;}
+  .toolbar-divider{margin:0 .4rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;}
+}
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← 返回</a>
+<main class="reader">
+  <header class="reader-header">
+    <h1>《一寸一寸》</h1>
+    <div class="meta">
+      <span>小说</span><span class="dot">·</span>
+      <span>5263 字</span><span class="dot">·</span>
+      <span>2026年 7月18日</span>
+    </div>
+  </header>
+  <div class="reader-body"><p>我一个人住。</p><p>老了之后，记性差了不少。</p><p>但有些东西还是老样子，就比如那双布鞋，比如窗外那棵松树，比如家门总会多出来的一双拖鞋。</p><p>拖鞋不是我的，我一个人住。</p><p>太阳再次越过了山脉，暖洋洋的日光是每日早晨准时的闹钟。</p><p>我每次从床上起来时，被子总在我身上盖得严严实实的，掖过了我的肩膀。</p><p>也许是我睡觉规矩惯了。</p><p>费力坐了起来，被子被艰难地掀盖在一旁。</p><p>脚一探，精准地踩进放在床边的那双旧布鞋里。我好像记得，昨晚我的布鞋是对着我的，今天我竟容易地就穿上了。</p><p>那双布鞋我穿了或许有几十年了，底都磨平了，但就是舒服，每一次穿上，就宛如我的脚长出了新一层的皮肤。</p><p>我不记得是谁买的了，应该是我自己吧。但我每天都穿，因为它穿着就是舒服。</p><p>我穿着这双布鞋走到了窗边。窗外那一棵松树，自从我搬来这里后，我便一直喜欢看着。现在没准是冬天，好冷啊。天太冷了，貌似那棵松树的叶子都掉光了，光秃秃的。</p><p>雪就这样一片一片地落了下来，松树啊，恐怕已经忘了秋天了吧。</p><p>大概是同情吧，我这样想着。</p><p>我再次闻到了那一股熟悉的香气。我兴奋地走到餐桌前。</p><p>桌上有一碗熬得很烂的白粥，还冒着热气呢！</p><p>我确信这是我早晨起来亲自熬煮的，否则白粥上怎么还会有着我最爱的酱油呢？</p><p>更何况，我可是一个人住。</p><p>当我把那一勺白粥送入嘴时，它并不是滚烫的。我也已经习惯了，或许是我把它忘在了桌子，想起要吃时才恰恰好。</p><p>恰恰好是最好吃的那个温度。</p><p>一滴米汤挂在了我的嘴角，我想要伸舌头舔舐时，却感觉有什么东西轻轻擦过了我的脸。</p><p>奇怪，明明我是一个人住的。</p><p>应该是风吧。</p><p>吃完后，我习惯了把碗筷留在桌上，今天也一样。</p><p>我走到门口，正想要去找那一棵松树聊聊天。</p><p>可是，我看见脚下有一双蓝色的旧拖鞋，就放在门槛前。</p><p>奇怪了，我明明一个人住，蓝色也不是我会喜欢的颜色。门口怎么会有别人的鞋呢？</p><p>我如此地不解。</p><p>我费劲地，把那双蓝色拖鞋，一寸一寸地，踢到离地垫三米远的地方。</p><p>那双拖鞋把我想要出门散步的心情弄没了，我关上门。</p><p>回到房内，门后不知从何时起，就挂着一个相框。</p><p>那个相框好老了，快被白蚁啃食干净了，却偏偏还留着这一副木骨架。</p><p>也许是留给我做个念想的吧。</p><p>相框里是我年轻时的照片。相框其实不小，但我只占据了一半。</p><p>两分钟，我对着我旁边的另一半看着。</p><p>那边的玻璃总是反光，什么都看不清啊。</p><p>我也没兴趣继续看下去了，那里兴许本就没有站人。</p><p>我一个人住，腿脚虽然是慢了点，但日子过得还算妥帖。</p><p>我坐在窗前的摇摇椅上，悠哉，悠哉。</p><p>松树长出了新枝，不，那是雪。</p><p>我大概是老了，连雪都忘了是什么。</p><p>想到这，我低下头来，打量着我唯一可以描述的这一双布鞋。</p><p>我突然笑了一声。</p><p>我还记得的那一场冬天，那时的我还不怕冷。</p><p>那时正是我在大学最飞扬的时候，当她寄信来，说她想我时，我的心好像被点燃火线的炸药一般，非要在一个地方把热情释放出来。</p><p>那根火线烧得正旺，我于是旷了期末最重要的三门考试，现在想起，还是觉得我做了一个对的选择。</p><p>那时的我没拿什么包袱，只是把那封信和钱包放在裤兜里，不顾一切地便跑去了火车站。</p><p>火车站还算简陋，检票口还是人工的。趁检票人忙于核票时，我低着头，侧过身越过他，然后加快脚步。</p><p>他察觉了，吆喝着保安要把我拦下。</p><p>我四处张望，来往的行人都登上了火车，我不知道他们去哪里，但身后的喊打声越来越大了。最后我别无选择，看准一辆已经起了黑烟的火车，抓准时机爬上。</p><p>我的身子越过铁制的车帮，掉在坚硬的凹凸表面上。煤块表面凸起的部分，刺在我的背后，我挪动，想要摆脱开。最后，我终于坐起了身，但后背的衣服，凉飕飕的。</p><p>开了几个洞。</p><p>冬天的风是冷的，火车从烈日一直行往落日。</p><p>我在煤块上翻来覆去，太阳落了两轮了。冬天时风是冷的，呼啸而过的风凌厉地刮在我脸上。我勉强张开嘴巴，向这狂烈的风呐喊。但风把煤灰卷入我的嘴里，当我闭上嘴巴，牙齿一合，嘴里全是涩的。我没有感觉到冷意，那根引线还火着呢。</p><p>行了多少路我也不知道，只能凭着一直响的车，在心底反复提醒我自己。</p><p>“快到了，就快能见到她了。”</p><p>火车引擎的轰鸣声渐消了，我在不安与兴奋中探出头来。在煤灰与风中，我已俨然成了一个人形煤炭。以至于当我爬过车帮，落在月台上时，等候火车的行人们，看到我之后议论纷纷。</p><p>“他这是怎么了。”</p><p>“怕不是逃票来的吧。”</p><p>但我并不在意这些，我沉浸在喜悦之中。我乘上了不知通往哪里的火车，误打误撞地来到了她的城市。我检查了裤兜，那封信还在。</p><p>我其实并不知道去往她宿舍的路怎么走，只是凭着她曾寄给我照片，在脑海中东拼西凑，就走到了她宿舍楼下。那时的我走得很急。</p><p>“我怕我再晚一点，她就不在了。”</p><p>那时是下午，人流都在操场牵着手散步，所以宿舍的人不多。偶尔也有几个人走过。</p><p>我站在楼下大喊，虽然声音已经嘶哑了。</p><p>那时我还记得有一个人跑了下来，她一边用不可置信的语气骂着我疯了，我傻笑着把那封信掏出来。</p><p>“看，我来了。”</p><p>她听见我嘶哑的声音后，显得有一些慌乱。眼角几滴慌乱的泪水落下。她忽然转身上去，把我留在楼下。那时的我有些错愕，还以为做错了什么事情。但两分钟后她急匆匆地跑了下来，手里拿着一瓶水。</p><p>“你真的疯了，先喝水。”</p><p>我接过那瓶水，水还是温的。</p><p>喉咙再次湿润。她不知从哪里掏出一块毛巾，在我喝水时，擦拭着我的面庞。</p><p>她的毛巾变黑了，她的眼也湿润了。</p><p>“你真像个煤球啊。”</p><p>那炸药，悄声地引爆。</p><p>“别擦了，擦不干净的。”
+满脸都是黑灰的我，接过毛巾，笑得很开心。</p><p>可是，我当年去见的到底是谁啊？</p><p>我记得那时冬天寒风的刺骨，也记得那时候我心跳的响亮，煤炭大约是苦涩的。</p><p>但那张脸，究竟长什么样了？</p><p>我看向那张相片，反光的那一半还在反光。那块区域白蒙蒙一片。</p><p>答案就在反光之下，但我怎么什么都看不见啊？</p><p>怎么可能，我连前程都不要了，义无反顾去见了一个人。可我现在，忘了她长什么样子。</p><p>就连她的名字，我也忘了。</p><p>我抱着对她名字的探寻入睡，渴望在梦里，再次回到那年的冬天。那我便能在梦里，重新看到她的脸。</p><p>一夜无梦，或许有，兴许我忘了。</p><p>我掀起那紧实的被子，穿上我的布鞋。</p><p>我走到门口，想要借着那棵松树回忆起那年冬天。但当我打开门时，门槛前，那双蓝色拖鞋又出现了。我走到三米外，来到那双拖鞋昨天待过的位置。</p><p>几对脚步印在雪上，一直到那里。我伸脚，把我那双珍贵的布鞋踩在旁边做对比。</p><p>奇怪，我的脚明明比较大。</p><p>我不禁感到烦躁，费力地把那双蓝色拖鞋踢开，踢到好远之外。若是它再长腿走回来，那它必定会冻伤。</p><p>我明明一个人住，到底是谁在跟我开这种玩笑？</p><p>回到屋内，唯有热腾的饭菜能够安抚我的烦躁。我走到餐桌前，正准备吃饭。饭桌上有一条清蒸鱼，一盘白菜，一盘青椒炒肉，和我最爱的炸橘子。这些菜肴很大可能是我煮的，才能显得如此诱人。</p><p>这时，我发现桌上摆着两只碗，两双筷子，面对面摆着。</p><p>这家里只有我这一张嘴，显得如此孤独。</p><p>我愣住了，摇了摇头，可能是我糊涂了。</p><p>我起身，把多出来的那副碗筷收进橱柜里。</p><p>我笑了一声。</p><p>我真是糊涂了，一个人吃饭，竟然还得摆两副碗筷。</p><p>撇开那副碗筷，这顿饭我吃得很开心。尤其是那炸橘子，是我最爱的甜点。我很庆幸，我还记得自己的口味。也许是我吃得高兴吧，这顿饭与往日一样，不过半小时便吃完了。有三个炸橘子，我吃了两个。</p><p>吃完后，桌上只留下鱼吃完后的骨身，和一个炸橘子。我兴许吃得太过饱足了，待会再收拾吧。</p><p>我走到门口去，再次看向门上挂着的相框。这一次，我的身旁不再反光，我也看清了相框里的情景。那是我，背景是熟悉的宿舍。旁边确实有一个模糊的影子。</p><p>那应该只是黑斑吧。</p><p>我伸手去擦，手指在相框镜面反复擦拭，却怎么也擦不掉。我无能为力地叹出一口气。</p><p>老了的东西好像就是容易坏。</p><p>我一个人的日子就这么继续着。</p><p>有时我会坐在摇椅上，看着窗外的松树，偶尔会有燕子来枝上歇脚，但松树并不知道，也没什么回应。窗口是开着的，冷风吹进来时宛如又把我放在一块又一块的煤块上。当我想去拿外套时，不知何时，外套却已经披在了肩上。也许是我之前便穿上了的吧，便不再在意。</p><p>有时吃完饭，会忘记擦嘴，因为贴合我口味的佳肴总是让我深陷满足，从而什么都忘记了。但不知道为什么，我的嘴角总是干干净净的，当我意识到嘴角有油渍后，油渍便没有了。那大概是风吹的吧，否则又怎会那么柔软呢。</p><p>入睡时，躺在床上。半梦半醒时我会分不清是梦还是现实，被角总会被轻柔的掖好。晚上当夜风吹来时也不会感到寒冷。</p><p>那看来我的身子骨很好啊，做这些事都不用过脑子了。</p><p>有天，我坐在摇椅上。窗外的松树上没有燕子，地上的雪却盖过了它的根。</p><p>我这时想着拿把雪铲去清理。我在屋内走着，找寻着雪铲。它或许在屋里，或许在屋外。但经过餐桌时，发现半刻钟前还在餐桌上，等着收拾的碗筷竟然不见了。走到水槽前才发现，碗筷原来已经被洗好了。</p><p>两副碗筷。</p><p>我带着拖拉的脚步，走回空无一人的房间。</p><p>对着折好的被子，我喃喃自语道：
+“我家里以前有住过人吗？”</p><p>我在门外找到了那一把雪铲，在门槛前的那双蓝色拖鞋边。松树前的雪被清理得很干净，通往外头的脚步也出现了，比我小多的脚印。</p><p>我低头，看见那双蓝色拖鞋再次回到了我的脚边。</p><p>别踢开了吧。</p><p>我对门边的我这么说。</p><p>我又从掖得紧实的被子里醒来了。</p><p>餐桌上有我最爱的炸橘子，三个。</p><p>还未落座时，我把两副碗筷洗净，放在餐桌上。</p><p>我知道一副碗筷是我的，但另一副碗筷我不知道为何我会一起放在餐桌上。</p><p>我看着多出来的那一副碗筷，对着餐桌上我的碗筷问道：“我明明一个人住，怎么总做这些多余的事？屋里除了我还有谁？”</p><p>吃完两颗炸橘子后，我有些口渴。但我老了，腿脚不便，懒得再站起来去倒水了。</p><p>“口渴”这个念头在我脑海产生时，忽然手边已经多了一杯温水。</p><p>我好像没有离开过椅子，酸痛的脊椎可以证明。这杯水恐怕不是我倒的，就算是我，也不可能，这说不通。</p><p>我看着那空了的杯子，水是温的。</p><p>这屋子，兴许真有别人。</p><p>夜很快漫过了松树上的雪，洁白的雪这时和松树藏在了夜里。我躺在床上，没有灯的房间里很黑。</p><p>我听到房内有很轻的脚步声，也许它本来不轻，是我听觉变差了。但我确实地听到，甚至它向我走近。我不敢发出声音，只是浑身僵硬。这时我倒是希望屋里多出来的是鬼而不是人。</p><p>我经过三秒钟的挣扎后，鼓起勇气，对着黑暗的房间用着突兀的声音喊了一声：“有人吗？”</p><p>没有回应，也没有回音。</p><p>房间回到了四秒前的寂静。但我很清晰地感觉到，我的被子，被一双手，轻轻地，拍了拍。</p><p>我带着不解与惧怕入睡。</p><p>隔天，天微朦。</p><p>我坐在摇椅上，对着那棵松树发呆。</p><p>突然，有一滴水落在我手背上。</p><p>水是温的。</p><p>我抬头看着屋顶。屋顶好好的，没有破损，昨夜好像也没有下雨。外面下的是雪，不是雨。我就这样看着手背上那滴温热的水珠，缓慢地流过我的手。不知道为什么，我心里突然觉得很难过。</p><p>这屋里大概真的还有一个人。我想见她，可我看不见她，我也想不起她会是谁了。</p><p>我回到门后，死死地盯着那张合照。</p><p>不，那不是反光，也不是黑斑。这照片上，本就不止我一个人。我眯着眼睛，试图看清那个被记忆抹去的脸。我想看清那一个轮廓下，她的眼睛，她的鼻子。</p><p>最后，我看到的只有那团雾。</p><p>那团雾在相框里扩开，一寸一寸地，把那个人的脸吞了下去。</p><p>我没心情吃东西了，即使餐桌上有我最爱的炸橘子。我回到摇椅上，拼命地回忆着。</p><p>蓝色的拖鞋，多出的碗筷，掖好的被角，温热的水，甚至是手背上的那滴水，也许是眼泪。把这些串起来后，我忽地站起身，开门。我看着门口的那双蓝色拖鞋，对着它说：“你不是多出来的，你本来就该在这里啊。”</p><p>我把门关上，门后挂着的相框因这股力量摆动，砸在门上。我伸出手，把相框固定好。右手拇指，轻轻擦过那层雾，擦不掉。</p><p>我转身，看着空荡荡的房间。</p><p>看着餐桌，空荡荡的餐桌。那里没有炸橘子。</p><p>“应该不是屋里进了一个人。是我，是不是我忘了一个人？”</p><p>我对着那盘炸橘子说道。</p><p>我的脑海里闪过记忆的碎片，有一些声音。有人似乎在我耳边，很轻的喊过我什么，喊过什么，但我除了一阵风之外，什么都抓不住。</p><p>我竟然哭了，眼泪往外流，我没有嚎啕。</p><p>我似乎什么都没想起，身体里的悲伤却先一步地回来了。</p><p>只是为什么眼泪会流我也不懂。</p><p>“我把谁弄丢了？”</p><p>天亮了。</p><p>又黑了。</p><p>看。松树没叶子。</p><p>鞋还在。</p><p>我的手。这是树皮。不。这是手。</p><p>相框。我活多久了？</p><p>好像很久。或许没活过。</p><p>饿。圆圆的。那是什么。</p><p>渴了。水来了。椅子。我还坐着。</p><p>床。累了。被子。舒服。</p><p>太阳。月亮。</p><p>坐在摇椅上，我无力站起了。窗外，松树一样。我的嘴边，有勺子的形状，也有粥的味道。白粥是热的。或许我拿着勺子。好像又不是。我感觉到，有一个人，看不见的人，就站在我面前。</p><p>忽然有一股风，带着那个冬天的味道，劈头盖脸地砸向我。我的面前传来刺鼻的煤灰味，我感受到后背破洞处灌进来的冷风。我的心脏，我感受到了那时剧烈的跳动。我记起了，我曾不惜这条命，为了奔向一个人。</p><p>但我还是记不起那张脸，这几十年的日子也记不起。我的心底好像有一个陨石坑，那是我引爆的。不平的窟窿，我跌入里面。忽然那一滴温热的水又掉下来了。为什么呢？因为我好像弄丢了，比我命还要重要的人。</p><p>张开嘴。最后的力。我对着。对着面前。面前的空气。或许不是空气。喊出。</p><p>“妹。”</p><p>喊完后，树皮表面，被一层温暖罩着。那个温度，好熟悉。温度一寸一寸地覆上来。手是不是树皮，无所谓了。</p><p>拖鞋不是我的，我不是一个人住。</p></div>
+</main>
+<div class="toolbar" id="toolbar">
+  <div class="toolbar-group">
+    <button class="toolbar-btn theme-btn" id="btn-theme">亮</button>
+  </div>
+  <div class="toolbar-divider"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn size-btn" id="btn-size-minus">A-</button>
+    <button class="toolbar-btn size-btn" id="btn-size-plus">A+</button>
+  </div>
+  <div class="toolbar-divider"></div>
+  <div class="toolbar-group">
+    <button class="toolbar-btn font-btn" id="btn-font">宋</button>
+  </div>
+</div>
+<script>(function(){
+  var h=document.documentElement;
+  var toolbar=document.getElementById('toolbar');
+  var btnTheme=document.getElementById('btn-theme');
+  var btnFont=document.getElementById('btn-font');
+  var btnSizeMinus=document.getElementById('btn-size-minus');
+  var btnSizePlus=document.getElementById('btn-size-plus');
+  var K='reader_prefs';
+  var THEMES=['light','sepia','dark'];
+  var THEME_LABELS={'light':'亮','sepia':'护','dark':'暗'};
+  var FONTS=['serif','kai','fangsong','sans'];
+  var FONT_LABELS={'serif':'宋','kai':'楷','fangsong':'仿','sans':'黑'};
+  var SIZES=['sm','md','lg'];
+  var p=l(),lastY=0,timer=null;
+
+  function l(){try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return{}}}
+  function s(v){localStorage.setItem(K,JSON.stringify(v));}
+  function apply(v){
+    if(v.theme){h.dataset.theme=v.theme;btnTheme.textContent=THEME_LABELS[v.theme]||'亮';}
+    if(v.font){h.dataset.font=v.font;btnFont.textContent=FONT_LABELS[v.font]||'宋';}
+    if(v.size){h.dataset.size=v.size;}
+  }
+  function cycle(arr,cur){var i=arr.indexOf(cur);return arr[(i+1)%arr.length];}
+  apply(p);
+
+  btnTheme.addEventListener('click',function(){
+    p.theme=cycle(THEMES,p.theme||'light');
+    apply(p);s(p);
+  });
+  btnFont.addEventListener('click',function(){
+    p.font=cycle(FONTS,p.font||'serif');
+    apply(p);s(p);
+  });
+  btnSizeMinus.addEventListener('click',function(){
+    var i=SIZES.indexOf(p.size||'md');
+    p.size=SIZES[Math.max(0,i-1)];
+    apply(p);s(p);
+  });
+  btnSizePlus.addEventListener('click',function(){
+    var i=SIZES.indexOf(p.size||'md');
+    p.size=SIZES[Math.min(SIZES.length-1,i+1)];
+    apply(p);s(p);
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.key==='t'||e.key==='T')btnTheme.click();
+    else if(e.key==='f'||e.key==='F')btnFont.click();
+    else if(e.key==='-'||e.key==='_')btnSizeMinus.click();
+    else if(e.key==='='||e.key==='+')btnSizePlus.click();
+    else if(e.key==='ArrowLeft')history.back();
+  });
+
+  function onScroll(){
+    var y=window.scrollY;
+    if(y>lastY&&y>100){toolbar.classList.add('hidden');}
+    else{toolbar.classList.remove('hidden');}
+    lastY=y;
+    clearTimeout(timer);
+    timer=setTimeout(function(){if(window.scrollY>100)toolbar.classList.add('hidden');},2500);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+
+  window.addEventListener('storage',function(e){
+    if(e.key===K){p=JSON.parse(e.newValue||'{}');apply(p);}
+  });
+})();</script>
+</body>
+</html>
