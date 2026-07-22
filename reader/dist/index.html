@@ -104,7 +104,11 @@ body{
     var list=document.getElementById('work-list');
     if(works.length===0){list.innerHTML='<div style="text-align:center;padding:4rem 1rem;color:var(--text2);">暂无作品</div>';return;}
     list.innerHTML='<div class="work-list">'+works.map(function(w){
-      var paras=(w.content||'').split(/\r?\n\r?\n/);
+      var c=w.content||'',paras;
+      if(/\r?\n\r?\n/.test(c)){paras=c.split(/\r?\n\r?\n/);}
+      else if(/\r\n/.test(c)){paras=c.split(/\r\n/);}
+      else if(/\n/.test(c)){paras=c.split(/\n/);}
+      else{paras=[c];}
       var excerpt=paras[0]?paras[0].substring(0,100)+'…':'';
       return '<a href="read/'+w.id+'.html" class="work-item">'+
         '<div class="wi-title">'+esc(w.title||'无标题')+'</div>'+
